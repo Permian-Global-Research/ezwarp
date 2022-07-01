@@ -12,40 +12,63 @@ get_ext <- function(x, ...) {
 #' 
 #' @export
 get_ext.SpatRaster <- function(x,...){
-  terra::ext(x)
+  # terra::ext(x)
+  terra_ext(x)
 }
 
 #' @rdname get_proj
 #' 
 #' @export
 get_ext.SpatVector <- function(x,...){
-  terra::ext(x)
+  # terra::ext(x)
+  terra_ext(x)
 }
 
 #' @rdname get_proj
 #' 
 #' @export
 get_ext.sf <- function(x,...){
-  as.vector(sf::st_bbox(x))[c(1,3,2,4)]
+  # as.vector(sf::st_bbox(x))[c(1,3,2,4)]
+  attr(x[[attr(x, "sf_column")]], "bbox")[c("xmin", "xmax", "ymin", "ymax")]
 }
 
 #' @rdname get_proj
 #' 
 #' @export
 get_ext.sfc <- function(x, ...){
-  as.vector(sf::st_bbox(x))[c(1,3,2,4)]
+  attr(st_as_sfc(nc), "bbox")[c("xmin", "xmax", "ymin", "ymax")]
 }
 
 #' @rdname get_proj
 #' 
 #' @export
 get_ext.stars <- function(x, ...){
-  as.vector(sf::st_bbox(x))[c(1,3,2,4)]
+  # as.vector(sf::st_bbox(x))[c(1,3,2,4)]
+  stars_ext(x)
 }
 
 #' @rdname get_proj
 #' 
 #' @export
 get_ext.stars_proxy <- function(x, ...){
-  as.vector(sf::st_bbox(x))[c(1,3,2,4)]
+  # as.vector(sf::st_bbox(x))[c(1,3,2,4)]
+  stars_ext(x)
+}
+
+#' @rdname get_proj
+#' 
+#' @export
+get_ext.ezgrid <- function(x, ...){
+  x$extent
+}
+
+
+terra_ext <- function(x){
+  x@ptr$extent@.xData[["vector"]]
+}
+
+stars_ext <- function(x){
+  d <- attr(x, "dimension")
+  c(c(d[[1]]$from -1, d[[1]]$to) * d[[1]]$delta + d[[1]]$offset,
+    c(d[[2]]$from - 1, d[[2]]$to) * -d[[2]]$delta - d[[2]]$offset)
 }

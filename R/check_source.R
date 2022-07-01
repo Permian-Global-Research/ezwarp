@@ -8,7 +8,7 @@
 #' If remote, src must be prefixed with relevant gdal module. e.g. "/vsicurl/"
 #'
 #' @return character source.
-
+#' @export
 check_source <- function(s){
   UseMethod("check_source")
 }
@@ -45,4 +45,42 @@ check_source.stars_proxy <- function(s) {
 #' @rdname check_source
 #' 
 #' @export
-check_source.character <- function(s) s
+check_source.character <- function(s){
+  if (is_url(s)){
+    ##### fix this.
+  }
+  s
+} 
+
+#' @rdname check_source
+#' 
+#' @export
+check_source.sf <- function(s){
+  sf_temp_save(s)
+}
+
+#' @rdname check_source
+#' 
+#' @export
+check_source.sfc <- function(s){
+  sf_temp_save(s)
+}
+
+#' @rdname check_source
+#' 
+#' @export
+check_source.SpatVector <- function(s){
+  s.file <- tempfile(fileext = '.fgb')
+  writeVector(s, s.file, filetype='FlatGeobuf', options=NULL )
+  s.file
+}
+
+
+#' save sf to temp source - return source
+#'
+#' @return
+sf_temp_save <- function(s){
+  s.file <- tempfile(fileext = '.fgb')
+  sf::write_sf(s, s.file)
+  s.file
+}

@@ -4,7 +4,16 @@
 \alias{ezwarp}
 \title{Easy Warper using vapour}
 \usage{
-ezwarp(x, y, res, bands = NULL, resample = "bilinear", cutline = FALSE, ...)
+ezwarp(
+  x,
+  y,
+  res,
+  bands = NULL,
+  resample = "bilinear",
+  cutline = NULL,
+  nodata = NULL,
+  ...
+)
 }
 \arguments{
 \item{x}{a list or vector of raster source(s) or SpatRaster(s)}

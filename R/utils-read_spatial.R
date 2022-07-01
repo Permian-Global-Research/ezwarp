@@ -5,18 +5,19 @@
 #' @return
 #'
 #' @examples
-read_spat_chr <- function(x){
+read_spat_info <- function(x){
     suppressWarnings(tryCatch({
-      x <- terra::rast(x)
+      tst <- vapour_raster_info(x) 
+      x <- ezgrid(tst$extent, tst$dimXY, tst$projection)
     },
-    error = function(c) {
+    error = function(e) {
       tryCatch({
-       x <- terra::vect(x) %>% 
-         terra::makeValid()
+        tst <- vapour_layer_info(x) 
+        x <- ezgrid(tst$extent, NULL, tst$projection$Wkt)
       },
-      error = function(c) {
+      error = function(e) {
         message(e)
-        stop("check your `y` argument - the source can't be read by {terra}")
+        stop("check your `y` argument - the source can't be read by gdal or ogr")
       })
     }))
   x

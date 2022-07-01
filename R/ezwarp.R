@@ -17,31 +17,41 @@
 #'
 #' @examples
 ezwarp <- function(x,
-                     y,
-                     res,
-                     bands = NULL,
-                     resample = 'bilinear',
-                     cutline = FALSE,
-                     ...) {
+                   y,
+                   res,
+                   bands = NULL,
+                   resample = 'bilinear',
+                   cutline = NULL,
+                   nodata = NULL,
+                   ...) {
   
-  params <- list_inputs(x, y, res)
+  
+  x <- check_in_form(x)
+  y2 <- check_grid_form(y)
+  
+  
+  params <- list_inputs(x, y2, res)
+  
+  check_res_form(y2, res)
+  
   if (is.null(bands)){
     bands <- c(1:vapour::vapour_raster_info(params$x)$bands) ### FIX THIS
   }
   
-  opts <- ""
-  
   # save sf to file if cutine is TRUE
-  if (any(class(y) %in% c("sf", "sfc"))) {
-    if (isTRUE(cutline)) {
-      tf <- tempfile(fileext = '.fgb')
-      sf::write_sf(y, tf)
-      cl <- tf
-    }
-    opts <- c('-cutline', cl,
-                '-crop_to_cutline')
-  }
   
+  opts <- ""
+  if (!is.null(cutline)){
+    cl <- check_source(y)
+    opts <- c('-cutline', cl,
+              '-crop_to_cutline')
+  }
+   
+  if (!is.null(nodata)){
+    opts <- c(opts,
+              '-dstnodata',
+              nodata)
+  }   
   
   v <- vapour::vapour_warp_raster(
     x = params$x,

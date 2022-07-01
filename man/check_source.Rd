@@ -6,6 +6,9 @@
 \alias{check_source.stars}
 \alias{check_source.stars_proxy}
 \alias{check_source.character}
+\alias{check_source.sf}
+\alias{check_source.sfc}
+\alias{check_source.SpatVector}
 \title{Check the source raster classes}
 \usage{
 check_source(s)
@@ -17,6 +20,12 @@ check_source(s)
 \method{check_source}{stars_proxy}(s)
 
 \method{check_source}{character}(s)
+
+\method{check_source}{sf}(s)
+
+\method{check_source}{sfc}(s)
+
+\method{check_source}{SpatVector}(s)
 }
 \arguments{
 \item{s}{a raster source - either character i.e a local source or remote.

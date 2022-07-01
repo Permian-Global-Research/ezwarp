@@ -47,34 +47,26 @@ list_inputs <- function(x, y, res) {
   x <- lapply(x, check_source) |>
     unlist()
   
-  if (class(y)[1]=='character') {
-    y <- read_spat_chr(y)
-  }
-  
-  extent = get_ext(y)
-  
-  if (!missing(res)) {
-    extent = round_bbox(extent, res)
-    dimension = dims_from_box(extent, res)
+  if (inherits(y, 'character')) {
+    y <- read_spat_info(y)
+    extent=y$extent
+    dimension = y$dimension
+    projection = y$projection
+    
   } else {
-    if (any(class(y) %in% c("sf", "sfc", "SpatVector"))) {
-      
-      i <- vapour::vapour_raster_info(x[1])
-      
-      dims <- i$dimXY
-      src.ext <- i$extent
-      x.res <- abs(src.ext[1]-src.ext[2])/dims[1]
-      y.res <- abs(src.ext[2]-src.ext[3])/dims[2]
-      
-      dims_from_box()
-      
-      dimension <-vapour::vapour_raster_info(x[1])$dimXY
+    extent = get_ext(y)
+    
+    if (!missing(res)) {
+      extent = round_bbox(extent, res)
+      dimension = dims_from_box(extent, res)
     } else {
       dimension <- dim(y)[2:1]
     }
     
+    projection = get_proj(y)
   }
-  projection = get_proj(y)
+  
+  
   
   return(list(
     x = x,
@@ -83,7 +75,6 @@ list_inputs <- function(x, y, res) {
     projection = projection
   ))
 }
-
 
 
 
