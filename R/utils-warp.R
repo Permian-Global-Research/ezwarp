@@ -60,7 +60,7 @@ list_inputs <- function(x, y, res) {
       extent = round_bbox(extent, res)
       dimension = dims_from_box(extent, res)
     } else {
-      dimension <- dim(y)[2:1]
+      dimension <- get_dim(y)
     }
     
     projection = get_proj(y)
