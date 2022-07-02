@@ -3,6 +3,9 @@
 \name{get_dim}
 \alias{get_dim}
 \alias{get_dim.SpatRaster}
+\alias{get_dim.SpatVector}
+\alias{get_dim.sf}
+\alias{get_dim.sfc}
 \alias{get_dim.stars}
 \alias{get_dim.stars_proxy}
 \alias{get_dim.chracter}
@@ -12,6 +15,12 @@
 get_dim(x, ...)
 
 \method{get_dim}{SpatRaster}(x, ...)
+
+\method{get_dim}{SpatVector}(x, ...)
+
+\method{get_dim}{sf}(x, ...)
+
+\method{get_dim}{sfc}(x, ...)
 
 \method{get_dim}{stars}(x, ...)
 

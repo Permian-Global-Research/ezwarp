@@ -8,6 +8,7 @@
 \alias{get_ext.stars}
 \alias{get_ext.stars_proxy}
 \alias{get_ext.ezgrid}
+\alias{get_ext.character}
 \alias{get_proj}
 \alias{get_proj.SpatRaster}
 \alias{get_proj.SpatVector}
@@ -16,6 +17,7 @@
 \alias{get_proj.stars}
 \alias{get_proj.stars_proxy}
 \alias{get_proj.ezgrid}
+\alias{get_proj.character}
 \title{get_proj: get projection of a spatial object}
 \usage{
 \method{get_ext}{SpatRaster}(x, ...)
@@ -32,6 +34,8 @@
 
 \method{get_ext}{ezgrid}(x, ...)
 
+\method{get_ext}{character}(x, ...)
+
 get_proj(x, ...)
 
 \method{get_proj}{SpatRaster}(x, ...)
@@ -47,6 +51,8 @@ get_proj(x, ...)
 \method{get_proj}{stars_proxy}(x, ...)
 
 \method{get_proj}{ezgrid}(x, ...)
+
+\method{get_proj}{character}(x, ...)
 }
 \arguments{
 \item{x}{...}

@@ -18,6 +18,27 @@ get_dim.SpatRaster <- function(x,...){
 #' @rdname get_dim
 #' 
 #' @export
+get_dim.SpatVector <- function(x,...){
+  NULL
+}
+
+#' @rdname get_dim
+#' 
+#' @export
+get_dim.sf <- function(x, ...){
+  NULL
+}
+
+#' @rdname get_dim
+#' 
+#' @export
+get_dim.sfc <- function(x, ...){
+  NULL
+}
+
+#' @rdname get_dim
+#' 
+#' @export
 get_dim.stars <- function(x, ...){
   stars_dim(x)
 }
@@ -33,13 +54,8 @@ get_dim.stars_proxy <- function(x, ...){
 #' 
 #' @export
 get_dim.chracter <- function(x, ...){
-  tst <- try(vapour::vapour_raster_info(x))
-  if (inherits(tst, "try-error")) {
-    stop("Unable to read the dimension of the soure")
-  }
-  tst$dimXY
+  read_spat_info(x, val='dimension')
 }
-
 
 #' @rdname get_dim
 #' 

@@ -3,11 +3,14 @@
 \name{sciplot}
 \alias{sciplot}
 \alias{sciplot.SpatRaster}
+\alias{sciplot.stars}
 \title{sciplot: generic plot but using palettes from {scico}}
 \usage{
 sciplot(x, ...)
 
 \method{sciplot}{SpatRaster}(x, .pal = "bilbao", .n = 256, direction = 1, ...)
+
+\method{sciplot}{stars}(x, .pal = "acton", .n = 256, direction = 1, ...)
 }
 \arguments{
 \item{x}{...}

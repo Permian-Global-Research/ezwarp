@@ -11,11 +11,18 @@ sciplot <- function(x, ...) {
 #' @rdname sciplot
 #' 
 #' @export
-sciplot.SpatRaster <- function(x, .pal="bilbao", .n=256, direction=1, ...){
+sciplot.SpatRaster <- function(x, .pal="acton", .n=256, direction=1, ...){
   .pal <- scico::scico(.n, palette = .pal, direction=direction)
   terra::plot(x, col=.pal, ...)
 }
 
+#' @rdname sciplot
+#' 
+#' @export
+sciplot.stars <- function(x, .pal="acton", .n=256, direction=1, ...){
+  .pal <- scico::scico(.n, palette = .pal, direction=direction)
+  plot(x, col=.pal, ...)
+}
 
 #' view {scico} colour palette options
 #'

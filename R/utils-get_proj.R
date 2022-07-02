@@ -62,6 +62,15 @@ get_proj.ezgrid <- function(x, ...){
   x$projection
 }
 
+#' @rdname get_proj
+#' 
+#' @export
+get_proj.character <- function(x, ...){
+  read_spat_info(x, val='projection')
+}
+
+
+
 stars_crs <- function(x){
   d <- attr(x, "dimension")
   d[[1]]$refsys[["wkt"]]

@@ -27,7 +27,7 @@ check_in_form <- function(x){
 #' @return list
 check_grid_form <- function(x) {
   if (length(list(x)) > 1) {
-    stop("Argument y must have a length of 1.")
+    stop("Only one spatial source can be provied for argument `y`.")
   }
   x
 }

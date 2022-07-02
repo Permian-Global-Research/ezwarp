@@ -62,6 +62,13 @@ get_ext.ezgrid <- function(x, ...){
   x$extent
 }
 
+#' @rdname get_proj
+#' 
+#' @export
+get_ext.character <- function(x, ...){
+  read_spat_info(x, val='extent')
+}
+
 
 terra_ext <- function(x){
   x@ptr$extent@.xData[["vector"]]

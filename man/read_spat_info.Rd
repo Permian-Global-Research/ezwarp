@@ -4,7 +4,7 @@
 \alias{read_spat_info}
 \title{read a spatial url/path}
 \usage{
-read_spat_info(x)
+read_spat_info(x, val = NULL)
 }
 \arguments{
 \item{x}{A character vector - source for a raster or spatial vector}

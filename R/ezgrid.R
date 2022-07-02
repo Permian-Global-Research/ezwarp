@@ -27,7 +27,7 @@ ezgrid <- function(extent, dimension, projection){
   ezg
 }
 
-# check extent and proj validity... 
+# check extent, dimension and proj validity... 
 # check extent and projection are valid. from {gdlaio}
 # taken from: https://github.com/hypertidy/gdalio/blob/main/R/default_grid.R
 is_grid_valid <- function(extent, dimension, projection){

@@ -11,7 +11,9 @@ ezwarp(
   bands = NULL,
   resample = "bilinear",
   cutline = NULL,
+  crop_to_cutline = TRUE,
   nodata = NULL,
+  out_class = c("SpatRaster", "stars"),
   ...
 )
 }
@@ -26,9 +28,9 @@ ezwarp(
 
 \item{resample}{resampling method}
 
-\item{...}{Additional args passed to \code{vapour::vapour_warp_raster}}
+\item{cutline}{an sf or ogr-readable spatial vector source to mask the output raster. see -cutline argument in gdalwarp}
 
-\item{mask}{an sf or ogr-readable spatial vector source to mask the output raster. see -cutline argument in gdalwarp}
+\item{...}{Additional args passed to \code{vapour::vapour_warp_raster}}
 }
 \value{
 

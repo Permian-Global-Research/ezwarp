@@ -43,36 +43,34 @@ dims_from_box <- function(.box, .res) {
 #' @param res 
 #'
 #' @return
-list_inputs <- function(x, y, res) {
+build_warp_inputs <- function(x, y, res) {
   x <- lapply(x, check_source) |>
     unlist()
   
   if (inherits(y, 'character')) {
     y <- read_spat_info(y)
-    extent=y$extent
-    dimension = y$dimension
-    projection = y$projection
     
   } else {
-    extent = get_ext(y)
-    
-    if (!missing(res)) {
-      extent = round_bbox(extent, res)
-      dimension = dims_from_box(extent, res)
-    } else {
-      dimension <- get_dim(y)
-    }
-    
-    projection = get_proj(y)
+    y <- ezgrid(
+      extent = get_ext(y),
+      projection = get_proj(y),
+      dimension = get_dim(y)
+    )
   }
   
-  
+  if (!missing(res)) {
+    y$extent = round_bbox(y$extent, res)
+    y$dimension = dims_from_box(y$extent, res)
+  } else {
+    if (is.null(y$dimension))
+      no_res_vec_err()
+  }
   
   return(list(
     x = x,
-    extent = extent,
-    dimension = dimension,
-    projection = projection
+    extent = y$extent,
+    dimension = y$dimension,
+    projection = y$projection
   ))
 }
 

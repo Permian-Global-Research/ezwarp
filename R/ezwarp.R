@@ -9,7 +9,7 @@
 #' @param res numeric. the resolution of the output SpatRaster.
 #' @param bands numeric which bands to use from the source.
 #' @param resample resampling method
-#' @param mask an sf or ogr-readable spatial vector source to mask the output raster. see -cutline argument in gdalwarp
+#' @param cutline an sf or ogr-readable spatial vector source to mask the output raster. see -cutline argument in gdalwarp
 #' @param ... Additional args passed to `vapour::vapour_warp_raster`
 #'
 #' @return
@@ -22,29 +22,31 @@ ezwarp <- function(x,
                    bands = NULL,
                    resample = 'bilinear',
                    cutline = NULL,
+                   crop_to_cutline = TRUE,
                    nodata = NULL,
+                   out_class = c('SpatRaster', 'stars'),
                    ...) {
   
   
   x <- check_in_form(x)
-  y2 <- check_grid_form(y)
+  y <- check_grid_form(y)
+  check_res_form(y, res)
   
-  
-  params <- list_inputs(x, y2, res)
-  
-  check_res_form(y2, res)
+  params <- build_warp_inputs(x, y, res)
   
   if (is.null(bands)){
-    bands <- c(1:vapour::vapour_raster_info(params$x)$bands) ### FIX THIS
+    bands <- c(1:vapour::vapour_raster_info(params$x[1])$bands) ### FIX THIS
   }
   
   # save sf to file if cutine is TRUE
   
   opts <- ""
   if (!is.null(cutline)){
-    cl <- check_source(y)
-    opts <- c('-cutline', cl,
-              '-crop_to_cutline')
+    cl <- check_source(cutline)
+    opts <- c('-cutline', cl)
+    if (isTRUE(crop_to_cutline)){
+      opts <- c(opts, '-crop_to_cutline')
+    }
   }
    
   if (!is.null(nodata)){
@@ -66,15 +68,14 @@ ezwarp <- function(x,
     ...
   )
   
-  r <- terra::rast(
-    terra::ext(params$extent),
-    nrows = params$dimension[2],
-    ncols = params$dimension[1],
-    crs = params$projection
-  )
+  if (out_class[1]=='SpatRaster'){
+    build_SpatRaster(params, v)
+  } else if (out_class[1]=='stars'){
+    build_stars(params, v)
+  } else {
+    warning(sprintf("The requested `out_class` value '%s' not supported. Returning SpatRaster...", out_class))
+    build_SpatRaster(params, v)
+  }
   
-  if (length(v) > 1)
-    terra::nlyr(r) <- length(v)
   
-  terra::setValues(r, do.call(cbind, v))
 }

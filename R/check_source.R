@@ -46,9 +46,9 @@ check_source.stars_proxy <- function(s) {
 #' 
 #' @export
 check_source.character <- function(s){
-  if (is_url(s)){
-    ##### fix this.
-  }
+  # if (is_url(s)){
+  #   ##### fix this.
+  # }
   s
 } 
 
