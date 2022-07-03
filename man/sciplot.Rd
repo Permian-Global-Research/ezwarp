@@ -8,7 +8,7 @@
 \usage{
 sciplot(x, ...)
 
-\method{sciplot}{SpatRaster}(x, .pal = "bilbao", .n = 256, direction = 1, ...)
+\method{sciplot}{SpatRaster}(x, .pal = "acton", .n = 256, direction = 1, ...)
 
 \method{sciplot}{stars}(x, .pal = "acton", .n = 256, direction = 1, ...)
 }

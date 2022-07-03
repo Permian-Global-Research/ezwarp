@@ -25,6 +25,8 @@ ezwarp <- function(x,
                    crop_to_cutline = TRUE,
                    nodata = NULL,
                    out_class = c('SpatRaster', 'stars'),
+                   filename=NULL,
+                   overwrite=TRUE,
                    ...) {
   
   
@@ -68,14 +70,52 @@ ezwarp <- function(x,
     ...
   )
   
-  if (out_class[1]=='SpatRaster'){
-    build_SpatRaster(params, v)
-  } else if (out_class[1]=='stars'){
-    build_stars(params, v)
+  if (is.null(filename)){
+    
+    if (out_class[1]=='SpatRaster'){
+      build_SpatRaster(params, v)
+    } else if (out_class[1]=='stars'){
+      build_stars(params, v)
+    } else {
+      warning(sprintf("The requested `out_class` value '%s' not supported. Returning SpatRaster...", out_class))
+      build_SpatRaster(params, v)
+    }
+    
+    
   } else {
-    warning(sprintf("The requested `out_class` value '%s' not supported. Returning SpatRaster...", out_class))
-    build_SpatRaster(params, v)
+    vapour_create(
+      filename = filename,
+      extent = params$extent,
+      dimension = params$dimension,
+      projection = params$projection,
+      n_bands = length(bands),
+      overwrite = overwrite,
+    )
+    
+    vapour_write_raster_block(
+      filename,
+      data=v[[1]],
+      offset = c(0L, 0L),
+      dimension = params$dimension,
+      band=bands,
+      overwrite = overwrite
+    )
+    
+    if (out_class[1]=='SpatRaster'){
+      terra::rast(filename)
+    } else if (out_class[1]=='stars'){
+      stars::read_stars(filename)
+    } else {
+      warning(sprintf("The requested `out_class` value '%s' not supported. Returning SpatRaster...", out_class))
+      terra::rast(filename)
+    }
+    
+    
   }
+
   
+  
+  
+
   
 }

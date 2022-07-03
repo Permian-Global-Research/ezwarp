@@ -14,6 +14,8 @@ ezwarp(
   crop_to_cutline = TRUE,
   nodata = NULL,
   out_class = c("SpatRaster", "stars"),
+  filename = NULL,
+  overwrite = TRUE,
   ...
 )
 }
