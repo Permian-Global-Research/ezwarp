@@ -13,15 +13,15 @@ get_ext <- function(x, ...) {
 #' @export
 get_ext.SpatRaster <- function(x,...){
   # terra::ext(x)
-  terra_ext(x)
+  x@ptr$extent@.xData[["vector"]]
 }
 
 #' @rdname get_proj
 #' 
 #' @export
 get_ext.SpatVector <- function(x,...){
-  # terra::ext(x)
-  terra_ext(x)
+  check_terra()
+  terra::ext(x) # Can't locate the correct slot so using the ext function.
 }
 
 #' @rdname get_proj
@@ -70,9 +70,9 @@ get_ext.character <- function(x, ...){
 }
 
 
-terra_ext <- function(x){
-  x@ptr$extent@.xData[["vector"]]
-}
+# terra_ext <- function(x){
+#   x@ptr$extent@.xData[["vector"]]  ### DOESN'T WORK FOR SPATVECT.
+# }
 
 stars_ext <- function(x){
   d <- attr(x, "dimension")

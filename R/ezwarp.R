@@ -11,6 +11,12 @@
 #' @param resample resampling method
 #' @param cutline an sf or ogr-readable spatial vector source to mask the output raster. see -cutline argument in gdalwarp
 #' @param ... Additional args passed to `vapour::vapour_warp_raster`
+#' @param crop_to_cutline 
+#' @param nodata 
+#' @param out_class 
+#' @param filename 
+#' @param overwrite 
+#' @param options 
 #'
 #' @return
 #' @export
@@ -27,6 +33,8 @@ ezwarp <- function(x,
                    out_class = c('SpatRaster', 'stars'),
                    filename=NULL,
                    overwrite=TRUE,
+                   options = "",
+                   engine=c("vapour", "sf"),
                    ...) {
   
   
@@ -44,7 +52,7 @@ ezwarp <- function(x,
   
   opts <- ""
   if (!is.null(cutline)){
-    cl <- check_source(cutline)
+    cl <- get_source(cutline)
     opts <- c('-cutline', cl)
     if (isTRUE(crop_to_cutline)){
       opts <- c(opts, '-crop_to_cutline')
@@ -56,60 +64,66 @@ ezwarp <- function(x,
               '-dstnodata',
               nodata)
   }   
+  opts <- c(opts, options)
   
-  v <- vapour::vapour_warp_raster(
-    x = params$x,
-    bands= bands,
-    extent = params$extent,
-    dimension = params$dimension,
-    projection = params$projection,
-    resample = resample,
-    band_output_type = 'numeric',
-    silent=FALSE,
-    options = opts,
-    ...
-  )
   
-  if (is.null(filename)){
+  if (engine[1]=='vapour'){
     
-    if (out_class[1]=='SpatRaster'){
-      build_SpatRaster(params, v)
-    } else if (out_class[1]=='stars'){
-      build_stars(params, v)
+    v <- vapour_warp_util(params, bands, resample, opts,...)
+    
+    if (is.null(filename)) {
+      if (out_class[1] == 'SpatRaster') {
+        return(build_SpatRaster(params, v))
+      } else if (out_class[1] == 'stars') {
+        return(build_stars(params, v))
+      } else {
+        warning(
+          sprintf(
+            "The requested `out_class` value '%s' not supported. Returning SpatRaster...",
+            out_class
+          )
+        )
+        return(build_SpatRaster(params, v))
+      }
     } else {
-      warning(sprintf("The requested `out_class` value '%s' not supported. Returning SpatRaster...", out_class))
-      build_SpatRaster(params, v)
-    }
+      vapour_create(
+        filename = filename,
+        extent = params$extent,
+        dimension = params$dimension,
+        projection = params$projection,
+        n_bands = length(bands),
+        overwrite = overwrite,
+      )
+      
+      vapour_write_raster_block(
+        filename,
+        data = v[[1]],
+        offset = c(0L, 0L),
+        dimension = params$dimension,
+        band = bands,
+        overwrite = overwrite
+      )}
+
+  } else if (engine[1]=='sf'){
     
+    filename <- sf_warp_util(params,
+                        filename,
+                        resample,
+                        opts,
+                        ...)
     
   } else {
-    vapour_create(
-      filename = filename,
-      extent = params$extent,
-      dimension = params$dimension,
-      projection = params$projection,
-      n_bands = length(bands),
-      overwrite = overwrite,
-    )
-    
-    vapour_write_raster_block(
-      filename,
-      data=v[[1]],
-      offset = c(0L, 0L),
-      dimension = params$dimension,
-      band=bands,
-      overwrite = overwrite
-    )
-    
+    stop("Engine not supported - choose from 'vapour' or 'sf'.")
+  }
+  
     if (out_class[1]=='SpatRaster'){
-      terra::rast(filename)
+      return(terra::rast(filename))
     } else if (out_class[1]=='stars'){
-      stars::read_stars(filename)
+      return(stars::read_stars(filename))
     } else {
       warning(sprintf("The requested `out_class` value '%s' not supported. Returning SpatRaster...", out_class))
-      terra::rast(filename)
+      return(terra::rast(filename))
     }
-    
     
   }
 
@@ -118,4 +132,4 @@ ezwarp <- function(x,
   
 
   
-}
+

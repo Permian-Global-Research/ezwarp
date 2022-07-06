@@ -25,12 +25,12 @@ read_spat_info <- function(x, val=NULL){
 
 try_spat_info <- function(x) {
   x <- suppressWarnings(tryCatch({
-    tst <- vapour_raster_info(x)
+    tst <- invisible(vapour_raster_info(x)) # invisible still prints message
     ezgrid(tst$extent, tst$dimXY, tst$projection)
   },
   error = function(e) {
     tryCatch({
-      tst <- vapour_layer_info(x)
+      tst <- vapour_layer_info(x) 
       ezgrid(tst$extent, NULL, tst$projection$Wkt)
     },
     error = function(e) {

@@ -9,16 +9,18 @@
 #'
 #' @return character source.
 #' @export
-check_source <- function(s){
-  UseMethod("check_source")
+get_source <- function(s){
+  UseMethod("get_source")
 }
 
 
-#' @rdname check_source
+#' @rdname get_source
 #' 
 #' @export
-check_source.SpatRaster <- function(s) {
-  s.file <- terra::sources(s)
+get_source.SpatRaster <- function(s) {
+  check_terra()
+  # s.file <- terra::sources(s)
+  s.file <- s@ptr$filenames
   if (identical(s.file, "")) {
     s.file <- tempfile(fileext = '.tif')
     terra::writeRaster(s, s.file)
@@ -26,52 +28,54 @@ check_source.SpatRaster <- function(s) {
 s.file
 }
 
-#' @rdname check_source
+#' @rdname get_source
 #' 
 #' @export
-check_source.stars <- function(s) {
+get_source.stars <- function(s) {
+  check_stars()
   s.file <- tempfile(fileext = '.tif')
   stars::write_stars(s, s.file)
   s.file
 }
 
-#' @rdname check_source
+#' @rdname get_source
 #' 
 #' @export
-check_source.stars_proxy <- function(s) {
+get_source.stars_proxy <- function(s) {
   s[[1]]
 } 
 
-#' @rdname check_source
+#' @rdname get_source
 #' 
 #' @export
-check_source.character <- function(s){
+get_source.character <- function(s){
   # if (is_url(s)){
   #   ##### fix this.
   # }
   s
 } 
 
-#' @rdname check_source
+#' @rdname get_source
 #' 
 #' @export
-check_source.sf <- function(s){
+get_source.sf <- function(s){
   sf_temp_save(s)
 }
 
-#' @rdname check_source
+#' @rdname get_source
 #' 
 #' @export
-check_source.sfc <- function(s){
+get_source.sfc <- function(s){
   sf_temp_save(s)
 }
 
-#' @rdname check_source
+#' @rdname get_source
 #' 
 #' @export
-check_source.SpatVector <- function(s){
+get_source.SpatVector <- function(s){
+  check_terra()
   s.file <- tempfile(fileext = '.fgb')
-  writeVector(s, s.file, filetype='FlatGeobuf', options=NULL )
+  terra::writeVector(s, s.file, filetype='FlatGeobuf', options=NULL )
   s.file
 }
 
@@ -80,6 +84,7 @@ check_source.SpatVector <- function(s){
 #'
 #' @return
 sf_temp_save <- function(s){
+  check_sf()
   s.file <- tempfile(fileext = '.fgb')
   sf::write_sf(s, s.file)
   s.file

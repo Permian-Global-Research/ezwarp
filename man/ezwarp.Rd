@@ -16,6 +16,8 @@ ezwarp(
   out_class = c("SpatRaster", "stars"),
   filename = NULL,
   overwrite = TRUE,
+  options = "",
+  engine = c("vapour", "sf"),
   ...
 )
 }
@@ -31,6 +33,18 @@ ezwarp(
 \item{resample}{resampling method}
 
 \item{cutline}{an sf or ogr-readable spatial vector source to mask the output raster. see -cutline argument in gdalwarp}
+
+\item{crop_to_cutline}{}
+
+\item{nodata}{}
+
+\item{out_class}{}
+
+\item{filename}{}
+
+\item{overwrite}{}
+
+\item{options}{}
 
 \item{...}{Additional args passed to \code{vapour::vapour_warp_raster}}
 }

@@ -44,7 +44,7 @@ dims_from_box <- function(.box, .res) {
 #'
 #' @return
 build_warp_inputs <- function(x, y, res) {
-  x <- lapply(x, check_source) |>
+  x <- lapply(x, get_source) |>
     unlist()
   
   if (inherits(y, 'character')) {
