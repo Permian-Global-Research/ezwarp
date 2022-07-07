@@ -15,3 +15,10 @@ check_stars <- function(){
     stop(paste0("The {stars} package required to carry out this warp configuration.\n",
                 "Please see: https://r-spatial.github.io/stars/ to for instructions")) 
 }
+
+check_options <- function(o){
+  if ("-crop_to_cutline" %in% o){
+    stop(paste0("The option -crop_to_cutline is not supported. Instead, use ",
+                "the crop_to_cutline argument in ezwarp function."))
+  }
+}

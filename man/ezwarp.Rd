@@ -11,7 +11,7 @@ ezwarp(
   bands = NULL,
   resample = "bilinear",
   cutline = NULL,
-  crop_to_cutline = TRUE,
+  crop_to_cutline = FALSE,
   nodata = NULL,
   out_class = c("SpatRaster", "stars"),
   filename = NULL,

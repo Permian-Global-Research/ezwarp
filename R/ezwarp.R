@@ -28,7 +28,7 @@ ezwarp <- function(x,
                    bands = NULL,
                    resample = 'bilinear',
                    cutline = NULL,
-                   crop_to_cutline = TRUE,
+                   crop_to_cutline = FALSE,
                    nodata = NULL,
                    out_class = c('SpatRaster', 'stars'),
                    filename=NULL,
@@ -37,6 +37,7 @@ ezwarp <- function(x,
                    engine=c("vapour", "sf"),
                    ...) {
   
+  check_options(options)
   
   x <- check_in_form(x)
   y <- check_grid_form(y)
@@ -45,28 +46,48 @@ ezwarp <- function(x,
   params <- build_warp_inputs(x, y, res)
   
   if (is.null(bands)){
-    bands <- c(1:vapour::vapour_raster_info(params$x[1])$bands) ### FIX THIS
+    bands <- c(1:vapour::vapour_raster_info(params$x[1])$bands) 
   }
   
-  # save sf to file if cutine is TRUE
   
+  # sort out the options.
   opts <- ""
   if (!is.null(cutline)){
     cl <- get_source(cutline)
-    opts <- c('-cutline', cl)
+    
     if (isTRUE(crop_to_cutline)){
-      opts <- c(opts, '-crop_to_cutline')
+      # internal cutline control
+      check_terra()
+      com=""
+      if ("-csql" %in% options){
+        id <- match("-csql", options)
+        com <-  options[id+1]
+      }
+      info <- vapour::vapour_layer_info(cl, sql = com)
+      bound <- matrix(info$extent[c(1, 2, 2, 1, 1, 
+                                    3, 3, 4, 4, 3)], ncol = 2)
+      m <- terra::project(bound, from = info$projection$Wkt, to=params$projection)
+      
+      target_extent <- as.vector(apply(m, 2, range)) %>% 
+        round_bbox(., res)
+      target_dims <- dims_from_box(target_extent, res)
+      
+      params$extent <- target_extent
+      params$dimension <- target_dims
     }
+    
+    opts <- c('-cutline', cl)
   }
    
   if (!is.null(nodata)){
     opts <- c(opts,
               '-dstnodata',
               nodata)
-  }   
+  }
   opts <- c(opts, options)
   
-  
+
+  # send inputs to the engine.
   if (engine[1]=='vapour'){
     
     v <- vapour_warp_util(params, bands, resample, opts,...)
@@ -116,14 +137,20 @@ ezwarp <- function(x,
     stop("Engine not supported - choose from 'vapour' or 'sf'.")
   }
   
-    if (out_class[1]=='SpatRaster'){
-      return(terra::rast(filename))
-    } else if (out_class[1]=='stars'){
-      return(stars::read_stars(filename))
-    } else {
-      warning(sprintf("The requested `out_class` value '%s' not supported. Returning SpatRaster...", out_class))
-      return(terra::rast(filename))
-    }
+  # if in memory is not true or the sf engine is used then read the file.
+  if (out_class[1] == 'SpatRaster') {
+    return(terra::rast(filename))
+  } else if (out_class[1] == 'stars') {
+    return(stars::read_stars(filename))
+  } else {
+    warning(
+      sprintf(
+        "The requested `out_class` value '%s' not supported. Returning SpatRaster...",
+        out_class
+      )
+    )
+    return(terra::rast(filename))
+  }
     
   }
 

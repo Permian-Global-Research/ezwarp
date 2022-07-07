@@ -21,7 +21,7 @@ get_ext.SpatRaster <- function(x,...){
 #' @export
 get_ext.SpatVector <- function(x,...){
   check_terra()
-  terra::ext(x) # Can't locate the correct slot so using the ext function.
+  as.vector(terra::ext(x)) # Can't locate the correct slot so using the ext function.
 }
 
 #' @rdname get_proj

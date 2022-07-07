@@ -44,8 +44,26 @@ dims_from_box <- function(.box, .res) {
 #'
 #' @return
 build_warp_inputs <- function(x, y, res) {
+  
+  x <- build_sources(x)
+  
+  y <- build_template(y, res)
+  
+  return(list(
+    x = x,
+    extent = y$extent,
+    dimension = y$dimension,
+    projection = y$projection
+  ))
+}
+
+
+build_sources <- function(x){
   x <- lapply(x, get_source) |>
     unlist()
+}
+
+build_template <- function(y, res){
   
   if (inherits(y, 'character')) {
     y <- read_spat_info(y)
@@ -65,14 +83,5 @@ build_warp_inputs <- function(x, y, res) {
     if (is.null(y$dimension))
       no_res_vec_err()
   }
-  
-  return(list(
-    x = x,
-    extent = y$extent,
-    dimension = y$dimension,
-    projection = y$projection
-  ))
+  return(y)
 }
-
-
-

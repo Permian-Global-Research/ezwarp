@@ -58,7 +58,7 @@ sf_warp_util <- function(params,
 #' @examples
 vapour_warp_util <- function(params, bands, resample, opts, ...){
   v <- vapour::vapour_warp_raster(
-    x = params$x,
+    x = vapour::vapour_vrt(params$x),
     bands= bands,
     extent = params$extent,
     dimension = params$dimension,
