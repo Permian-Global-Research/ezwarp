@@ -30,23 +30,29 @@ ezwarp(
 
 \item{bands}{numeric which bands to use from the source.}
 
-\item{resample}{resampling method}
+\item{resample}{resampling method. If raster source is categorical use 'nearest'}
 
 \item{cutline}{an sf or ogr-readable spatial vector source to mask the output raster. see -cutline argument in gdalwarp}
 
-\item{crop_to_cutline}{}
+\item{crop_to_cutline}{logical. If TRUE, then the output will be cropped to the limits of the mask given in cutline.}
 
-\item{nodata}{}
+\item{nodata}{Numeric. No data value to be used for output.}
 
-\item{out_class}{}
+\item{out_class}{either "SpatRaster" or "stars"}
 
-\item{filename}{}
+\item{filename}{the filepath for the out raster. if given and "vapour" is used
+for the engine, then the output SpatRaster/stars object will have a source.
+If NULL then an in memory raster is returned. If the sf engine is used and
+filename is NULL then a tempfile is used.}
 
-\item{overwrite}{}
+\item{overwrite}{logical - should a file be overwritten.}
 
-\item{options}{}
+\item{options}{gdal options.}
 
-\item{...}{Additional args passed to \code{vapour::vapour_warp_raster}}
+\item{engine}{either "vapour" or "sf". choose which warper to use. Only vapour
+supports in memory raster creation.}
+
+\item{...}{Additional args passed to \code{vapour::vapour_warp_raster}. Might be removed.}
 }
 \value{
 

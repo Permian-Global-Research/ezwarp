@@ -8,15 +8,20 @@
 #' @param y a raster source, SpatRaster, sf, or sfc
 #' @param res numeric. the resolution of the output SpatRaster.
 #' @param bands numeric which bands to use from the source.
-#' @param resample resampling method
+#' @param resample resampling method. If raster source is categorical use 'nearest'
 #' @param cutline an sf or ogr-readable spatial vector source to mask the output raster. see -cutline argument in gdalwarp
-#' @param ... Additional args passed to `vapour::vapour_warp_raster`
-#' @param crop_to_cutline 
-#' @param nodata 
-#' @param out_class 
-#' @param filename 
-#' @param overwrite 
-#' @param options 
+#' @param crop_to_cutline logical. If TRUE, then the output will be cropped to the limits of the mask given in cutline.
+#' @param nodata Numeric. No data value to be used for output.
+#' @param out_class either "SpatRaster" or "stars"
+#' @param filename the filepath for the out raster. if given and "vapour" is used 
+#' for the engine, then the output SpatRaster/stars object will have a source. 
+#' If NULL then an in memory raster is returned. If the sf engine is used and 
+#' filename is NULL then a tempfile is used.
+#' @param overwrite logical - should a file be overwritten.
+#' @param options gdal options. 
+#' @param engine either "vapour" or "sf". choose which warper to use. Only vapour
+#' supports in memory raster creation.
+#' @param ... Additional args passed to `vapour::vapour_warp_raster`. Might be removed.
 #'
 #' @return
 #' @export
