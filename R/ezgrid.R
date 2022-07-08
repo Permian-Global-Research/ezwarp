@@ -15,7 +15,7 @@
 #'   dimension = c(180, 90), 
 #'   projection = 'EPSG:4326')
 #' 
-ezgrid <- function(extent, dimension, projection){
+ezgrid <- function(extent, dimension=NULL, projection){
   
   x <- is_grid_valid(extent, dimension, projection)
   

@@ -4,7 +4,7 @@
 \alias{ezgrid}
 \title{Create an ezgrid object}
 \usage{
-ezgrid(extent, dimension, projection)
+ezgrid(extent, dimension = NULL, projection)
 }
 \arguments{
 \item{extent}{numeric vector with the following form: \code{c(xmin, xmax, ymin, ymax)}}

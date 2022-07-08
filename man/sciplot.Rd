@@ -6,11 +6,11 @@
 \alias{sciplot.stars}
 \title{sciplot: generic plot but using palettes from {scico}}
 \usage{
-sciplot(x, ...)
+sciplot(x, .pal = "acton", .n = 256, direction = 1, centre = FALSE, ...)
 
-\method{sciplot}{SpatRaster}(x, .pal = "acton", .n = 256, direction = 1, ...)
+\method{sciplot}{SpatRaster}(x, .pal = "acton", .n = 256, direction = 1, centre = FALSE, ...)
 
-\method{sciplot}{stars}(x, .pal = "acton", .n = 256, direction = 1, ...)
+\method{sciplot}{stars}(x, .pal = "acton", .n = 256, direction = 1, centre = FALSE, ...)
 }
 \arguments{
 \item{x}{...}

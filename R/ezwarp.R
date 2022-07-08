@@ -58,7 +58,7 @@ ezwarp <- function(x,
     if (isTRUE(crop_to_cutline)){
       # internal cutline control
       check_terra()
-      com=""
+      com<-""
       if ("-csql" %in% options){
         id <- match("-csql", options)
         com <-  options[id+1]
