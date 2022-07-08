@@ -5,3 +5,6 @@
 
 
 /dev/*
+
+gdalwmscache/
+README_cache/

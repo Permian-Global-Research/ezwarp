@@ -78,4 +78,38 @@ plot(st_geometry(f_sf), add=TRUE, border='grey10')
 
 <img src="man/figures/README-mask-che, figures-side-1.png" width="50%" /><img src="man/figures/README-mask-che, figures-side-2.png" width="50%" />
 
-mix sources…
+This example is just to illustrate that ezwarp can handle differing
+inputs as sources - url/filepath/SpatRaster/stars and can use all of
+these along with sf/sfc/SpatVector as a template too.
+
+``` r
+nc_sub1 <- f_sf[1:10,]
+nc_sub2 <- vect(f_sf[90:100,])
+
+nc_sub1.terra <- ezwarp(x=src, y=nc_sub1, res=100, cutline= nc_sub1,
+                        crop_to_cutline = TRUE) 
+#> Warning in projection_info_gdal_cpp(dsource, layer = layer, sql = sql): GDAL
+#> Message 6: Unhandled projection method Mercator_1SP
+
+nc_sub2.stars <- ezwarp(x=src, y=nc_sub2, res=200, cutline= nc_sub2,
+                        crop_to_cutline = TRUE, out_class = 'stars')
+#> Warning in projection_info_gdal_cpp(dsource, layer = layer, sql = sql): GDAL
+#> Message 6: Unhandled projection method Mercator_1SP
+
+multi.ras <- ezwarp(x=list(nc_sub1.terra, nc_sub2.stars), 
+                    y=f_sf, res=200, out_class = 'stars')
+
+
+sciplot(nc_sub1.terra, .pal = 'bamako')
+plot(st_geometry(f_sf), add=TRUE, border='grey30')
+
+sciplot(nc_sub2.stars, .pal = 'vanimo', reset=FALSE)
+#> downsample set to 2
+plot(st_geometry(f_sf), add=TRUE, border='grey30', reset=TRUE)
+
+sciplot(multi.ras, .pal = 'romaO', reset=FALSE)
+#> downsample set to 4
+plot(st_geometry(f_sf), add=TRUE, border='grey30', reset=TRUE)
+```
+
+<img src="man/figures/README-mixed-source, figures-side-1.png" width="33%" /><img src="man/figures/README-mixed-source, figures-side-2.png" width="33%" /><img src="man/figures/README-mixed-source, figures-side-3.png" width="33%" />
