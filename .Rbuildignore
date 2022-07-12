@@ -4,3 +4,4 @@
 ^README\.Rmd$
 ^\.covrignore$
 ^codecov\.yml$
+^\.github$
