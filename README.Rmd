@@ -10,7 +10,9 @@ knitr::opts_chunk$set(
   comment = "#>",
   fig.path = "man/figures/README-",
   cache=TRUE,
-  out.width = "100%"
+  out.width = "100%",
+  warning = FALSE,
+  message = FALSE
 )
 ```
 
@@ -32,12 +34,12 @@ template <- ezgrid(c(-180, 180, -90, 90),
                    dimension = c(720, 360),
                    projection='EPSG:4326')
 
-src <- "/vsicurl/https://public.services.aad.gov.au/datasets/science/GEBCO_2019_GEOTIFF/GEBCO_2019.tif"
+src <- "/vsicurl/https://public.services.aad.gov.au/datasets/science/GEBCO_2021_GEOTIFF/GEBCO_2021.tif"
 
 world.el.terra <- ezwarp(x=src, y=template)
 world.el.stars <- ezwarp(x=src, y=template, out_class = 'stars')
-sciplot(world.el.terra, .pal='bukavu', centre=TRUE)
-sciplot(world.el.stars, .pal='oleron', centre=TRUE)
+sciplot(world.el.terra, pal='bukavu', centre=TRUE)
+sciplot(world.el.stars, pal='oleron', n =256, centre=TRUE)
 
 ```
 
@@ -48,7 +50,7 @@ wrld <-"/vsizip//vsicurl/https://github.com/wmgeolab/geoBoundaries/raw/main/rele
 
 world.el.mask <- ezwarp(x=src, y=src, res=0.5, cutline = wrld)
 
-sciplot(world.el.mask, .pal='lapaz', range=c(0, max(world.el.mask[], na.rm=TRUE)))
+sciplot(world.el.mask, pal='lapaz', range=c(0, max(world.el.mask[], na.rm=TRUE)))
 ```
 
 
@@ -79,7 +81,7 @@ plot(st_geometry(f_sf), add=TRUE, border='grey10')
 
 This example is just to illustrate that ezwarp can handle differing inputs as sources - url/filepath/SpatRaster/stars and can use all of these along with sf/sfc/SpatVector as a template too. 
 
-```{r mixed-source, figures-side, fig.show="hold", out.width="33%"}
+```{r mixed-source, figures-side, fig.show="hold", out.width="33%", warning=FALSE, message=FALSE}
 
 nc_sub1 <- f_sf[1:10,]
 nc_sub2 <- vect(f_sf[90:100,])
@@ -94,13 +96,13 @@ multi.ras <- ezwarp(x=list(nc_sub1.terra, nc_sub2.stars),
                     y=f_sf, res=200, out_class = 'stars')
 
 
-sciplot(nc_sub1.terra, .pal = 'bamako')
+sciplot(nc_sub1.terra, pal = 'bamako')
 plot(st_geometry(f_sf), add=TRUE, border='grey30')
 
-sciplot(nc_sub2.stars, .pal = 'vanimo', reset=FALSE)
+sciplot(nc_sub2.stars, pal = 'vanimo', reset=FALSE)
 plot(st_geometry(f_sf), add=TRUE, border='grey30', reset=TRUE)
 
-sciplot(multi.ras, .pal = 'romaO', reset=FALSE)
+sciplot(multi.ras, pal = 'romaO', reset=FALSE)
 plot(st_geometry(f_sf), add=TRUE, border='grey30', reset=TRUE)
 
 

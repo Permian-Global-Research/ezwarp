@@ -4,20 +4,61 @@
 \alias{sciplot}
 \alias{sciplot.SpatRaster}
 \alias{sciplot.stars}
-\title{sciplot: generic plot but using palettes from {scico}}
+\alias{sciplot_pals}
+\title{sciplot: plot methods using colours from \code{{scico}}}
 \usage{
-sciplot(x, .pal = "acton", .n = 256, direction = 1, centre = FALSE, ...)
+sciplot(x, pal = "acton", n, direction, centre, ...)
 
-\method{sciplot}{SpatRaster}(x, .pal = "acton", .n = 256, direction = 1, centre = FALSE, ...)
+\method{sciplot}{SpatRaster}(
+  x,
+  pal = "acton",
+  n = 256,
+  direction = 1,
+  centre = FALSE,
+  n_quantile = NULL,
+  ...
+)
 
-\method{sciplot}{stars}(x, .pal = "acton", .n = 256, direction = 1, centre = FALSE, ...)
+\method{sciplot}{stars}(x, pal = "acton", n = 11, direction = 1, centre = FALSE, ...)
+
+sciplot_pals()
 }
 \arguments{
-\item{x}{...}
+\item{x}{object to plot, either a SpatRaster or stars object}
+
+\item{pal}{Default is 'acton'. Character describing colour palette to use. choose from \code{sciplot_pals()}}
+
+\item{n}{Numeric of length 1. The number of breaks/colours to include in the sclae}
+
+\item{direction}{Default is 1. Direction of colour palette to reverse use -1.}
+
+\item{centre}{Logical. If TRUE, the palette is centred around zero. good for bivariate/split palettes.}
+
+\item{...}{additional args passed to plot.}
+
+\item{n_quantile}{Numeric. if not NULL sets the number of quantile breaks to use for sciplot.SpatRaster}
+}
+\value{
+character vector of scico palette names. see \code{scico::scico_palette_names()}
 }
 \description{
-plot using {scico} palettes
+plot a 'SpatRaster' or 'stars' object using \code{{scico}} palettes. View palette
+options with \code{sciplot_pals()}
 }
 \details{
-plot using {scico} palettes
+sciplot_pals plots the various sciplot palettes and returns their names as a
+character vector. Wrapper for \code{scico::scico_palette_show()}  and \code{scico::scico_palette_names()}.
+}
+\examples{
+
+src <- /vsicurl/https://public.services.aad.gov.au/datasets/science/GEBCO_2021_GEOTIFF/GEBCO_2021.tif
+template <- ezgrid(c(-180, 180, -90, 90), c(720, 360), 'EPSG:4326')
+world.el.terra <- ezwarp(x=src, y=template)
+sciplot(world.el.terra, pal='oleron', centre=TRUE)
+
+f <- system.file("ex/elev.tif", package="terra") 
+r.stars <- stars::read_stars(f)
+sciplot(r.stars)
+
+sciplot_pals()
 }

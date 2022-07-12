@@ -16,19 +16,16 @@ make warping easy - more to come.
 ``` r
 library(ezwarp)
 library(terra)
-#> terra 1.5.49
 template <- ezgrid(c(-180, 180, -90, 90),
                    dimension = c(720, 360),
                    projection='EPSG:4326')
 
-src <- "/vsicurl/https://public.services.aad.gov.au/datasets/science/GEBCO_2019_GEOTIFF/GEBCO_2019.tif"
+src <- "/vsicurl/https://public.services.aad.gov.au/datasets/science/GEBCO_2021_GEOTIFF/GEBCO_2021.tif"
 
 world.el.terra <- ezwarp(x=src, y=template)
 world.el.stars <- ezwarp(x=src, y=template, out_class = 'stars')
-sciplot(world.el.terra, .pal='bukavu', centre=TRUE)
-sciplot(world.el.stars, .pal='oleron', centre=TRUE)
-#> Warning in hist.default(x[[1]], ..., main = main): argument 'main' is not made
-#> use of
+sciplot(world.el.terra, pal='bukavu', centre=TRUE)
+sciplot(world.el.stars, pal='oleron', n =256, centre=TRUE)
 ```
 
 <img src="man/figures/README-simple-world, figures-side-1.png" width="50%" /><img src="man/figures/README-simple-world, figures-side-2.png" width="50%" />
@@ -40,7 +37,7 @@ wrld <-"/vsizip//vsicurl/https://github.com/wmgeolab/geoBoundaries/raw/main/rele
 
 world.el.mask <- ezwarp(x=src, y=src, res=0.5, cutline = wrld)
 
-sciplot(world.el.mask, .pal='lapaz', range=c(0, max(world.el.mask[], na.rm=TRUE)))
+sciplot(world.el.mask, pal='lapaz', range=c(0, max(world.el.mask[], na.rm=TRUE)))
 ```
 
 <img src="man/figures/README-mask-world-1.png" width="100%" />
@@ -56,16 +53,10 @@ f <- system.file("gpkg", "nc.gpkg", package = "sf")
 
 nc.mask <- ezwarp(x=esri_sat, y=esri_sat, res=100, cutline = f,
                    crop_to_cutline = TRUE, nodata = -99)
-#> Warning in warp_in_memory_gdal_cpp(x, source_WKT = source_projection, target_WKT
-#> = projection, : GDAL Message 1: for band 1, destination nodata value has been
-#> clamped to 0, the original value being out of range.
 
 stokes.mask <- ezwarp(x=esri_sat, y=esri_sat, res=25, cutline = f,
                    options=c("-csql", "SELECT * FROM 'nc.gpkg' WHERE NAME = 'Stokes'"),
                    crop_to_cutline = TRUE, nodata = -99)
-#> Warning in warp_in_memory_gdal_cpp(x, source_WKT = source_projection, target_WKT
-#> = projection, : GDAL Message 1: for band 1, destination nodata value has been
-#> clamped to 0, the original value being out of range.
 
 f_sf <- read_sf(f) %>% 
   st_transform(vapour::vapour_raster_info(esri_sat)$projection)
@@ -88,27 +79,21 @@ nc_sub2 <- vect(f_sf[90:100,])
 
 nc_sub1.terra <- ezwarp(x=src, y=nc_sub1, res=100, cutline= nc_sub1,
                         crop_to_cutline = TRUE) 
-#> Warning in projection_info_gdal_cpp(dsource, layer = layer, sql = sql): GDAL
-#> Message 6: Unhandled projection method Mercator_1SP
 
 nc_sub2.stars <- ezwarp(x=src, y=nc_sub2, res=200, cutline= nc_sub2,
                         crop_to_cutline = TRUE, out_class = 'stars')
-#> Warning in projection_info_gdal_cpp(dsource, layer = layer, sql = sql): GDAL
-#> Message 6: Unhandled projection method Mercator_1SP
 
 multi.ras <- ezwarp(x=list(nc_sub1.terra, nc_sub2.stars), 
                     y=f_sf, res=200, out_class = 'stars')
 
 
-sciplot(nc_sub1.terra, .pal = 'bamako')
+sciplot(nc_sub1.terra, pal = 'bamako')
 plot(st_geometry(f_sf), add=TRUE, border='grey30')
 
-sciplot(nc_sub2.stars, .pal = 'vanimo', reset=FALSE)
-#> downsample set to 2
+sciplot(nc_sub2.stars, pal = 'vanimo', reset=FALSE)
 plot(st_geometry(f_sf), add=TRUE, border='grey30', reset=TRUE)
 
-sciplot(multi.ras, .pal = 'romaO', reset=FALSE)
-#> downsample set to 4
+sciplot(multi.ras, pal = 'romaO', reset=FALSE)
 plot(st_geometry(f_sf), add=TRUE, border='grey30', reset=TRUE)
 ```
 
