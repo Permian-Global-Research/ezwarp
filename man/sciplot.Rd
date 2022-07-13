@@ -36,7 +36,7 @@ sciplot_pals()
 
 \item{...}{additional args passed to plot.}
 
-\item{n_quantile}{Numeric. if not NULL sets the number of quantile breaks to use for sciplot.SpatRaster}
+\item{n_quantile}{Numeric. if not NULL sets the number of quantile breaks to use for sciplot.SpatRaster. See details.}
 }
 \value{
 character vector of scico palette names. see \code{scico::scico_palette_names()}
@@ -46,6 +46,9 @@ plot a 'SpatRaster' or 'stars' object using \code{{scico}} palettes. View palett
 options with \code{sciplot_pals()}
 }
 \details{
+n_quantile sets quantile breaks for the colour palette. When using breaks,
+terra::plot does not support continuous legend as is the default in stars.
+
 sciplot_pals plots the various sciplot palettes and returns their names as a
 character vector. Wrapper for \code{scico::scico_palette_show()}  and \code{scico::scico_palette_names()}.
 }
