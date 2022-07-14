@@ -112,7 +112,7 @@ ezwarp <- function(x,
         return(build_SpatRaster(params, v))
       }
     } else {
-      vapour_create(
+      vapour::vapour_create(
         filename = filename,
         extent = params$extent,
         dimension = params$dimension,
@@ -121,7 +121,7 @@ ezwarp <- function(x,
         overwrite = overwrite,
       )
       
-      vapour_write_raster_block(
+      vapour::vapour_write_raster_block(
         filename,
         data = v[[1]],
         offset = c(0L, 0L),
