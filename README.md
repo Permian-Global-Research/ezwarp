@@ -16,7 +16,7 @@ coverage](https://codecov.io/gh/Permian-Global-Research/ezwarp/branch/main/graph
 The goal of ezwarp is to simplify the use of
 [gdalwarp](https://gdal.org/programs/gdalwarp.html) in R. Gdalwarp is a
 very powerful and fast Image reprojection and warping utility. It can be
-used to reproject (transform the Coordinate Reference System (CRS)),
+used to reproject (i.e. transform to a new Coordinate Reference System),
 crop, mask and resample. Unlike many tools in R, this can all be done in
 a single command, using the warp tool, saving time and code.
 
@@ -52,15 +52,15 @@ class object which is a very simple s3 object comprising those three key
 variables (created with `ezgrid()`). However, estimating raster
 dimensions can be unintuitive and is a step removed from the required
 spatial context on the ground. So, ezwarp provides a resolution argument
-(`res`) which can be used with an ezgrid object, with a missing
-dimension or any of the following R spatial classes: SpatRaster,
+(`res`) which can be used with an ezgrid object (with or without missing
+dimension value) or any of the following R spatial classes: SpatRaster,
 SpatVector, sf, sfc, stars. In addition, ezwarp also supports file paths
-and URLs for valid spatial files.
+and URLs for valid spatial files (it’s gdal after all).
 
 terra sf and stars are the best supported and most popular spatial
-packages in the R ecosystem. *ezwarp* aims to support these types.
-Further types can be added as required (please submit an issue to
-request this).
+packages in the R ecosystem. *ezwarp* aims to support these types as a
+starting point but further spatial (or indeed non-spatial) classes may
+be supported in time.
 
 ### Installation
 
