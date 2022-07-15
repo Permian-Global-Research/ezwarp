@@ -47,6 +47,8 @@ ezwarp <- function(x,
   x <- check_in_form(x)
   y <- check_grid_form(y)
   check_res_form(y, res)
+  check_logical(crop_to_cutline, "crop_to_cutline")
+  
   
   params <- build_warp_inputs(x, y, res)
   

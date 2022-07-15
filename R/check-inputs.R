@@ -54,3 +54,9 @@ no_res_vec_err <- function(){
   stop("When `y` is a spatial vector source, `res` must be provided.")
 }
 
+
+check_logical <- function(x, .arg){
+  if (!is.logical(x)) {
+    stop(paste0(.arg, " must be a logical!"))
+  }
+}

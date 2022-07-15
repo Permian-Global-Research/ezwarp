@@ -10,7 +10,6 @@ test_that("sciplot-test", {
 
 test_that("sciplot-stars-basic", {
 
-  
   expect_silent(sciplot(r.stars))
 })
 
