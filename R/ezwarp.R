@@ -35,7 +35,7 @@ ezwarp <- function(x,
                    cutline = NULL,
                    crop_to_cutline = FALSE,
                    nodata = NULL,
-                   out_class = c('SpatRaster', 'stars'),
+                   out_class = c('SpatRaster', 'stars','matrix'),
                    filename=NULL,
                    overwrite=TRUE,
                    options = "",
@@ -104,6 +104,8 @@ ezwarp <- function(x,
         return(build_SpatRaster(params, v))
       } else if (out_class[1] == 'stars') {
         return(build_stars(params, v))
+      } else if(out_class[1] == 'matrix'){
+        return(build_matrix(params, v))
       } else {
         warning(
           sprintf(
