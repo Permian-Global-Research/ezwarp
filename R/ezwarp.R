@@ -151,7 +151,11 @@ ezwarp <- function(x,
     return(terra::rast(filename))
   } else if (out_class[1] == 'stars') {
     return(stars::read_stars(filename))
-  } else {
+  } else if(out_class[1] == 'matrix'){
+    #read from source
+    v <- vapour_warp_util(params, bands, resample, opts,...)
+    return(build_matrix(params, v))
+  }  else {
     warning(
       sprintf(
         "The requested `out_class` value '%s' not supported. Returning SpatRaster...",

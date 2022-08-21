@@ -29,6 +29,7 @@ matrix_thing <- function(.v, .p){
 #'
 #' @return matrix
 build_matrix <- function(p, v){
+  
   m <- matrix(v[[1]], p$dimension[1])[,p$dimension[2]:1, drop = F]
   if (length(v) > 1) {
     v2 <- lapply(v, matrix_thing, p)
