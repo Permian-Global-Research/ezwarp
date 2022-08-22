@@ -12,7 +12,7 @@
 #' @param cutline an sf or ogr-readable spatial vector source to mask the output raster. see -cutline argument in gdalwarp
 #' @param crop_to_cutline logical. If TRUE, then the output will be cropped to the limits of the mask given in cutline.
 #' @param nodata Numeric. No data value to be used for output.
-#' @param out_class either "SpatRaster" or "stars"
+#' @param out_class default is "SpatRaster". Can be either "SpatRaster", "stars" or "matrix"
 #' @param filename the filepath for the out raster. if given and "vapour" is used 
 #' for the engine, then the output SpatRaster/stars object will have a source. 
 #' If NULL then an in memory raster is returned. If the sf engine is used and 

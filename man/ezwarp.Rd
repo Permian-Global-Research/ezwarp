@@ -38,7 +38,7 @@ ezwarp(
 
 \item{nodata}{Numeric. No data value to be used for output.}
 
-\item{out_class}{either "SpatRaster" or "stars"}
+\item{out_class}{default is "SpatRaster". Can be either "SpatRaster", "stars" or "matrix"}
 
 \item{filename}{the filepath for the out raster. if given and "vapour" is used
 for the engine, then the output SpatRaster/stars object will have a source.

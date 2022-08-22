@@ -115,6 +115,7 @@ argument to 0.5 to make sure we resample the grid. In this example, the
 sf warp engine is used rather than vapour.
 
 ``` r
+
 wrld <-"/vsizip//vsicurl/https://github.com/wmgeolab/geoBoundaries/raw/main/releaseData/CGAZ/geoBoundariesCGAZ_ADM0.zip"
 
 world.el.mask <- ezwarp(x=src, y=src, res=0.5, cutline = wrld, engine = 'sf')
@@ -165,6 +166,7 @@ inputs as sources - url/filepath/SpatRaster/stars and can use all of
 these along with sf/sfc/SpatVector/ezgrid as a target (y) too.
 
 ``` r
+
 nc_sub1 <- f_sf[1:10,]
 nc_sub2 <- vect(f_sf[90:100,])
 
@@ -189,3 +191,42 @@ plot(st_geometry(f_sf), add=TRUE, border='grey30', reset=TRUE)
 ```
 
 <img src="man/figures/README-mixed-source, figures-side-1.png" width="33%" /><img src="man/figures/README-mixed-source, figures-side-2.png" width="33%" /><img src="man/figures/README-mixed-source, figures-side-3.png" width="33%" />
+
+A matrix output class is also supported. This will return a matrix if
+the source has only one band (or only one is requested). A
+multidimensional array is returned when more than one band is present.
+The returned object includes *extent*, *dimension* and *projections*
+attributes. These objects happen also to be compatible with rayshader…
+
+``` r
+library(rayshader)
+
+# get terrain as matrix
+nc_dtm.mat <- ezwarp(src, f_sf, cutline = f_sf, res=500, out_class = 'matrix', 
+                     engine = 'sf', nodata=-999)
+#> 0...10...20...30...40...50...60...70...80...90...100 - done.
+# nc_dtm.mat[is.nan(nc_dtm.mat)]<-NA
+
+# get esri sat RGB bands as stacked array
+nc.mask.mat <- ezwarp(x=esri_sat, y=f_sf, res=250, cutline = f_sf,
+                   crop_to_cutline = TRUE, nodata = -99,
+                   out_class = 'matrix')
+
+# make the map
+pal.cols <- c(scico::scico(5, palette = "vikO"))
+
+nc_dtm.mat %>%
+  sphere_shade(
+    texture = create_texture(pal.cols[1], pal.cols[2], pal.cols[3],
+                             pal.cols[4], pal.cols[5]),zscale = 5) %>%
+   add_overlay(scales::rescale(nc.mask.mat, to = c(0, 1)),
+    alphalayer = 0.7, rescale_original = FALSE) %>%
+  add_overlay(generate_polygon_overlay(
+      f_sf, extent = raster::extent(attributes(nc_dtm.mat)$extent),
+      heightmap = nc_dtm.mat, palette = NA)
+  ) %>%
+  plot_3d(nc_dtm.mat, zscale=70, theta = 0, phi=90, zoom=0.5, windowsize = (c(1100,600))) 
+  render_snapshot(clear = TRUE)
+```
+
+<img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />

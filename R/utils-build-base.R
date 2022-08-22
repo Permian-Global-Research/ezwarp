@@ -18,7 +18,7 @@ rotate <- function(x){
 #' @keywords internal
 #'
 matrix_thing <- function(.v, .p){
-  m <- matrix(.v, .p[1])#[,g$dimension[2]:1, drop = F]
+  m <- matrix(.v, .p$dimension)#[,g$dimension[2]:1, drop = F]
   rotate(m)
 }
 
@@ -30,16 +30,14 @@ matrix_thing <- function(.v, .p){
 #' @return matrix
 build_matrix <- function(p, v){
   
-  m <- matrix(v[[1]], p$dimension[1])[,p$dimension[2]:1, drop = F]
+  
   if (length(v) > 1) {
-    v2 <- lapply(v, matrix_thing, p)
+    v2 <- lapply(v, matrix_thing, .p=p)
     a <- matrix(NA, p$dimension[2],p$dimension[1])
-    m <- array(c(unlist(v2, use.names = FALSE), a), c(p$dimension[2], p$dimension[1], 4))[,p$dimension[1]:1,  drop = FALSE]
-    m <- m%>%
-      scales::rescale(.,to=c(0,1))
+    m <- array(c(unlist(v2, use.names = FALSE), a), c(p$dimension[2], p$dimension[1], length(v2)))[,p$dimension[1]:1, , drop = FALSE]
     
-    m[,,4] <- alpha
   } else {
+    m <- matrix(v[[1]], p$dimension[1])[,p$dimension[2]:1, drop = F]
     m <- rotate(rotate(m)) %>%
       apply(2,rev)
   }
