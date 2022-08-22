@@ -1,3 +1,5 @@
+raytrix
+================
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
@@ -196,7 +198,8 @@ A matrix output class is also supported. This will return a matrix if
 the source has only one band (or only one is requested). A
 multidimensional array is returned when more than one band is present.
 The returned object includes *extent*, *dimension* and *projections*
-attributes. These objects happen also to be compatible with rayshader…
+attributes. This can be useful if you plan to directly manipulate your
+data in R. These objects happen also to be compatible with rayshader…
 
 ``` r
 library(rayshader)
@@ -205,7 +208,6 @@ library(rayshader)
 nc_dtm.mat <- ezwarp(src, f_sf, cutline = f_sf, res=500, out_class = 'matrix', 
                      engine = 'sf', nodata=-999)
 #> 0...10...20...30...40...50...60...70...80...90...100 - done.
-# nc_dtm.mat[is.nan(nc_dtm.mat)]<-NA
 
 # get esri sat RGB bands as stacked array
 nc.mask.mat <- ezwarp(x=esri_sat, y=f_sf, res=250, cutline = f_sf,
@@ -223,10 +225,10 @@ nc_dtm.mat %>%
     alphalayer = 0.7, rescale_original = FALSE) %>%
   add_overlay(generate_polygon_overlay(
       f_sf, extent = raster::extent(attributes(nc_dtm.mat)$extent),
-      heightmap = nc_dtm.mat, palette = NA)
-  ) %>%
+      heightmap = nc_dtm.mat, palette = NA),
+      alphalayer = 0.7, rescale_original = TRUE) %>%
   plot_3d(nc_dtm.mat, zscale=70, theta = 0, phi=90, zoom=0.5, windowsize = (c(1100,600))) 
-  render_snapshot(clear = TRUE)
+  render_snapshot(clear = FALSE)
 ```
 
 <img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
