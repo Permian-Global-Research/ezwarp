@@ -19,8 +19,8 @@ get_source <- function(s){
 #' @export
 get_source.SpatRaster <- function(s) {
   check_terra()
-  # s.file <- terra::sources(s)
-  s.file <- s@ptr$filenames
+  s.file <- terra::sources(s)
+  # s.file <- s@ptr$filenames
   if (identical(s.file, "")) {
     s.file <- tempfile(fileext = '.tif')
     terra::writeRaster(s, s.file)
