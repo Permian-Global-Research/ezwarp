@@ -11,13 +11,13 @@
 \alias{get_source.SpatVector}
 \title{Check the source raster classes}
 \usage{
-get_source(s)
+get_source(s, force = FALSE)
 
-\method{get_source}{SpatRaster}(s)
+\method{get_source}{SpatRaster}(s, force = FALSE)
 
 \method{get_source}{stars}(s)
 
-\method{get_source}{stars_proxy}(s)
+\method{get_source}{stars_proxy}(s, force = FALSE)
 
 \method{get_source}{character}(s)
 
@@ -30,6 +30,9 @@ get_source(s)
 \arguments{
 \item{s}{a raster source - either character i.e a local source or remote.
 If remote, src must be prefixed with relevant gdal module. e.g. "/vsicurl/"}
+
+\item{force}{Logical to determine if the SpatRaster or stars_proxy object should
+be resaved even if on disk sources exist.}
 }
 \value{
 character source.

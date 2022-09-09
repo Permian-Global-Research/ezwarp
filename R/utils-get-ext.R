@@ -36,7 +36,7 @@ get_ext.sf <- function(x,...){
 #' 
 #' @export
 get_ext.sfc <- function(x, ...){
-  attr(st_as_sfc(x), "bbox")[c("xmin", "xmax", "ymin", "ymax")]
+  attr(x, "bbox")[c("xmin", "xmax", "ymin", "ymax")]
 }
 
 #' @rdname get_proj

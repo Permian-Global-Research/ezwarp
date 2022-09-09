@@ -54,7 +54,7 @@ character vector. Wrapper for \code{scico::scico_palette_show()}  and \code{scic
 }
 \examples{
 
-src <- /vsicurl/https://public.services.aad.gov.au/datasets/science/GEBCO_2021_GEOTIFF/GEBCO_2021.tif
+src <- "/vsicurl/https://public.services.aad.gov.au/datasets/science/GEBCO_2021_GEOTIFF/GEBCO_2021.tif"
 template <- ezgrid(c(-180, 180, -90, 90), c(720, 360), 'EPSG:4326')
 world.el.terra <- ezwarp(x=src, y=template)
 sciplot(world.el.terra, pal='oleron', centre=TRUE)

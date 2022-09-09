@@ -6,10 +6,12 @@
 #'
 #' @param s a raster source - either character i.e a local source or remote. 
 #' If remote, src must be prefixed with relevant gdal module. e.g. "/vsicurl/"
+#' @param force Logical to determine if the SpatRaster or stars_proxy object should
+#' be resaved even if on disk sources exist.
 #'
 #' @return character source.
 #' @export
-get_source <- function(s){
+get_source <- function(s, force=FALSE){
   UseMethod("get_source")
 }
 
@@ -17,15 +19,33 @@ get_source <- function(s){
 #' @rdname get_source
 #' 
 #' @export
-get_source.SpatRaster <- function(s) {
+get_source.SpatRaster <- function(s, force=FALSE) {
   check_terra()
-  # s.file <- terra::sources(s)
-  s.file <- s@ptr$filenames
-  if (identical(s.file, "")) {
-    s.file <- tempfile(fileext = '.tif')
-    terra::writeRaster(s, s.file)
+  
+  t.ter <- function(r){
+    tf <- tempfile(fileext = '.tif')
+    terra::writeRaster(r, tf)
+    tf
   }
+  
+  if (isFALSE(force)){
+    s.file <- terra::sources(s)
+    # s.file <- s@ptr$filenames
+    if (identical(s.file, "")) {
+      s.file <- t.ter(s)
+    }
+  } else {
+    s.file <- t.ter(s)
+  }
+
 s.file
+}
+
+
+t.star <- function(r){
+  ts <- tempfile(fileext = '.tif')
+  stars::write_stars(r, ts)
+  ts
 }
 
 #' @rdname get_source
@@ -33,16 +53,18 @@ s.file
 #' @export
 get_source.stars <- function(s) {
   check_stars()
-  s.file <- tempfile(fileext = '.tif')
-  stars::write_stars(s, s.file)
-  s.file
+  t.star(s)
 }
 
 #' @rdname get_source
 #' 
 #' @export
-get_source.stars_proxy <- function(s) {
-  s[[1]]
+get_source.stars_proxy <- function(s, force=FALSE) {
+  if (isFALSE(force)){
+    return(s[[1]])
+  } else (
+    return(t.star(s))
+  )
 } 
 
 #' @rdname get_source

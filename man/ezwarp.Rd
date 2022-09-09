@@ -13,7 +13,7 @@ ezwarp(
   cutline = NULL,
   crop_to_cutline = FALSE,
   nodata = NULL,
-  out_class = c("SpatRaster", "stars"),
+  out_class = c("SpatRaster", "stars", "matrix"),
   filename = NULL,
   overwrite = TRUE,
   options = "",
@@ -38,7 +38,7 @@ ezwarp(
 
 \item{nodata}{Numeric. No data value to be used for output.}
 
-\item{out_class}{either "SpatRaster" or "stars"}
+\item{out_class}{default is "SpatRaster". Can be either "SpatRaster", "stars", "matrix", vector (A list of vectors for multi-band data)}
 
 \item{filename}{the filepath for the out raster. if given and "vapour" is used
 for the engine, then the output SpatRaster/stars object will have a source.
@@ -61,4 +61,10 @@ supports in memory raster creation.}
 super handy warper but limited in that returns in memory SpatRast. May cause
 issues when creating a raster > memory. Also not clear how to implement
 the cutline feature.
+}
+\examples{
+f <- system.file("ex/elev.tif", package="terra") 
+r.terra <- terra::rast(f)
+r1a <- ezwarp(f,f, res=1e-4)
+r1b <- ezwarp(r.terra,f, res=1e-4, engine = 'sf')
 }

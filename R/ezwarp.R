@@ -12,7 +12,7 @@
 #' @param cutline an sf or ogr-readable spatial vector source to mask the output raster. see -cutline argument in gdalwarp
 #' @param crop_to_cutline logical. If TRUE, then the output will be cropped to the limits of the mask given in cutline.
 #' @param nodata Numeric. No data value to be used for output.
-#' @param out_class either "SpatRaster" or "stars"
+#' @param out_class default is "SpatRaster". Can be either "SpatRaster", "stars", "matrix", vector (A list of vectors for multi-band data)
 #' @param filename the filepath for the out raster. if given and "vapour" is used 
 #' for the engine, then the output SpatRaster/stars object will have a source. 
 #' If NULL then an in memory raster is returned. If the sf engine is used and 
@@ -27,6 +27,11 @@
 #' @export
 #'
 #' @examples
+#' f <- system.file("ex/elev.tif", package="terra") 
+#' r.terra <- terra::rast(f)
+#' r1a <- ezwarp(f,f, res=1e-4)
+#' r1b <- ezwarp(r.terra,f, res=1e-4, engine = 'sf')
+
 ezwarp <- function(x,
                    y,
                    res,
@@ -35,7 +40,7 @@ ezwarp <- function(x,
                    cutline = NULL,
                    crop_to_cutline = FALSE,
                    nodata = NULL,
-                   out_class = c('SpatRaster', 'stars'),
+                   out_class = c('SpatRaster', 'stars','matrix'),
                    filename=NULL,
                    overwrite=TRUE,
                    options = "",
@@ -52,9 +57,54 @@ ezwarp <- function(x,
   
   params <- build_warp_inputs(x, y, res)
   
-  if (is.null(bands)){
-    bands <- c(1:vapour::vapour_raster_info(params$x[1])$bands) 
+  # function to check R raster object bands
+  bands_R_ras <- function(r){
+    if (inherits(r, c("SpatRaster","stars_proxy"))){
+      bands <- as.integer(dim(r)[3])
+    } else {
+      bands <- c(1:vapour::vapour_raster_info(params$x[1])$bands) 
+    }
+    bands
   }
+  
+  # function to temp save R raster objects - used when multiple sources for 
+  # single object i.e per band.
+  save_R_ras <- function(r){
+    if (inherits(r, c("SpatRaster"))){
+      if (length(terra::sources(r))>1){
+        return(get_source(r, force=TRUE))
+      } else {
+        return(sources(r))
+      }
+      
+    } else if (inherits(r, c("stars_proxy"))){
+      if (length(r[[1]])){
+        return(get_source(r, force=TRUE))
+      } else {
+        return(r[[1]])
+      }
+      
+    } else {
+      return(r)
+    }
+  }
+  
+  
+  if (is.null(bands)){
+    b_list <- lapply(x, bands_R_ras)
+    
+    if (!length(unique(b_list))==1){
+      stop("Input band numbers differ. You must provide a value for `bands` in this case.")
+    }
+    
+    bands <- b_list[[1]]
+    
+    if (bands > 1 & length(params$x)>1){
+      params$x <- sapply(x, save_R_ras)
+    }
+  }
+  
+  
   
   
   # sort out the options.
@@ -104,6 +154,10 @@ ezwarp <- function(x,
         return(build_SpatRaster(params, v))
       } else if (out_class[1] == 'stars') {
         return(build_stars(params, v))
+      } else if(out_class[1] == 'matrix'){
+        return(build_matrix(params, v))
+      } else if(out_class[1] == 'vector'){
+        return(build_vector(params, v))
       } else {
         warning(
           sprintf(
@@ -149,7 +203,11 @@ ezwarp <- function(x,
     return(terra::rast(filename))
   } else if (out_class[1] == 'stars') {
     return(stars::read_stars(filename))
-  } else {
+  } else if(out_class[1] == 'matrix'){
+    #read from source
+    v <- vapour_warp_util(params, bands, resample, opts,...)
+    return(build_matrix(params, v))
+  }  else {
     warning(
       sprintf(
         "The requested `out_class` value '%s' not supported. Returning SpatRaster...",

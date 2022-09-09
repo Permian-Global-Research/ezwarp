@@ -18,7 +18,7 @@
 #' 
 #' @examples 
 #' 
-#' src <- /vsicurl/https://public.services.aad.gov.au/datasets/science/GEBCO_2021_GEOTIFF/GEBCO_2021.tif
+#' src <- "/vsicurl/https://public.services.aad.gov.au/datasets/science/GEBCO_2021_GEOTIFF/GEBCO_2021.tif"
 #' template <- ezgrid(c(-180, 180, -90, 90), c(720, 360), 'EPSG:4326')
 #' world.el.terra <- ezwarp(x=src, y=template)
 #' sciplot(world.el.terra, pal='oleron', centre=TRUE)
@@ -39,7 +39,7 @@ sciplot.SpatRaster <- function(x, pal="acton", n=256, direction=1, centre=FALSE,
                                n_quantile=NULL, ...){
   brks <- NULL
   if (!is.null(n_quantile)){
-    brks <- quantile(x[], probs= seq(0,1, length.out=n_quantile))
+    brks <- quantile(x[], probs= seq(0,1, length.out=n_quantile), na.rm =TRUE)
   }
   
   pal <- scico::scico(n, palette = pal, direction=direction)

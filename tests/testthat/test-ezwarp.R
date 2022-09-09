@@ -64,3 +64,14 @@ test_that("ezwarp-basic3-sf", {
   
   expect_lt(sum(r2[], na.rm = TRUE), sum(r.terra[], na.rm = TRUE))
 })
+
+
+test_that("ezwarp-multisoure-test", {
+  
+  r.terra3 <- c(r.terra, sqrt(r.terra))
+  
+  r2 <- ezwarp(r.terra3, r.terra)
+  d <- dim(r.terra3)[3]
+  
+  expect_equal(d, 2)
+})

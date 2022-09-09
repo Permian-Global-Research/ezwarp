@@ -1,5 +1,12 @@
 ---
-output: github_document
+title: raytrix
+output: 
+  github_document:
+    fig_width: 7.5
+    fig_height: 6
+  html_preview: false
+editor_options: 
+  chunk_output_type: console
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -193,6 +200,42 @@ plot(st_geometry(f_sf), add=TRUE, border='grey30', reset=TRUE)
 
 ```
 
+A matrix output class is also supported. This will return a matrix if the source 
+has only one band (or only one is requested). A multidimensional array is 
+returned when more than one band is present. The returned object includes 
+*extent*, *dimension* and *projections* attributes. This can be useful if you plan
+to directly manipulate your data in R. These objects happen also to 
+be compatible with rayshader...
+
+```{r}
+library(rayshader)
+
+# get terrain as matrix
+nc_dtm.mat <- ezwarp(src, f_sf, cutline = f_sf, res=500, out_class = 'matrix', 
+                     engine = 'sf', nodata=-999)
+
+# get esri sat RGB bands as stacked array
+nc.mask.mat <- ezwarp(x=esri_sat, y=f_sf, res=250, cutline = f_sf,
+                   crop_to_cutline = TRUE, nodata = -99,
+                   out_class = 'matrix')
+
+# make the map
+pal.cols <- c(scico::scico(5, palette = "vikO"))
+
+nc_dtm.mat %>%
+  sphere_shade(
+    texture = create_texture(pal.cols[1], pal.cols[2], pal.cols[3],
+                             pal.cols[4], pal.cols[5]),zscale = 5) %>%
+   add_overlay(scales::rescale(nc.mask.mat, to = c(0, 1)),
+    alphalayer = 0.7, rescale_original = FALSE) %>%
+  add_overlay(generate_polygon_overlay(
+      f_sf, extent = raster::extent(attributes(nc_dtm.mat)$extent),
+      heightmap = nc_dtm.mat, palette = NA),
+      alphalayer = 0.7) %>%
+  plot_3d(nc_dtm.mat, zscale=70, theta = 0, phi=90, zoom=0.5, windowsize = (c(1100,600))) 
+  render_snapshot(clear = FALSE)
+
+```
 
 
 
