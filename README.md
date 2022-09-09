@@ -1,10 +1,7 @@
-raytrix
+ezwarp
 ================
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-
-# ezwarp
-
 <!-- badges: start -->
 
 [![Lifecycle:
@@ -215,19 +212,19 @@ nc.mask.mat <- ezwarp(x=esri_sat, y=f_sf, res=250, cutline = f_sf,
                    out_class = 'matrix')
 
 # make the map
-pal.cols <- c(scico::scico(5, palette = "vikO"))
+pal.cols <- c(scico::scico(5, palette = "buda"))
 
 nc_dtm.mat %>%
   sphere_shade(
     texture = create_texture(pal.cols[1], pal.cols[2], pal.cols[3],
                              pal.cols[4], pal.cols[5]),zscale = 5) %>%
    add_overlay(scales::rescale(nc.mask.mat, to = c(0, 1)),
-    alphalayer = 0.7, rescale_original = FALSE) %>%
+    alphalayer = 0.8, rescale_original = TRUE) %>%
   add_overlay(generate_polygon_overlay(
       f_sf, extent = raster::extent(attributes(nc_dtm.mat)$extent),
       heightmap = nc_dtm.mat, palette = NA),
-      alphalayer = 0.7, rescale_original = TRUE) %>%
-  plot_3d(nc_dtm.mat, zscale=70, theta = 0, phi=90, zoom=0.5, windowsize = (c(1100,600))) 
+      alphalayer = 0.7) %>%
+  plot_3d(nc_dtm.mat, zscale=70, theta = 0, phi=90, zoom=0.5, windowsize = (c(2200,1200))) 
   render_snapshot(clear = FALSE)
 ```
 

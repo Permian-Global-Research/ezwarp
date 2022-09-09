@@ -28,7 +28,7 @@ ezwarp(
 
 \item{res}{numeric. the resolution of the output SpatRaster.}
 
-\item{bands}{numeric which bands to use from the source.}
+\item{bands}{numeric which bands to use from the source. Only used if \code{engine=="vapour"}}
 
 \item{resample}{resampling method. If raster source is categorical use 'nearest'}
 
