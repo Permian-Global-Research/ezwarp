@@ -22,7 +22,7 @@ matrix_thing <- function(.v, .p){
   rotate(m)
 }
 
-#' Build a SpatRaster from vapour vector
+#' Build a Matrix from vapour vector
 #'
 #' @param p ezgrid object
 #' @param v list of numeric vectors from vapour
@@ -48,3 +48,21 @@ build_matrix <- function(p, v){
   
   return(m)
 }
+
+
+
+#' Build a list of vectors from format
+#'
+#' @param p ezgrid object
+#' @param v list of numeric vectors from vapour
+#'
+#' @return matrix
+build_vector <- function(p, v){
+  
+  attributes(v)$extent <- p$extent
+  attributes(v)$dimension <- p$dimension
+  attributes(v)$projection <- p$projection
+  
+  return(v)
+}
+
