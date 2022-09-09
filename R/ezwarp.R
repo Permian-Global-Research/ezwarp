@@ -7,7 +7,7 @@
 #' @param x a list or vector of raster source(s) or SpatRaster(s)
 #' @param y a raster source, SpatRaster, sf, or sfc
 #' @param res numeric. the resolution of the output SpatRaster.
-#' @param bands numeric which bands to use from the source.
+#' @param bands numeric which bands to use from the source. Only used if `engine=="vapour"`
 #' @param resample resampling method. If raster source is categorical use 'nearest'
 #' @param cutline an sf or ogr-readable spatial vector source to mask the output raster. see -cutline argument in gdalwarp
 #' @param crop_to_cutline logical. If TRUE, then the output will be cropped to the limits of the mask given in cutline.
@@ -62,7 +62,7 @@ ezwarp <- function(x,
     if (inherits(r, c("SpatRaster","stars_proxy"))){
       bands <- as.integer(dim(r)[3])
     } else {
-      bands <- c(1:vapour::vapour_raster_info(params$x[1])$bands) 
+      bands <- max(c(1:vapour::vapour_raster_info(params$x[1])$bands)) 
     }
     bands
   }
@@ -99,7 +99,7 @@ ezwarp <- function(x,
     
     bands <- b_list[[1]]
     
-    if (bands > 1 & length(params$x)>1){
+    if ((bands > 1 & length(params$x)>1)[1]){
       params$x <- sapply(x, save_R_ras)
     }
   }
