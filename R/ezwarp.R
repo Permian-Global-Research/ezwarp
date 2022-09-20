@@ -97,9 +97,9 @@ ezwarp <- function(x,
       stop("Input band numbers differ. You must provide a value for `bands` in this case.")
     }
     
-    bands <- b_list[[1]]
+    bands <- 1:b_list[[1]]
     
-    if ((bands > 1 & length(params$x)>1)[1]){
+    if ((length(bands) > 1 & length(params$x)>1)[1]){
       params$x <- sapply(x, save_R_ras)
     }
   }
