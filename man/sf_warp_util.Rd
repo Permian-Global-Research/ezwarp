@@ -4,12 +4,14 @@
 \alias{sf_warp_util}
 \title{Easy Warp using sf::gdalutils}
 \usage{
-sf_warp_util(params, destination, resample, options, ...)
+sf_warp_util(params, destination, resample, compression, options, ...)
 }
 \arguments{
 \item{destination}{out put destination. if NUll then a tempfile is created}
 
 \item{resample}{resampling method}
+
+\item{compression}{the tif compression method to use - e.g. "DEFLATE" or "LZW"}
 
 \item{...}{Not used.}
 

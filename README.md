@@ -13,7 +13,7 @@ coverage](https://codecov.io/gh/Permian-Global-Research/ezwarp/branch/main/graph
 ### Overview
 
 The goal of ezwarp is to simplify the use of
-[gdalwarp](https://gdal.org/programs/gdalwarp.html) in R. Gdalwarp is a
+[gdalwarp](https://gdal.org/programs/gdalwarp.html) in R. Gdal warp is a
 very powerful and fast Image reprojection and warping utility. It can be
 used to reproject (i.e. transform to a new Coordinate Reference System),
 crop, mask and resample. Unlike many tools in R, this can all be done in
@@ -56,10 +56,10 @@ dimension value) or any of the following R spatial classes: SpatRaster,
 SpatVector, sf, sfc, stars. In addition, ezwarp also supports file paths
 and URLs for valid spatial files (it’s gdal after all).
 
-terra sf and stars are the best supported and most popular spatial
-packages in the R ecosystem. *ezwarp* aims to support these types as a
-starting point but further spatial (or indeed non-spatial) classes may
-be supported in time.
+terra, sf and stars are the best supported and most popular spatial
+packages in the R ecosystem. *ezwarp* aims to support these types along
+with vector and matrix classes (as output formats only). Further spatial
+(or indeed non-spatial) classes may be supported in the future.
 
 ### Installation
 

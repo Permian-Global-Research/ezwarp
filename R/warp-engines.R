@@ -8,16 +8,16 @@
 #' @param res numeric. the resolution of the output SpatRaster.
 #' @param bands integer. which bands to use from the source
 #' @param resample resampling method
+#' @param compression the tif compression method to use - e.g. "DEFLATE" or "LZW"
 #' @param destination out put destination. if NUll then a tempfile is created
 #' @param cutline an sf or ogr-readable spatial vector source to mask the output raster.
 #' @param ... Not used.
 #'
 #' @return
-#'
-#' @examples
 sf_warp_util <- function(params,
                         destination,
                         resample,
+                        compression,
                         options,
                         ...) {
   
@@ -31,6 +31,7 @@ sf_warp_util <- function(params,
     "-t_srs", params$projection,
     "-r", resample,
     "-overwrite",
+    "-co", paste0("COMPRESS=", compression),
     options
   )
   
@@ -54,8 +55,6 @@ sf_warp_util <- function(params,
 #' @param ... 
 #'
 #' @return
-#'
-#' @examples
 vapour_warp_util <- function(params, bands, resample, opts, ...){
   v <- vapour::vapour_warp_raster(
     x = vapour::vapour_vrt(params$x),

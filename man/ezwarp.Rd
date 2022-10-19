@@ -2,7 +2,7 @@
 % Please edit documentation in R/ezwarp.R
 \name{ezwarp}
 \alias{ezwarp}
-\title{Easy Warper using vapour}
+\title{An easy way to use gdal warp in R}
 \usage{
 ezwarp(
   x,
@@ -17,6 +17,7 @@ ezwarp(
   filename = NULL,
   overwrite = TRUE,
   options = "",
+  compression = "DEFLATE",
   engine = c("vapour", "sf"),
   ...
 )
@@ -28,7 +29,7 @@ ezwarp(
 
 \item{res}{numeric. the resolution of the output SpatRaster.}
 
-\item{bands}{numeric which bands to use from the source. Only used if \code{engine=="vapour"}}
+\item{bands}{numeric which bands to use from the source. Only used if \code{engine="vapour"}}
 
 \item{resample}{resampling method. If raster source is categorical use 'nearest'}
 
@@ -48,6 +49,8 @@ filename is NULL then a tempfile is used.}
 \item{overwrite}{logical - should a file be overwritten.}
 
 \item{options}{gdal options.}
+
+\item{compression}{default is "DEFLATE". character describing tif compression e.g. "LZW"}
 
 \item{engine}{either "vapour" or "sf". choose which warper to use. Only vapour
 supports in memory raster creation.}
