@@ -9,6 +9,8 @@ round_nearest(x, accuracy, f = round)
 \arguments{
 \item{x}{numeric}
 
+\item{accuracy}{numeric. Target multiple to round to.}
+
 \item{f}{}
 }
 \value{

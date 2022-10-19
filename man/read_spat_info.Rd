@@ -10,7 +10,7 @@ read_spat_info(x, val = NULL)
 \item{x}{A character vector - source for a raster or spatial vector}
 }
 \value{
-
+list or vector with spatial attributes.
 }
 \description{
 read a spatial url/path

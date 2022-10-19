@@ -4,7 +4,7 @@
 #' A literal copy of `plyr::round_any()`
 #'
 #' @param x numeric
-#' @param accuracy
+#' @param accuracy numeric. Target multiple to round to.
 #' @param f
 #'
 #' @return

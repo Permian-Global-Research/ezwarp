@@ -1,4 +1,4 @@
-#' Easy Warper using vapour
+#' An easy way to use gdal warp in R
 #' 
 #' super handy warper but limited in that returns in memory SpatRast. May cause
 #' issues when creating a raster > memory. Also not clear how to implement 
@@ -7,7 +7,7 @@
 #' @param x a list or vector of raster source(s) or SpatRaster(s)
 #' @param y a raster source, SpatRaster, sf, or sfc
 #' @param res numeric. the resolution of the output SpatRaster.
-#' @param bands numeric which bands to use from the source. Only used if `engine=="vapour"`
+#' @param bands numeric which bands to use from the source. Only used if `engine="vapour"`
 #' @param resample resampling method. If raster source is categorical use 'nearest'
 #' @param cutline an sf or ogr-readable spatial vector source to mask the output raster. see -cutline argument in gdalwarp
 #' @param crop_to_cutline logical. If TRUE, then the output will be cropped to the limits of the mask given in cutline.
@@ -18,10 +18,12 @@
 #' If NULL then an in memory raster is returned. If the sf engine is used and 
 #' filename is NULL then a tempfile is used.
 #' @param overwrite logical - should a file be overwritten.
+#' @param compression default is "DEFLATE". character describing tif compression e.g. "LZW"
 #' @param options gdal options. 
 #' @param engine either "vapour" or "sf". choose which warper to use. Only vapour
 #' supports in memory raster creation.
 #' @param ... Additional args passed to `vapour::vapour_warp_raster`. Might be removed.
+#' 
 #'
 #' @return
 #' @export
@@ -44,6 +46,7 @@ ezwarp <- function(x,
                    filename=NULL,
                    overwrite=TRUE,
                    options = "",
+                   compression = "DEFLATE",
                    engine=c("vapour", "sf"),
                    ...) {
   
@@ -191,6 +194,7 @@ ezwarp <- function(x,
     filename <- sf_warp_util(params,
                         filename,
                         resample,
+                        compression,
                         opts,
                         ...)
     

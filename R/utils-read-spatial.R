@@ -2,9 +2,7 @@
 #'
 #' @param x A character vector - source for a raster or spatial vector
 #'
-#' @return
-#'
-#' @examples
+#' @return list or vector with spatial attributes.
 read_spat_info <- function(x, val=NULL){
   
   x <- try_spat_info(x)
