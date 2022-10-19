@@ -9,7 +9,7 @@
 #' @param res numeric. the resolution of the output SpatRaster.
 #' @param bands numeric which bands to use from the source. Only used if `engine="vapour"`
 #' @param resample resampling method. If raster source is categorical use 'nearest'
-#' @param cutline an sf or ogr-readable spatial vector source to mask the output raster. see -cutline argument in gdalwarp
+#' @param cutline an sf, sfc, SpatVector or ogr-readable spatial vector source to mask the output raster. see -cutline argument in gdalwarp
 #' @param crop_to_cutline logical. If TRUE, then the output will be cropped to the limits of the mask given in cutline.
 #' @param nodata Numeric. No data value to be used for output.
 #' @param out_class default is "SpatRaster". Can be either "SpatRaster", "stars", "matrix", vector (A list of vectors for multi-band data)

@@ -60,7 +60,7 @@ test_that("ezwarp-basic3-sf", {
   
   vect.obj <- terra::as.polygons(r.terra2) 
   
-  r2 <- ezwarp(r.terra, r.stars, cutline=sf::st_as_sf(vect.obj), engine='sf')
+  r2 <- ezwarp(r.terra, r.stars, cutline=vect.obj, engine='sf')
   
   expect_lt(sum(r2[], na.rm = TRUE), sum(r.terra[], na.rm = TRUE))
 })

@@ -33,7 +33,7 @@ ezwarp(
 
 \item{resample}{resampling method. If raster source is categorical use 'nearest'}
 
-\item{cutline}{an sf or ogr-readable spatial vector source to mask the output raster. see -cutline argument in gdalwarp}
+\item{cutline}{an sf, sfc, SpatVector or ogr-readable spatial vector source to mask the output raster. see -cutline argument in gdalwarp}
 
 \item{crop_to_cutline}{logical. If TRUE, then the output will be cropped to the limits of the mask given in cutline.}
 
