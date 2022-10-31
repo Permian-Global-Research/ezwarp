@@ -10,12 +10,28 @@ test_that("ezwarp-basic-vapour", {
   expect_gt(sum(r1a[], na.rm=TRUE), 0)
 })
 
+
 test_that("ezwarp-basic-sf", {
   
-  r1b <- ezwarp(f,f, res=1e-4, engine = 'sf')
+  r1b <- ezwarp(f,f, res=1e-4, engine = 'sf', out_class = 'stars')
   
-  expect_gt(sum(r1b[], na.rm=TRUE), 0)
+  expect_gt(sum(r1b[[1]], na.rm=TRUE), 0)
 })
+
+test_that("ezwarp-basic-vapour-matrix", {
+  
+  r1c <- ezwarp(f,f, res=1e-4, out_class = "matrix")
+  
+  expect_gt(sum(r1c, na.rm=TRUE), 0)
+})
+
+test_that("ezwarp-basic-vapour-vector", {
+  
+  r1d <- ezwarp(f,f, res=1e-4, out_class = "vector")
+  
+  expect_gt(sum(r1d[[1]], na.rm=TRUE), 0)
+})
+
 
 test_that("ezwarp-basic2-vapour", {
   

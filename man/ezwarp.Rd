@@ -13,7 +13,7 @@ ezwarp(
   cutline = NULL,
   crop_to_cutline = FALSE,
   nodata = NULL,
-  out_class = c("SpatRaster", "stars", "matrix"),
+  out_class = c("SpatRaster", "stars", "matrix", "vector"),
   filename = NULL,
   overwrite = TRUE,
   options = "",
