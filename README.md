@@ -26,9 +26,9 @@ in R. These include:
 -   [sf::gdal_utils](https://r-spatial.github.io/sf/reference/gdal_utils.html)
 -   [stars::st_warp](https://r-spatial.github.io/stars/reference/st_warp.html)
 -   [{gdalio}](https://github.com/hypertidy/gdalio)
--   system(“gdalwarp …”)
 -   [terra::project](https://rspatial.github.io/terra/reference/project.html)
 -   [{whatarelief}](https://mdsumner.github.io/whatarelief/)
+-   system(“gdalwarp …”)
 
 Some of these packages/functions (perhaps sensibly) restrict certain
 functionality of gdalwarp to make specific tasks much simpler

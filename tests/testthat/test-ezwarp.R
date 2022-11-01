@@ -18,6 +18,13 @@ test_that("ezwarp-basic-sf", {
   expect_gt(sum(r1b[[1]], na.rm=TRUE), 0)
 })
 
+test_that("ezwarp-basic-vapour-stars", {
+  
+  r1b <- ezwarp(f,f, res=1e-4, out_class = 'stars')
+  
+  expect_gt(sum(r1b[[1]], na.rm=TRUE), 0)
+})
+
 test_that("ezwarp-basic-vapour-matrix", {
   
   r1c <- ezwarp(f,f, res=1e-4, out_class = "matrix")
