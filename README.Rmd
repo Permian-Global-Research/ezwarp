@@ -1,5 +1,5 @@
 ---
-title: "<br> ezwarp <img src='https://avatars.githubusercontent.com/u/106586419?s=400&u=69fb140fd7d3f204f361e85dba7398ac33d88a03&v=4' align='right' height='10%' width='10%'/>  <br> "
+title: "ezwarp <img src='https://avatars.githubusercontent.com/u/106586419?s=400&u=69fb140fd7d3f204f361e85dba7398ac33d88a03&v=4' align='right' height='10%' width='10%'/>  <br> "
 output: 
   github_document:
     fig_width: 7.5
