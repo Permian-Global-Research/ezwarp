@@ -64,10 +64,13 @@ ezwarp <- function(x,
   bands_R_ras <- function(r){
     if (inherits(r, c("SpatRaster","stars_proxy"))){
       bands <- as.integer(dim(r)[3])
+      if(is.na(bands)){ # to catch when stars proxy doesn't give the third dim.
+        bands<-1
+      }
     } else {
       bands <- max(c(1:vapour::vapour_raster_info(params$x[1])$bands)) 
     }
-    bands
+    return(bands)
   }
   
   # function to temp save R raster objects - used when multiple sources for 
@@ -91,7 +94,7 @@ ezwarp <- function(x,
       return(r)
     }
   }
-  
+  # browser()
   
   if (is.null(bands)){
     b_list <- lapply(x, bands_R_ras)
@@ -127,6 +130,11 @@ ezwarp <- function(x,
       bound <- matrix(info$extent[c(1, 2, 2, 1, 1, 
                                     3, 3, 4, 4, 3)], ncol = 2)
       m <- terra::project(bound, from = info$projection$Wkt, to=params$projection)
+      
+      # catch for when a raster is used as a template and res isn't specified.
+      if (missing(res)){
+        res=(params$extent[2]-params$extent[1])/params$dimension[1]
+      }
       
       target_extent <- as.vector(apply(m, 2, range)) %>% 
         round_bbox(., res)

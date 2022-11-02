@@ -1,4 +1,5 @@
 ezwarp
+<img src='https://avatars.githubusercontent.com/u/106586419?s=400&u=69fb140fd7d3f204f361e85dba7398ac33d88a03&v=4' align='right' height='75%' width='75%'/>
 ================
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -6,8 +7,6 @@ ezwarp
 
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
-[![Codecov test
-coverage](https://codecov.io/gh/Permian-Global-Research/ezwarp/branch/main/graph/badge.svg)](https://app.codecov.io/gh/Permian-Global-Research/ezwarp?branch=main)
 <!-- badges: end -->
 
 ### Overview
