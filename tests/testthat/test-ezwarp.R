@@ -221,11 +221,16 @@ test_that("ezwarp-band-conflict-pass", {
 
 test_that("ezwarp-basic3-vapour", {
   
-  
-  r2 <- ezwarp(r.terra, r.stars, cutline=sf::st_as_sf(vect.obj200),
+  r1 <- ezwarp(f, f, cutline=.file,
                crop_to_cutline = TRUE)
   
-  expect_lt(sum(r2[], na.rm = TRUE), sum(r.terra[], na.rm = TRUE))
+  r2 <- ezwarp(r.terra, r.stars, cutline=.file,
+               crop_to_cutline = TRUE,
+               options=c("-csql", 
+                         paste0( "SELECT * FROM ", terra::vector_layers(.file), 
+                                 " WHERE elevation >= 170")))
+  
+  expect_lt(sum(r2[], na.rm = TRUE), sum(r1[], na.rm = TRUE))
 })
 
 
