@@ -1,5 +1,5 @@
 ezwarp
-<img src='https://avatars.githubusercontent.com/u/106586419?s=400&u=69fb140fd7d3f204f361e85dba7398ac33d88a03&v=4' align='right' height='75%' width='75%'/>
+<img src='https://avatars.githubusercontent.com/u/106586419?s=400&u=69fb140fd7d3f204f361e85dba7398ac33d88a03&v=4' align='right' height='20%' width='20%'/>
 ================
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
