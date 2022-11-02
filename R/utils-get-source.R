@@ -29,9 +29,11 @@ get_source.SpatRaster <- function(s, force=FALSE) {
   }
   
   if (isFALSE(force)){
+    # browser()
     s.file <- terra::sources(s)
     # s.file <- s@ptr$filenames
-    if (identical(s.file, "")) {
+    if ("" %in% s.file) {
+    # if (identical(s.file, "")) {
       s.file <- t.ter(s)
     }
   } else {

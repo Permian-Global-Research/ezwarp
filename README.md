@@ -1,4 +1,6 @@
 ezwarp
+<img src='https://avatars.githubusercontent.com/u/106586419?s=400&u=69fb140fd7d3f204f361e85dba7398ac33d88a03&v=4' align='right' height='12%' width='12%'/>
+<br>
 ================
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -6,8 +8,6 @@ ezwarp
 
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
-[![Codecov test
-coverage](https://codecov.io/gh/Permian-Global-Research/ezwarp/branch/main/graph/badge.svg)](https://app.codecov.io/gh/Permian-Global-Research/ezwarp?branch=main)
 <!-- badges: end -->
 
 ### Overview
@@ -26,9 +26,9 @@ in R. These include:
 -   [sf::gdal_utils](https://r-spatial.github.io/sf/reference/gdal_utils.html)
 -   [stars::st_warp](https://r-spatial.github.io/stars/reference/st_warp.html)
 -   [{gdalio}](https://github.com/hypertidy/gdalio)
--   system(“gdalwarp …”)
 -   [terra::project](https://rspatial.github.io/terra/reference/project.html)
 -   [{whatarelief}](https://mdsumner.github.io/whatarelief/)
+-   system(“gdalwarp …”)
 
 Some of these packages/functions (perhaps sensibly) restrict certain
 functionality of gdalwarp to make specific tasks much simpler
