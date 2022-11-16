@@ -40,7 +40,7 @@ sf_warp_util <- function(params,
     source = params$x,
     destination = destination,
     options = opts,
-    quiet = FALSE
+    quiet = TRUE
   )
   destination
 }
