@@ -78,14 +78,6 @@ classes may be supported in the future.
 
 ```{r, install, eval=FALSE}
 #install.packages("remotes")
-## need the dev vapour branch
-
-options(repos = c(
-    hypertidy = 'https://hypertidy.r-universe.dev',
-    CRAN = 'https://cloud.r-project.org'))
-    
-install.packages("vapour")
-
 remotes::install_github("Permian-Global-Research/ezwarp")
 ```
 

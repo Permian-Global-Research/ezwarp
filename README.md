@@ -22,13 +22,13 @@ a single command, using the warp tool, saving time and code.
 At present, there are many ways to access the functionality of gdalwarp
 in R. These include:
 
--   [vapour::warp_raster](https://hypertidy.github.io/vapour/reference/vapour_warp_raster.html)
--   [sf::gdal_utils](https://r-spatial.github.io/sf/reference/gdal_utils.html)
--   [stars::st_warp](https://r-spatial.github.io/stars/reference/st_warp.html)
--   [{gdalio}](https://github.com/hypertidy/gdalio)
--   [terra::project](https://rspatial.github.io/terra/reference/project.html)
--   [{whatarelief}](https://mdsumner.github.io/whatarelief/)
--   system(“gdalwarp …”)
+- [vapour::warp_raster](https://hypertidy.github.io/vapour/reference/vapour_warp_raster.html)
+- [sf::gdal_utils](https://r-spatial.github.io/sf/reference/gdal_utils.html)
+- [stars::st_warp](https://r-spatial.github.io/stars/reference/st_warp.html)
+- [{gdalio}](https://github.com/hypertidy/gdalio)
+- [terra::project](https://rspatial.github.io/terra/reference/project.html)
+- [{whatarelief}](https://mdsumner.github.io/whatarelief/)
+- system(“gdalwarp …”)
 
 Some of these packages/functions (perhaps sensibly) restrict certain
 functionality of gdalwarp to make specific tasks much simpler
@@ -65,14 +65,6 @@ with vector and matrix classes (as output formats only). Further spatial
 
 ``` r
 #install.packages("remotes")
-## need the dev vapour branch
-
-options(repos = c(
-    hypertidy = 'https://hypertidy.r-universe.dev',
-    CRAN = 'https://cloud.r-project.org'))
-    
-install.packages("vapour")
-
 remotes::install_github("Permian-Global-Research/ezwarp")
 ```
 
