@@ -17,5 +17,6 @@ Imports:
     vapour (>= 0.8.8.9009)
 Suggests: 
     covr,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    stars
 Config/testthat/edition: 3
