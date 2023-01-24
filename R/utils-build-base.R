@@ -34,11 +34,13 @@ build_matrix <- function(p, v){
   if (length(v) > 1) {
     v2 <- lapply(v, matrix_thing, .p=p)
     a <- matrix(NA, p$dimension[2],p$dimension[1])
-    m <- array(c(unlist(v2, use.names = FALSE), a), c(p$dimension[2], p$dimension[1], length(v2)))[,p$dimension[1]:1, , drop = FALSE]
+    m <- array(c(unlist(v2, use.names = FALSE), a), 
+               c(p$dimension[2], p$dimension[1], length(v2))
+               )[,p$dimension[1]:1, , drop = FALSE]
     
   } else {
     m <- matrix(v[[1]], p$dimension[1])[,p$dimension[2]:1, drop = F]
-    m <- rotate(rotate(m)) %>%
+    m <- rotate(rotate(m))  |>
       apply(2,rev)
   }
   

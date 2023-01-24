@@ -20,7 +20,6 @@ get_ext.SpatRaster <- function(x,...){
 #' 
 #' @export
 get_ext.SpatVector <- function(x,...){
-  check_terra()
   as.vector(terra::ext(x)) # Can't locate the correct slot so using the ext function.
 }
 
@@ -43,7 +42,6 @@ get_ext.sfc <- function(x, ...){
 #' 
 #' @export
 get_ext.stars <- function(x, ...){
-  # as.vector(sf::st_bbox(x))[c(1,3,2,4)]
   stars_ext(x)
 }
 
@@ -51,7 +49,6 @@ get_ext.stars <- function(x, ...){
 #' 
 #' @export
 get_ext.stars_proxy <- function(x, ...){
-  # as.vector(sf::st_bbox(x))[c(1,3,2,4)]
   stars_ext(x)
 }
 
@@ -69,10 +66,6 @@ get_ext.character <- function(x, ...){
   read_spat_info(x, val='extent')
 }
 
-
-# terra_ext <- function(x){
-#   x@ptr$extent@.xData[["vector"]]  ### DOESN'T WORK FOR SPATVECT.
-# }
 
 stars_ext <- function(x){
   d <- attr(x, "dimension")

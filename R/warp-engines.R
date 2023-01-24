@@ -2,16 +2,13 @@
 #' Easy Warp using sf::gdalutils
 #' 
 #' stable and supports >memory rasters and cutline feature.
-#'
-#' @param x a raster source or SpatRaster
-#' @param y a raster source, SpatRaster, sf, or sfc
-#' @param res numeric. the resolution of the output SpatRaster.
-#' @param bands integer. which bands to use from the source
+#' @param params A list containing the raster source(s), ext, dim and crs.
+#' @param destination out put destination. if NUll then a tempfile is created
 #' @param resample resampling method
 #' @param compression the tif compression method to use - e.g. "DEFLATE" or "LZW"
-#' @param destination out put destination. if NUll then a tempfile is created
-#' @param cutline an sf or ogr-readable spatial vector source to mask the output raster.
+#' @param options character vector with gdal options.
 #' @param ... Not used.
+
 #'
 #' @return
 sf_warp_util <- function(params,
@@ -47,12 +44,11 @@ sf_warp_util <- function(params,
 
 
 #' vapour_warp_util
-#'
-#' @param params 
-#' @param bands 
-#' @param resample 
-#' @param opts 
-#' @param ... 
+#' @param params A list containing the raster source(s), ext, dim and crs.
+#' @param resample resampling method
+#' @param bands numeric veor of bands to include.
+#' @param opts character vector with gdal options.
+#' @param ... passed to `vapour::vapour_warp_raster`
 #'
 #' @return
 vapour_warp_util <- function(params, bands, resample, opts, ...){

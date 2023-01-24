@@ -29,11 +29,9 @@ get_source.SpatRaster <- function(s, force=FALSE) {
   }
   
   if (isFALSE(force)){
-    # browser()
     s.file <- terra::sources(s)
     # s.file <- s@ptr$filenames
     if ("" %in% s.file) {
-    # if (identical(s.file, "")) {
       s.file <- t.ter(s)
     }
   } else {
@@ -74,7 +72,7 @@ get_source.stars_proxy <- function(s, force=FALSE) {
 #' @export
 get_source.character <- function(s){
   # if (is_url(s)){
-  #   ##### fix this.
+  #   ##### should we check for a url and if so append /vsicurl etc? hmmm...
   # }
   s
 } 
