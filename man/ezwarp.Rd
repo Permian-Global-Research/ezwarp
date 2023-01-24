@@ -31,7 +31,7 @@ ezwarp(
 
 \item{bands}{numeric which bands to use from the source. Only used if \code{engine="vapour"}}
 
-\item{resample}{resampling method. If raster source is categorical use 'nearest'}
+\item{resample}{resampling method. default is bilinear, see details.}
 
 \item{cutline}{an sf, sfc, SpatVector or ogr-readable spatial vector source to mask the output raster. see -cutline argument in gdalwarp}
 
@@ -39,7 +39,7 @@ ezwarp(
 
 \item{nodata}{Numeric. No data value to be used for output.}
 
-\item{out_class}{default is "SpatRaster". Can be either "SpatRaster", "stars", "matrix", vector (A list of vectors for multi-band data)}
+\item{out_class}{default is "SpatRaster". Can be either "SpatRaster", "stars", "matrix", "vector"}
 
 \item{filename}{the filepath for the out raster. if given and "vapour" is used
 for the engine, then the output SpatRaster/stars object will have a source.
@@ -64,6 +64,19 @@ supports in memory raster creation.}
 super handy warper but limited in that returns in memory SpatRast. May cause
 issues when creating a raster > memory. Also not clear how to implement
 the cutline feature.
+}
+\details{
+When selecting the resample method, choose from the following options:
+'bilinear' (the default), 'near', 'cubic', 'cubicspline', 'lanczos', 'average', 'mode',
+'max', 'min', 'med', 'q1', 'q3', 'sum'. For details on these methods see: https://gdal.org/programs/gdalwarp.html
+If raster source is categorical make sure to use 'nearest'.
+
+If "matrix" is used for \code{out_class}, then a matrix is returned if only one band
+is targeted. If multiple bands are targeted, then a n-dimensional array is returned.
+The matrix is returned oriented North is up.
+
+If "vector" is used for \code{out_class}, a vector is returned for a single band target,
+and a list of vectors is returned for a multiband target.
 }
 \examples{
 f <- system.file("ex/elev.tif", package="terra") 

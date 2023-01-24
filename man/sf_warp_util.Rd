@@ -7,23 +7,17 @@
 sf_warp_util(params, destination, resample, compression, options, ...)
 }
 \arguments{
+\item{params}{A list containing the raster source(s), ext, dim and crs.}
+
 \item{destination}{out put destination. if NUll then a tempfile is created}
 
 \item{resample}{resampling method}
 
 \item{compression}{the tif compression method to use - e.g. "DEFLATE" or "LZW"}
 
+\item{options}{character vector with gdal options.}
+
 \item{...}{Not used.}
-
-\item{x}{a raster source or SpatRaster}
-
-\item{y}{a raster source, SpatRaster, sf, or sfc}
-
-\item{res}{numeric. the resolution of the output SpatRaster.}
-
-\item{bands}{integer. which bands to use from the source}
-
-\item{cutline}{an sf or ogr-readable spatial vector source to mask the output raster.}
 }
 \value{
 

@@ -106,13 +106,11 @@ argument to 0.5 to make sure we resample the grid. In this example, the
 sf warp engine is used rather than vapour.
 
 ``` r
-
-wrld <-"/vsizip//vsicurl/https://github.com/wmgeolab/geoBoundaries/raw/main/releaseData/CGAZ/geoBoundariesCGAZ_ADM0.zip"
+wrld <-"https://github.com/wmgeolab/geoBoundaries/raw/v5.0.0/releaseData/CGAZ/geoBoundariesCGAZ_ADM0.geojson"
 
 world.el.mask <- ezwarp(x=src, y=src, res=0.5, cutline = wrld, engine = 'sf')
-#> 0...10...20...30...40...50...60...70...80...90...100 - done.
 
-sciplot(world.el.mask, pal='lapaz', range=c(0, max(world.el.mask[], na.rm=TRUE)))
+sciplot(world.el.mask, pal='lapaz' ) # range=c(0, max(world.el.mask[], na.rm=TRUE))
 ```
 
 <img src="man/figures/README-mask-world-1.png" width="100%" />
@@ -138,10 +136,10 @@ nc.mask <- ezwarp(x=esri_sat, y=esri_sat, res=100, cutline = f,
                    crop_to_cutline = TRUE, nodata = -99)
 
 stokes.mask <- ezwarp(x=esri_sat, y=esri_sat, res=25, cutline = f,
-                   options=c("-csql", "SELECT * FROM 'nc.gpkg' WHERE NAME = 'Stokes'"),
+                   options=c("-csql", "SELECT * FROM 'nc.gpkg' WHERE NAME = 'Jackson'"),
                    crop_to_cutline = TRUE, nodata = -99)
 
-f_sf <- read_sf(f) %>% 
+f_sf <- read_sf(f) |>  
   st_transform(vapour::vapour_raster_info(esri_sat)$projection)
 
 terra::plotRGB(nc.mask)
@@ -188,36 +186,17 @@ the source has only one band (or only one is requested). A
 multidimensional array is returned when more than one band is present.
 The returned object includes *extent*, *dimension* and *projections*
 attributes. This can be useful if you plan to directly manipulate your
-data in R. These objects happen also to be compatible with rayshader…
+data in R. These objects happen also to be compatible with {rayshader…}
 
 ``` r
 library(rayshader)
 
 # get terrain as matrix
-nc_dtm.mat <- ezwarp(src, f_sf, cutline = f_sf, res=500, out_class = 'matrix', 
-                     engine = 'sf', nodata=-999)
-#> 0...10...20...30...40...50...60...70...80...90...100 - done.
-
-# get esri sat RGB bands as stacked array
-nc.mask.mat <- ezwarp(x=esri_sat, y=f_sf, res=250, cutline = f_sf,
-                   crop_to_cutline = TRUE, nodata = -99,
-                   out_class = 'matrix')
-
-# make the map
-pal.cols <- c(scico::scico(5, palette = "buda"))
-
-nc_dtm.mat %>%
-  sphere_shade(
-    texture = create_texture(pal.cols[1], pal.cols[2], pal.cols[3],
-                             pal.cols[4], pal.cols[5]),zscale = 5) %>%
-   add_overlay(scales::rescale(nc.mask.mat, to = c(0, 1)),
-    alphalayer = 0.8, rescale_original = TRUE) %>%
-  add_overlay(generate_polygon_overlay(
-      f_sf, extent = raster::extent(attributes(nc_dtm.mat)$extent),
-      heightmap = nc_dtm.mat, palette = NA),
-      alphalayer = 0.7) %>%
-  plot_3d(nc_dtm.mat, zscale=70, theta = 0, phi=90, zoom=0.5, windowsize = (c(2200,1200))) 
-  render_snapshot(clear = FALSE)
+nc_dtm.mat <- ezwarp(src, f_sf, cutline = f, crop_to_cutline = TRUE,
+                     res=200, out_class = 'matrix', nodata=-999, 
+                     resample = "lanczos") |> 
+  ray_shade(zscale=70)|> 
+  plot_map()
 ```
 
-<img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
+<img src="man/figures/README-rayshade-example-1.png" width="100%" />

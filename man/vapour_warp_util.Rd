@@ -7,15 +7,15 @@
 vapour_warp_util(params, bands, resample, opts, ...)
 }
 \arguments{
-\item{params}{}
+\item{params}{A list containing the raster source(s), ext, dim and crs.}
 
-\item{bands}{}
+\item{bands}{numeric veor of bands to include.}
 
-\item{resample}{}
+\item{resample}{resampling method}
 
-\item{opts}{}
+\item{opts}{character vector with gdal options.}
 
-\item{...}{}
+\item{...}{passed to \code{vapour::vapour_warp_raster}}
 }
 \value{
 

@@ -8,11 +8,11 @@
 #' @param y a raster source, SpatRaster, sf, or sfc
 #' @param res numeric. the resolution of the output SpatRaster.
 #' @param bands numeric which bands to use from the source. Only used if `engine="vapour"`
-#' @param resample resampling method. If raster source is categorical use 'nearest'
+#' @param resample resampling method. default is bilinear, see details.
 #' @param cutline an sf, sfc, SpatVector or ogr-readable spatial vector source to mask the output raster. see -cutline argument in gdalwarp
 #' @param crop_to_cutline logical. If TRUE, then the output will be cropped to the limits of the mask given in cutline.
 #' @param nodata Numeric. No data value to be used for output.
-#' @param out_class default is "SpatRaster". Can be either "SpatRaster", "stars", "matrix", vector (A list of vectors for multi-band data)
+#' @param out_class default is "SpatRaster". Can be either "SpatRaster", "stars", "matrix", "vector" 
 #' @param filename the filepath for the out raster. if given and "vapour" is used 
 #' for the engine, then the output SpatRaster/stars object will have a source. 
 #' If NULL then an in memory raster is returned. If the sf engine is used and 
@@ -24,6 +24,19 @@
 #' supports in memory raster creation.
 #' @param ... Additional args passed to `vapour::vapour_warp_raster`. Might be removed.
 #' 
+#' @details 
+#' 
+#' When selecting the resample method, choose from the following options:
+#' 'bilinear' (the default), 'near', 'cubic', 'cubicspline', 'lanczos', 'average', 'mode',
+#' 'max', 'min', 'med', 'q1', 'q3', 'sum'. For details on these methods see: https://gdal.org/programs/gdalwarp.html
+#'  If raster source is categorical make sure to use 'nearest'.
+#' 
+#' If "matrix" is used for `out_class`, then a matrix is returned if only one band
+#' is targeted. If multiple bands are targeted, then a n-dimensional array is returned.
+#' The matrix is returned oriented North is up. 
+#' 
+#' If "vector" is used for `out_class`, a vector is returned for a single band target, 
+#' and a list of vectors is returned for a multiband target.
 #'
 #' @return
 #' @export
@@ -56,7 +69,7 @@ ezwarp <- function(x,
   y <- check_grid_form(y)
   check_res_form(y, res)
   check_logical(crop_to_cutline, "crop_to_cutline")
-  
+  check_engine(engine)
   
   params <- build_warp_inputs(x, y, res)
   
@@ -94,7 +107,6 @@ ezwarp <- function(x,
       return(r)
     }
   }
-  # browser()
   
   if (is.null(bands)){
     b_list <- lapply(x, bands_R_ras)
@@ -136,8 +148,8 @@ ezwarp <- function(x,
         res=(params$extent[2]-params$extent[1])/params$dimension[1]
       }
       
-      target_extent <- as.vector(apply(m, 2, range)) %>% 
-        round_bbox(., res)
+      target_extent <- as.vector(apply(m, 2, range)) |>  
+        round_bbox(res)
       target_dims <- dims_from_box(target_extent, res)
       
       params$extent <- target_extent
@@ -215,10 +227,11 @@ ezwarp <- function(x,
     return(terra::rast(filename))
   } else if (out_class[1] == 'stars') {
     return(stars::read_stars(filename))
-  } else if(out_class[1] == 'matrix'){
+  } else if(out_class[1] %in% c('matrix', 'vector')){
     #read from source
     v <- vapour_warp_util(params, bands, resample, opts,...)
-    return(build_matrix(params, v))
+    if (out_class[1] == "matrix") return(build_matrix(params, v))
+    if (out_class[1] == "vector") return(build_vector(params, v))
   }  else {
     warning(
       sprintf(

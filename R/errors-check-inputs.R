@@ -22,3 +22,7 @@ check_options <- function(o){
                 "the crop_to_cutline argument in ezwarp function."))
   }
 }
+
+check_engine <- function(.eng){
+  if (.eng[1]=="sf") check_sf()
+}
