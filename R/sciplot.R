@@ -39,7 +39,7 @@ sciplot.SpatRaster <- function(x, pal="acton", n=256, direction=1, centre=FALSE,
                                n_quantile=NULL, ...){
   brks <- NULL
   if (!is.null(n_quantile)){
-    brks <- quantile(x[], probs= seq(0,1, length.out=n_quantile), na.rm =TRUE)
+    brks <- stats::quantile(x[], probs= seq(0,1, length.out=n_quantile), na.rm =TRUE)
   }
   
   pal <- scico::scico(n, palette = pal, direction=direction)
