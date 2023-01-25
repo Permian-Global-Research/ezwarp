@@ -17,7 +17,9 @@ Suggests:
     covr,
     testthat (>= 3.0.0),
     sf,
-    stars
+    stars,
+    rayshader
 Config/testthat/edition: 3
 Depends: 
     R (>= 4.1.0)
+URL: https://permian-global-research.github.io/ezwarp/

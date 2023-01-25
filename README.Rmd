@@ -40,7 +40,7 @@ many ways to access the functionality of gdalwarp in R. These include:
 - [stars::st_warp](https://r-spatial.github.io/stars/reference/st_warp.html)
 - [{gdalio}](https://github.com/hypertidy/gdalio)
 - [terra::project](https://rspatial.github.io/terra/reference/project.html)
-- [{whatarelief}](https://mdsumner.github.io/whatarelief/)
+- [{whatarelief}](https://hypertidy.github.io/whatarelief/)
 - system("gdalwarp ...")
 
 Some of these packages/functions (perhaps sensibly) restrict certain functionality
