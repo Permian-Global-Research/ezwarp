@@ -1,17 +1,27 @@
-#' Check the source raster classes
+#' Get the source of a spatial object
 #' 
-#' If a SpatRaster is provided the source of the raster is used. if it is in 
-#' memory then and error is thrown. if character provided then assumed to be 
-#' correct.
+#' A class agnostic function to return or create the source of a spatial object.
 #'
-#' @param s a raster source - either character i.e a local source or remote. 
+#' @param x a raster source - either character i.e a local source or remote. 
 #' If remote, src must be prefixed with relevant gdal module. e.g. "/vsicurl/"
 #' @param force Logical to determine if the SpatRaster or stars_proxy object should
-#' be resaved even if on disk sources exist.
-#'
+#' be re-saved even if on disk sources exist.
+#' @family spatial helpers (class agnostic)
+#' @rdname get_source
 #' @return character source.
+#' 
+#' @details 
+#' If a SpatRaster is provided the source of the raster is used. 
+#' 
+#' @examples
+#' f <- system.file("ex/elev.tif", package="terra") 
+#' get_source(f)
+#' get_source(terra::rast(f), force=TRUE)
+#' f2 <- system.file("ex/lux.shp", package="terra") 
+#' get_source(f2)
+#' 
 #' @export
-get_source <- function(s, force=FALSE){
+get_source <- function(x, force=FALSE){
   UseMethod("get_source")
 }
 
@@ -19,7 +29,7 @@ get_source <- function(s, force=FALSE){
 #' @rdname get_source
 #' 
 #' @export
-get_source.SpatRaster <- function(s, force=FALSE) {
+get_source.SpatRaster <- function(x, force=FALSE) {
   check_terra()
   
   t.ter <- function(r){
@@ -29,13 +39,13 @@ get_source.SpatRaster <- function(s, force=FALSE) {
   }
   
   if (isFALSE(force)){
-    s.file <- terra::sources(s)
+    s.file <- terra::sources(x)
     # s.file <- s@ptr$filenames
     if ("" %in% s.file) {
-      s.file <- t.ter(s)
+      s.file <- t.ter(x)
     }
   } else {
-    s.file <- t.ter(s)
+    s.file <- t.ter(x)
   }
 
 s.file
@@ -51,63 +61,59 @@ t.star <- function(r){
 #' @rdname get_source
 #' 
 #' @export
-get_source.stars <- function(s) {
+get_source.stars <- function(x) {
   check_stars()
-  t.star(s)
+  t.star(x)
 }
 
 #' @rdname get_source
 #' 
 #' @export
-get_source.stars_proxy <- function(s, force=FALSE) {
+get_source.stars_proxy <- function(x, force=FALSE) {
   if (isFALSE(force)){
-    return(s[[1]])
+    return(x[[1]])
   } else (
-    return(t.star(s))
+    return(t.star(x))
   )
 } 
 
 #' @rdname get_source
 #' 
 #' @export
-get_source.character <- function(s){
-  # if (is_url(s)){
-  #   ##### should we check for a url and if so append /vsicurl etc? hmmm...
-  # }
-  s
+get_source.character <- function(x){
+  read_spat_info(x, val='source')
 } 
 
 #' @rdname get_source
 #' 
 #' @export
-get_source.sf <- function(s){
-  sf_temp_save(s)
+get_source.sf <- function(x){
+  sf_temp_save(x)
 }
 
 #' @rdname get_source
 #' 
 #' @export
-get_source.sfc <- function(s){
-  sf_temp_save(s)
+get_source.sfc <- function(x){
+  sf_temp_save(x)
 }
 
 #' @rdname get_source
 #' 
 #' @export
-get_source.SpatVector <- function(s){
+get_source.SpatVector <- function(x){
   check_terra()
   s.file <- tempfile(fileext = '.fgb')
-  terra::writeVector(s, s.file, filetype='FlatGeobuf', options=NULL )
+  terra::writeVector(x, s.file, filetype='FlatGeobuf', options=NULL )
   s.file
 }
 
 
 #' save sf to temp source - return source
-#'
-#' @return
-sf_temp_save <- function(s){
+#' @noRd
+sf_temp_save <- function(x){
   check_sf()
   s.file <- tempfile(fileext = '.fgb')
-  sf::write_sf(s, s.file)
+  sf::write_sf(x, s.file)
   s.file
 }

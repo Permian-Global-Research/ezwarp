@@ -1,9 +1,12 @@
-ezwarp
-<img src='https://avatars.githubusercontent.com/u/106586419?s=400&u=69fb140fd7d3f204f361e85dba7398ac33d88a03&v=4' align='right' height='12%' width='12%'/>
-<br>
-================
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
+<br>
+
+<img src='https://avatars.githubusercontent.com/u/106586419?s=400&u=69fb140fd7d3f204f361e85dba7398ac33d88a03&v=4' align='right' height='10%' width='10%'/></a>
+
+# ezwarp
+
 <!-- badges: start -->
 
 [![Lifecycle:
@@ -99,18 +102,22 @@ sciplot(world.el.stars, pal='oleron', n =256, centre=TRUE)
 <img src="man/figures/README-simple-world, figures-side-1.png" width="50%" /><img src="man/figures/README-simple-world, figures-side-2.png" width="50%" />
 
 The `cutline` argument can be used to mask regions with a input spatial
-vector. Here we demonstrate this by using an online [geojson of country
-outlines](https://www.geoboundaries.org/downloadCGAZ.html) directly.
+vector. Here we demonstrate this by using an online [geojson of
+Madagascar](https://www.geoboundaries.org/downloadCGAZ.html) directly.
 Note also that we reuse the source as the target (y) but set the `res`
-argument to 0.5 to make sure we resample the grid. In this example, the
-sf warp engine is used rather than vapour.
+argument to 0.5 to make sure we resample the grid. We also specify
+`crop_to_cutline = TRUE` otherwise the extent will default to that
+defined by `y`. In this example, the ‘sf’ warp engine is used rather
+than ‘vapour’.
 
 ``` r
-wrld <-"https://github.com/wmgeolab/geoBoundaries/raw/v5.0.0/releaseData/CGAZ/geoBoundariesCGAZ_ADM0.geojson"
+madagascar <-"https://github.com/wmgeolab/geoBoundariesArchive_4_0_0/raw/299e00623ece6c03bcb9a751eda6094b1eac85a6/releaseData/gbOpen/MDG/ADM0/geoBoundaries-MDG-ADM0.geojson"
 
-world.el.mask <- ezwarp(x=src, y=src, res=0.5, cutline = wrld, engine = 'sf')
+world.el.mask <- ezwarp(x=src, y=src, res=0.1, cutline = madagascar, 
+                        crop_to_cutline = TRUE, engine = 'sf')
+#> gdalinfo - unable to open 'https://github.com/wmgeolab/geoBoundariesArchive_4_0_0/raw/299e00623ece6c03bcb9a751eda6094b1eac85a6/releaseData/gbOpen/MDG/ADM0/geoBoundaries-MDG-ADM0.geojson'.
 
-sciplot(world.el.mask, pal='lapaz' ) # range=c(0, max(world.el.mask[], na.rm=TRUE))
+sciplot(world.el.mask, pal='lapaz' ) 
 ```
 
 <img src="man/figures/README-mask-world-1.png" width="100%" />
@@ -133,18 +140,20 @@ esri_sat <- "<GDAL_WMS><Service name=\"TMS\"><ServerUrl>http://services.arcgison
 f <- system.file("gpkg", "nc.gpkg", package = "sf")
 
 nc.mask <- ezwarp(x=esri_sat, y=esri_sat, res=100, cutline = f,
-                   crop_to_cutline = TRUE, nodata = -99)
+                   crop_to_cutline = TRUE, nodata = -99, engine="sf")
+#> gdalinfo - unable to open '/home/hugh/R/x86_64-pc-linux-gnu-library/4.2/sf/gpkg/nc.gpkg'.
 
-stokes.mask <- ezwarp(x=esri_sat, y=esri_sat, res=25, cutline = f,
+jackson.mask <- ezwarp(x=esri_sat, y=esri_sat, res=25, cutline = f,
                    options=c("-csql", "SELECT * FROM 'nc.gpkg' WHERE NAME = 'Jackson'"),
                    crop_to_cutline = TRUE, nodata = -99)
+#> gdalinfo - unable to open '/home/hugh/R/x86_64-pc-linux-gnu-library/4.2/sf/gpkg/nc.gpkg'.
 
 f_sf <- read_sf(f) |>  
   st_transform(vapour::vapour_raster_info(esri_sat)$projection)
 
 terra::plotRGB(nc.mask)
 plot(st_geometry(f_sf), add=TRUE, border='grey90')
-terra::plotRGB(stokes.mask)
+terra::plotRGB(jackson.mask)
 plot(st_geometry(f_sf), add=TRUE, border='grey10')
 ```
 
@@ -192,11 +201,17 @@ data in R. These objects happen also to be compatible with {rayshader…}
 library(rayshader)
 
 # get terrain as matrix
-nc_dtm.mat <- ezwarp(src, f_sf, cutline = f, crop_to_cutline = TRUE,
-                     res=200, out_class = 'matrix', nodata=-999, 
-                     resample = "lanczos") |> 
-  ray_shade(zscale=70)|> 
-  plot_map()
+nc_dtm.mat <- ezwarp(src, jackson.mask,
+                     res=50, out_class = 'matrix', nodata=-999, 
+                     resample = "lanczos") 
+nc_dtm.mat|> 
+  sphere_shade(texture = "imhof4") |> 
+  add_shadow(ray_shade(nc_dtm.mat, zscale=10, sunaltitude = 20,
+  sunangle = 200,), 0)|> 
+  plot_3d(nc_dtm.mat, zscale = 10,fov = 130, theta = 50, phi = 20, zoom=0.1, 
+          windowsize = c(1000, 800))
+Sys.sleep(0.2)
+render_depth(focallength = 300, clear = TRUE)
 ```
 
 <img src="man/figures/README-rayshade-example-1.png" width="100%" />

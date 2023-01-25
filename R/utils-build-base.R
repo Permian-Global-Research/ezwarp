@@ -4,7 +4,7 @@
 #'
 #' @return Rotated matrix
 #' @keywords internal
-#'
+#' @noRd
 rotate <- function(x){
   t(x[nrow(x):1,])
 }
@@ -16,7 +16,7 @@ rotate <- function(x){
 #'
 #' @return Rotated matrix
 #' @keywords internal
-#'
+#' @noRd
 matrix_thing <- function(.v, .p){
   m <- matrix(.v, .p$dimension)#[,g$dimension[2]:1, drop = F]
   rotate(m)
@@ -28,6 +28,7 @@ matrix_thing <- function(.v, .p){
 #' @param v list of numeric vectors from vapour
 #'
 #' @return matrix
+#' @noRd
 build_matrix <- function(p, v){
   
   
@@ -59,6 +60,7 @@ build_matrix <- function(p, v){
 #' @param v list of numeric vectors from vapour
 #'
 #' @return matrix
+#' @noRd
 build_vector <- function(p, v){
   
   attributes(v)$extent <- p$extent

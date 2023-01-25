@@ -4,7 +4,7 @@
 \alias{ezgrid}
 \title{Create an ezgrid object}
 \usage{
-ezgrid(extent, dimension = NULL, projection)
+ezgrid(extent, dimension = NULL, projection, source = NULL)
 }
 \arguments{
 \item{extent}{numeric vector with the following form: \code{c(xmin, xmax, ymin, ymax)}}
@@ -12,6 +12,8 @@ ezgrid(extent, dimension = NULL, projection)
 \item{dimension}{numeric vector, length 2. define the XY dimension of the grid: \code{c(x.dim, y.dim)}}
 
 \item{projection}{projection of warped raster (in Well-Known-Text, or any projection string accepted by GDAL)}
+
+\item{source}{default NULL an optional spatial source/file path. used internally.}
 }
 \value{
 an ezgrid object
@@ -26,3 +28,4 @@ ezgrid(extent=c(-180, 180, -90, 90),
   projection = 'EPSG:4326')
 
 }
+\concept{warp_grid_params}

@@ -58,7 +58,8 @@ supports in memory raster creation.}
 \item{...}{Additional args passed to \code{vapour::vapour_warp_raster}. Might be removed.}
 }
 \value{
-
+one of the following as defined in \code{out_class}: 'SpatRaster',
+'stars','matrix', 'vector'
 }
 \description{
 super handy warper but limited in that returns in memory SpatRast. May cause
@@ -81,6 +82,12 @@ and a list of vectors is returned for a multiband target.
 \examples{
 f <- system.file("ex/elev.tif", package="terra") 
 r.terra <- terra::rast(f)
-r1a <- ezwarp(f,f, res=1e-4)
-r1b <- ezwarp(r.terra,f, res=1e-4, engine = 'sf')
+
+ezwarp(f,f, res=1e-4)
+
+ezwarp(r.terra,f, res=1e-4, engine = 'sf', out_class="stars")
+
+v <- ezwarp(r.terra,f, res=1e-4, out_class="vector")[[1]] 
+hist(v)
 }
+\concept{warp_functions}

@@ -24,6 +24,8 @@
 #' supports in memory raster creation.
 #' @param ... Additional args passed to `vapour::vapour_warp_raster`. Might be removed.
 #' 
+#' @family warp_functions
+#' 
 #' @details 
 #' 
 #' When selecting the resample method, choose from the following options:
@@ -38,15 +40,20 @@
 #' If "vector" is used for `out_class`, a vector is returned for a single band target, 
 #' and a list of vectors is returned for a multiband target.
 #'
-#' @return
-#' @export
+#' @return one of the following as defined in `out_class`: 'SpatRaster', 
+#' 'stars','matrix', 'vector'
 #'
 #' @examples
 #' f <- system.file("ex/elev.tif", package="terra") 
 #' r.terra <- terra::rast(f)
-#' r1a <- ezwarp(f,f, res=1e-4)
-#' r1b <- ezwarp(r.terra,f, res=1e-4, engine = 'sf')
-
+#' 
+#' ezwarp(f,f, res=1e-4)
+#' 
+#' ezwarp(r.terra,f, res=1e-4, engine = 'sf', out_class="stars")
+#' 
+#' v <- ezwarp(r.terra,f, res=1e-4, out_class="vector")[[1]] 
+#' hist(v)
+#' @export
 ezwarp <- function(x,
                    y,
                    res,
@@ -109,6 +116,7 @@ ezwarp <- function(x,
   }
   
   if (is.null(bands)){
+    
     b_list <- lapply(x, bands_R_ras)
     
     if (!length(unique(b_list))==1){

@@ -5,6 +5,7 @@
 #' @param x 
 #'
 #' @return list
+#' @noRd
 check_in_form <- function(x){
   if (length(x)>1){
     if (class(x)!="list"){
@@ -25,6 +26,7 @@ check_in_form <- function(x){
 #' @param x 
 #'
 #' @return list
+#' @noRd
 check_grid_form <- function(x) {
   if (length(list(x)) > 1) {
     stop("Only one spatial source can be provied for argument `y`.")
@@ -40,6 +42,7 @@ check_grid_form <- function(x) {
 #' @param x 
 #'
 #' @return list
+#' @noRd
 check_res_form <- function(x, .res){
   if (missing(.res) & inherits(x, c("sf", "sfc", "SpatVector"))){
     no_res_vec_err()

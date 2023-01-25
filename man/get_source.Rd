@@ -9,36 +9,52 @@
 \alias{get_source.sf}
 \alias{get_source.sfc}
 \alias{get_source.SpatVector}
-\title{Check the source raster classes}
+\title{Get the source of a spatial object}
 \usage{
-get_source(s, force = FALSE)
+get_source(x, force = FALSE)
 
-\method{get_source}{SpatRaster}(s, force = FALSE)
+\method{get_source}{SpatRaster}(x, force = FALSE)
 
-\method{get_source}{stars}(s)
+\method{get_source}{stars}(x)
 
-\method{get_source}{stars_proxy}(s, force = FALSE)
+\method{get_source}{stars_proxy}(x, force = FALSE)
 
-\method{get_source}{character}(s)
+\method{get_source}{character}(x)
 
-\method{get_source}{sf}(s)
+\method{get_source}{sf}(x)
 
-\method{get_source}{sfc}(s)
+\method{get_source}{sfc}(x)
 
-\method{get_source}{SpatVector}(s)
+\method{get_source}{SpatVector}(x)
 }
 \arguments{
-\item{s}{a raster source - either character i.e a local source or remote.
+\item{x}{a raster source - either character i.e a local source or remote.
 If remote, src must be prefixed with relevant gdal module. e.g. "/vsicurl/"}
 
 \item{force}{Logical to determine if the SpatRaster or stars_proxy object should
-be resaved even if on disk sources exist.}
+be re-saved even if on disk sources exist.}
 }
 \value{
 character source.
 }
 \description{
-If a SpatRaster is provided the source of the raster is used. if it is in
-memory then and error is thrown. if character provided then assumed to be
-correct.
+A class agnostic function to return or create the source of a spatial object.
 }
+\details{
+If a SpatRaster is provided the source of the raster is used.
+}
+\examples{
+f <- system.file("ex/elev.tif", package="terra") 
+get_source(f)
+get_source(terra::rast(f), force=TRUE)
+f2 <- system.file("ex/lux.shp", package="terra") 
+get_source(f2)
+
+}
+\seealso{
+Other spatial helpers (class agnostic): 
+\code{\link{get_dim}()},
+\code{\link{get_ext}()},
+\code{\link{get_proj}()}
+}
+\concept{spatial helpers (class agnostic)}

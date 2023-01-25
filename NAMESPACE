@@ -2,7 +2,7 @@
 
 S3method(get_dim,SpatRaster)
 S3method(get_dim,SpatVector)
-S3method(get_dim,chracter)
+S3method(get_dim,character)
 S3method(get_dim,ezgrid)
 S3method(get_dim,sf)
 S3method(get_dim,sfc)

@@ -11,7 +11,7 @@
 #' @param centre Logical. If TRUE, the palette is centred around zero. good for bivariate/split palettes.
 #' @param n_quantile Numeric. if not NULL sets the number of quantile breaks to use for sciplot.SpatRaster. See details.
 #' @param ... additional args passed to plot.
-#' 
+#' @family plot_helpers
 #' @details 
 #' n_quantile sets quantile breaks for the colour palette. When using breaks, 
 #' terra::plot does not support continuous legend as is the default in stars.
@@ -79,6 +79,7 @@ sciplot.stars <- function(x, pal="acton", n = 11, direction=1,
 #' view {scico} colour palette options
 #' 
 #' @rdname sciplot
+#' @family plot_helpers
 #' @return character vector of scico palette names. see `scico::scico_palette_names()`
 #' @export
 #' 

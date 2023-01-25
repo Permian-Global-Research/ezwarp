@@ -4,6 +4,7 @@
 #' @param v a numeric vector with raster values
 #'
 #' @return a SpatRaster
+#' @noRd
 build_SpatRaster <- function(p, v){
   r <- terra::rast(
     terra::ext(p$extent),

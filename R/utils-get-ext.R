@@ -1,14 +1,25 @@
-#' get extent of spatial object
+#' Get spatial extent
 #'
-#' get extent of spatial object
-#' @title get_ext: get projection of a spatial object
-#' @param x ...
+#' A class agnostic function to return the bounding extent (i.e. bounding box) of
+#' a spatial object. 
+#' 
+#' @param x A spatial object, file path or source
+#' @param ... Not used
+#' @family spatial helpers (class agnostic)
+#' @rdname get_ext
+#' @return A numeric vector of length 4. Values are returned as: "xmin", "xmax", "ymin", "ymax"
+#' @examples
+#' f <- system.file("ex/elev.tif", package="terra") 
+#' get_ext(f)
+#' get_ext(terra::rast(f))
+#' f2 <- system.file("ex/lux.shp", package="terra") 
+#' get_ext(f2)
 #' @export
 get_ext <- function(x, ...) {
   UseMethod("get_ext")
 }
 
-#' @rdname get_proj
+#' @rdname get_ext
 #' 
 #' @export
 get_ext.SpatRaster <- function(x,...){
@@ -16,14 +27,14 @@ get_ext.SpatRaster <- function(x,...){
   x@ptr$extent@.xData[["vector"]]
 }
 
-#' @rdname get_proj
+#' @rdname get_ext
 #' 
 #' @export
 get_ext.SpatVector <- function(x,...){
   as.vector(terra::ext(x)) # Can't locate the correct slot so using the ext function.
 }
 
-#' @rdname get_proj
+#' @rdname get_ext
 #' 
 #' @export
 get_ext.sf <- function(x,...){
@@ -31,35 +42,35 @@ get_ext.sf <- function(x,...){
   attr(x[[attr(x, "sf_column")]], "bbox")[c("xmin", "xmax", "ymin", "ymax")]
 }
 
-#' @rdname get_proj
+#' @rdname get_ext
 #' 
 #' @export
 get_ext.sfc <- function(x, ...){
   attr(x, "bbox")[c("xmin", "xmax", "ymin", "ymax")]
 }
 
-#' @rdname get_proj
+#' @rdname get_ext
 #' 
 #' @export
 get_ext.stars <- function(x, ...){
   stars_ext(x)
 }
 
-#' @rdname get_proj
+#' @rdname get_ext
 #' 
 #' @export
 get_ext.stars_proxy <- function(x, ...){
   stars_ext(x)
 }
 
-#' @rdname get_proj
+#' @rdname get_ext
 #' 
 #' @export
 get_ext.ezgrid <- function(x, ...){
   x$extent
 }
 
-#' @rdname get_proj
+#' @rdname get_ext
 #' 
 #' @export
 get_ext.character <- function(x, ...){

@@ -65,3 +65,4 @@ sciplot(r.stars)
 
 sciplot_pals()
 }
+\concept{plot_helpers}

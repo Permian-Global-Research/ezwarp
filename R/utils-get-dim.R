@@ -1,8 +1,20 @@
-#' get projection of spatial object
+#' Get spatial Dimension
 #'
-#' get projection of spatial object
-#' @title get_proj: get projection of a spatial object
-#' @param x ...
+#' A class agnostic function to return the dimensions of a spatial object. Only
+#' applicable for rasters - spatial vectors will return NULL.
+#' 
+#' @param x A spatial object, file path or source
+#' @param ... Not used
+#' @family spatial helpers (class agnostic)
+#' @rdname get_dim
+#' 
+#' @examples 
+#' f <- system.file("ex/elev.tif", package="terra") 
+#' get_dim(f)
+#' get_dim(terra::rast(f))
+#' f2 <- system.file("ex/lux.shp", package="terra") 
+#' get_dim(f2)
+#' 
 #' @export
 get_dim <- function(x, ...) {
   UseMethod("get_dim")
@@ -53,7 +65,7 @@ get_dim.stars_proxy <- function(x, ...){
 #' @rdname get_dim
 #' 
 #' @export
-get_dim.chracter <- function(x, ...){
+get_dim.character <- function(x, ...){
   read_spat_info(x, val='dimension')
 }
 

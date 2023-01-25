@@ -6,8 +6,9 @@
 #' @param extent numeric vector with the following form: `c(xmin, xmax, ymin, ymax)`
 #' @param dimension numeric vector, length 2. define the XY dimension of the grid: `c(x.dim, y.dim)`
 #' @param projection projection of warped raster (in Well-Known-Text, or any projection string accepted by GDAL)
-#'
+#' @param source default NULL an optional spatial source/file path. used internally.
 #' @return an ezgrid object
+#' @family warp_grid_params
 #' @export
 #'
 #' @examples
@@ -15,14 +16,15 @@
 #'   dimension = c(180, 90), 
 #'   projection = 'EPSG:4326')
 #' 
-ezgrid <- function(extent, dimension=NULL, projection){
+ezgrid <- function(extent, dimension=NULL, projection, source=NULL){
   
   x <- is_grid_valid(extent, dimension, projection)
   
   ezg <- structure(list(
     extent=x$extent,
     dimension=x$dimension,
-    projection=x$projection
+    projection=x$projection,
+    source=source
   ), class = "ezgrid")
   ezg
 }

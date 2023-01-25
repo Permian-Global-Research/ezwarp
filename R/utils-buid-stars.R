@@ -4,6 +4,7 @@
 #' @param v a numeric vector with raster values
 #'
 #' @return a stars object
+#' @noRd
 build_stars <- function(p, v) {
   # aa <- array(unlist(v, use.names = FALSE), c(p$dimension[1], p$dimension[2], length(v)))[,p$dimension[2]:1, , drop = FALSE]
   # if (length(v) == 1) aa <- aa[,,1, drop = TRUE]

@@ -8,6 +8,7 @@
 #' @param f
 #'
 #' @return
+#' @noRd
 round_nearest = function(x, accuracy, f = round) {
   f(x / accuracy) * accuracy
 }
@@ -18,6 +19,7 @@ round_nearest = function(x, accuracy, f = round) {
 #' @param .res 
 #'
 #' @return vector with bbox dims
+#' @noRd
 round_bbox <- function(.box, .res) {
   big <- round_nearest(.box[c(2, 4)], .res, f = ceiling)
   small <- round_nearest(.box[c(1, 3)], .res, f = floor)
@@ -30,6 +32,7 @@ round_bbox <- function(.box, .res) {
 #' @param .res 
 #'
 #' @return numeric vector xy dims
+#' @noRd
 dims_from_box <- function(.box, .res) {
   x = .box[2] - .box[1]
   y = .box[4] - .box[3]
@@ -43,6 +46,7 @@ dims_from_box <- function(.box, .res) {
 #' @param res 
 #'
 #' @return
+#' @noRd
 build_warp_inputs <- function(x, y, res) {
   
   x <- build_sources(x)

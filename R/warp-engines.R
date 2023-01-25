@@ -11,6 +11,7 @@
 
 #'
 #' @return
+#' @noRd
 sf_warp_util <- function(params,
                         destination,
                         resample,
@@ -51,6 +52,7 @@ sf_warp_util <- function(params,
 #' @param ... passed to `vapour::vapour_warp_raster`
 #'
 #' @return
+#' @noRd
 vapour_warp_util <- function(params, bands, resample, opts, ...){
   v <- vapour::vapour_warp_raster(
     x = vapour::vapour_vrt(params$x),

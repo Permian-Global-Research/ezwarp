@@ -1,8 +1,20 @@
-#' get projection of spatial object
+#' Get Spatial Projection
 #'
-#' get projection of spatial object
-#' @title get_proj: get projection of a spatial object
-#' @param x ...
+#' A class agnostic function to return the projection of a spatial object or 
+#' source. returned projection uses wkt format.
+#' 
+#' @param x A spatial object, file path or source
+#' @param ... Not used
+#' @family spatial helpers (class agnostic)
+#' @return A character - WKT projection string.
+#' 
+#' @examples
+#' f <- system.file("ex/elev.tif", package="terra") 
+#' get_proj(f)
+#' get_proj(terra::rast(f))
+#' f2 <- system.file("ex/lux.shp", package="terra") 
+#' get_proj(f2)
+#' 
 #' @export
 get_proj <- function(x, ...) {
   UseMethod("get_proj")

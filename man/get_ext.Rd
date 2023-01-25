@@ -2,16 +2,57 @@
 % Please edit documentation in R/utils-get-ext.R
 \name{get_ext}
 \alias{get_ext}
-\title{get_ext: get projection of a spatial object}
+\alias{get_ext.SpatRaster}
+\alias{get_ext.SpatVector}
+\alias{get_ext.sf}
+\alias{get_ext.sfc}
+\alias{get_ext.stars}
+\alias{get_ext.stars_proxy}
+\alias{get_ext.ezgrid}
+\alias{get_ext.character}
+\title{Get spatial extent}
 \usage{
 get_ext(x, ...)
+
+\method{get_ext}{SpatRaster}(x, ...)
+
+\method{get_ext}{SpatVector}(x, ...)
+
+\method{get_ext}{sf}(x, ...)
+
+\method{get_ext}{sfc}(x, ...)
+
+\method{get_ext}{stars}(x, ...)
+
+\method{get_ext}{stars_proxy}(x, ...)
+
+\method{get_ext}{ezgrid}(x, ...)
+
+\method{get_ext}{character}(x, ...)
 }
 \arguments{
-\item{x}{...}
+\item{x}{A spatial object, file path or source}
+
+\item{...}{Not used}
+}
+\value{
+A numeric vector of length 4. Values are returned as: "xmin", "xmax", "ymin", "ymax"
 }
 \description{
-get extent of spatial object
+A class agnostic function to return the bounding extent (i.e. bounding box) of
+a spatial object.
 }
-\details{
-get extent of spatial object
+\examples{
+f <- system.file("ex/elev.tif", package="terra") 
+get_ext(f)
+get_ext(terra::rast(f))
+f2 <- system.file("ex/lux.shp", package="terra") 
+get_ext(f2)
 }
+\seealso{
+Other spatial helpers (class agnostic): 
+\code{\link{get_dim}()},
+\code{\link{get_proj}()},
+\code{\link{get_source}()}
+}
+\concept{spatial helpers (class agnostic)}

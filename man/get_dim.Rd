@@ -8,9 +8,9 @@
 \alias{get_dim.sfc}
 \alias{get_dim.stars}
 \alias{get_dim.stars_proxy}
-\alias{get_dim.chracter}
+\alias{get_dim.character}
 \alias{get_dim.ezgrid}
-\title{get_proj: get projection of a spatial object}
+\title{Get spatial Dimension}
 \usage{
 get_dim(x, ...)
 
@@ -26,16 +26,31 @@ get_dim(x, ...)
 
 \method{get_dim}{stars_proxy}(x, ...)
 
-\method{get_dim}{chracter}(x, ...)
+\method{get_dim}{character}(x, ...)
 
 \method{get_dim}{ezgrid}(x, ...)
 }
 \arguments{
-\item{x}{...}
+\item{x}{A spatial object, file path or source}
+
+\item{...}{Not used}
 }
 \description{
-get projection of spatial object
+A class agnostic function to return the dimensions of a spatial object. Only
+applicable for rasters - spatial vectors will return NULL.
 }
-\details{
-get projection of spatial object
+\examples{
+f <- system.file("ex/elev.tif", package="terra") 
+get_dim(f)
+get_dim(terra::rast(f))
+f2 <- system.file("ex/lux.shp", package="terra") 
+get_dim(f2)
+
 }
+\seealso{
+Other spatial helpers (class agnostic): 
+\code{\link{get_ext}()},
+\code{\link{get_proj}()},
+\code{\link{get_source}()}
+}
+\concept{spatial helpers (class agnostic)}
