@@ -2,8 +2,8 @@
 % Please edit documentation in R/ezwarp-package.R
 \docType{package}
 \name{ezwarp-package}
-\alias{ezwarp}
 \alias{ezwarp-package}
+\alias{_PACKAGE}
 \title{ezwarp: A utility tool for working with gdal warp in R}
 \description{
 What the package does (one paragraph).

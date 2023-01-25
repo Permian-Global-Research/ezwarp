@@ -9,7 +9,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.path = "man/figures/README-",
-  cache=TRUE,
+  cache=FALSE,
   out.width = "100%",
   warning = FALSE,
   message = FALSE
@@ -94,7 +94,7 @@ a general plotting function `sciplot` is provided to make use of the great scien
 colour palettes provided in the [{scico}](https://github.com/thomasp85/scico) package.
 
 
-```{r simple-world, figures-side, fig.show="hold", out.width="50%"}
+```{r simple-world, fig.show='hold', out.width="50%"}
 library(ezwarp)
 library(terra)
 template <- ezgrid(c(-180, 180, -90, 90),
@@ -136,7 +136,7 @@ also demonstrates how ezwarp handles multiple bands, in this case with the esri
 satellite WMS layer. By default, all bands are read - this can be changed with 
 the `bands` argument.
 
-```{r mask-che, figures-side, fig.show="hold", out.width="50%"}
+```{r mask-che, fig.show='hold', out.width="50%"}
 library(sf)
 
 esri_sat <- "<GDAL_WMS><Service name=\"TMS\"><ServerUrl>http://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/${z}/${y}/${x}</ServerUrl></Service><DataWindow><UpperLeftX>-20037508.34</UpperLeftX><UpperLeftY>20037508.34</UpperLeftY><LowerRightX>20037508.34</LowerRightX><LowerRightY>-20037508.34</LowerRightY><TileLevel>17</TileLevel><TileCountX>1</TileCountX><TileCountY>1</TileCountY><YOrigin>top</YOrigin></DataWindow><Projection>EPSG:900913</Projection><BlockSizeX>256</BlockSizeX><BlockSizeY>256</BlockSizeY><BandsCount>3</BandsCount><MaxConnections>10</MaxConnections><Cache /></GDAL_WMS>"
@@ -164,7 +164,7 @@ This example is just to illustrate that *ezwarp* can handle differing inputs as
 sources - url/filepath/SpatRaster/stars and can use all of these along 
 with sf/sfc/SpatVector/ezgrid as a target (y) too. 
 
-```{r mixed-source, figures-side, fig.show="hold", out.width="33%", warning=FALSE, message=FALSE}
+```{r mixed-source, fig.show='hold', out.width="33%", warning=FALSE, message=FALSE}
 
 nc_sub1 <- f_sf[1:10,]
 nc_sub2 <- vect(f_sf[90:100,])

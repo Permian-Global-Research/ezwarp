@@ -101,7 +101,7 @@ sciplot(world.el.terra, pal='bukavu', centre=TRUE)
 sciplot(world.el.stars, pal='oleron', n =256, centre=TRUE)
 ```
 
-<img src="man/figures/README-simple-world, figures-side-1.png" width="50%" /><img src="man/figures/README-simple-world, figures-side-2.png" width="50%" />
+<img src="man/figures/README-simple-world-1.png" width="50%" /><img src="man/figures/README-simple-world-2.png" width="50%" />
 
 The `cutline` argument can be used to mask regions with a input spatial
 vector. Here we demonstrate this by using an online [geojson of
@@ -159,7 +159,7 @@ terra::plotRGB(jackson.mask)
 plot(st_geometry(f_sf), add=TRUE, border='grey10')
 ```
 
-<img src="man/figures/README-mask-che, figures-side-1.png" width="50%" /><img src="man/figures/README-mask-che, figures-side-2.png" width="50%" />
+<img src="man/figures/README-mask-che-1.png" width="50%" /><img src="man/figures/README-mask-che-2.png" width="50%" />
 
 This example is just to illustrate that *ezwarp* can handle differing
 inputs as sources - url/filepath/SpatRaster/stars and can use all of
@@ -190,7 +190,7 @@ sciplot(multi.ras, pal = 'romaO', reset=FALSE)
 plot(st_geometry(f_sf), add=TRUE, border='grey30', reset=TRUE)
 ```
 
-<img src="man/figures/README-mixed-source, figures-side-1.png" width="33%" /><img src="man/figures/README-mixed-source, figures-side-2.png" width="33%" /><img src="man/figures/README-mixed-source, figures-side-3.png" width="33%" />
+<img src="man/figures/README-mixed-source-1.png" width="33%" /><img src="man/figures/README-mixed-source-2.png" width="33%" /><img src="man/figures/README-mixed-source-3.png" width="33%" />
 
 A matrix output class is also supported. This will return a matrix if
 the source has only one band (or only one is requested). A

@@ -1,4 +1,6 @@
 #' @keywords internal
+#' @aliases ezwarp-package
+
 "_PACKAGE"
 
 ## usethis namespace: start
