@@ -12,6 +12,7 @@
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![codecov](https://codecov.io/gh/Permian-Global-Research/ezwarp/branch/main/graph/badge.svg?token=4I9PAMOY5I)](https://codecov.io/gh/Permian-Global-Research/ezwarp)
+[![R-CMD-check](https://github.com/Permian-Global-Research/ezwarp/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Permian-Global-Research/ezwarp/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 ### Overview

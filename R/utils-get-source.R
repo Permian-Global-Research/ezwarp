@@ -61,7 +61,7 @@ t.star <- function(r){
 #' @rdname get_source
 #' 
 #' @export
-get_source.stars <- function(x) {
+get_source.stars <- function(x, force=FALSE) {
   check_stars()
   t.star(x)
 }
@@ -80,28 +80,28 @@ get_source.stars_proxy <- function(x, force=FALSE) {
 #' @rdname get_source
 #' 
 #' @export
-get_source.character <- function(x){
+get_source.character <- function(x, force=FALSE){
   read_spat_info(x, val='source')
 } 
 
 #' @rdname get_source
 #' 
 #' @export
-get_source.sf <- function(x){
+get_source.sf <- function(x, force=FALSE){
   sf_temp_save(x)
 }
 
 #' @rdname get_source
 #' 
 #' @export
-get_source.sfc <- function(x){
+get_source.sfc <- function(x, force=FALSE){
   sf_temp_save(x)
 }
 
 #' @rdname get_source
 #' 
 #' @export
-get_source.SpatVector <- function(x){
+get_source.SpatVector <- function(x, force=FALSE){
   check_terra()
   s.file <- tempfile(fileext = '.fgb')
   terra::writeVector(x, s.file, filetype='FlatGeobuf', options=NULL )

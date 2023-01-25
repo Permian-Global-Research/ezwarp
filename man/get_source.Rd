@@ -15,17 +15,17 @@ get_source(x, force = FALSE)
 
 \method{get_source}{SpatRaster}(x, force = FALSE)
 
-\method{get_source}{stars}(x)
+\method{get_source}{stars}(x, force = FALSE)
 
 \method{get_source}{stars_proxy}(x, force = FALSE)
 
-\method{get_source}{character}(x)
+\method{get_source}{character}(x, force = FALSE)
 
-\method{get_source}{sf}(x)
+\method{get_source}{sf}(x, force = FALSE)
 
-\method{get_source}{sfc}(x)
+\method{get_source}{sfc}(x, force = FALSE)
 
-\method{get_source}{SpatVector}(x)
+\method{get_source}{SpatVector}(x, force = FALSE)
 }
 \arguments{
 \item{x}{a raster source - either character i.e a local source or remote.

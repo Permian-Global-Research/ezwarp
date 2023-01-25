@@ -100,7 +100,7 @@ ezwarp <- function(x,
       if (length(terra::sources(r))>1){
         return(get_source(r, force=TRUE))
       } else {
-        return(sources(r))
+        return(terra::sources(r))
       }
       
     } else if (inherits(r, c("stars_proxy"))){
