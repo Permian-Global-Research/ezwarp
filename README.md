@@ -11,6 +11,7 @@
 
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![codecov](https://codecov.io/gh/Permian-Global-Research/ezwarp/branch/main/graph/badge.svg?token=4I9PAMOY5I)](https://codecov.io/gh/Permian-Global-Research/ezwarp)
 <!-- badges: end -->
 
 ### Overview
