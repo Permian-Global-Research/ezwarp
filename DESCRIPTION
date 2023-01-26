@@ -4,7 +4,11 @@ Version: 0.0.2.0
 Authors@R: 
     person("Hugh", "Graham", , "hugh.graham@permianglobal.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-9451-5010"))
-Description: What the package does (one paragraph).
+Description: The goal of ezwarp is to simplify the use of gdalwarp in R. 
+    gdalwarp is a very powerful and fast Image reprojection and warping utility. 
+    It can be used to reproject (i.e. transform to a new Coordinate Reference 
+    System), crop, mask and resample. Unlike many tools in R, this can all be done 
+    in a single command, using the warp tool, saving time and code.
 License: Apache License (>= 2)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -23,4 +27,6 @@ Suggests:
 Config/testthat/edition: 3
 Depends: 
     R (>= 4.1.0)
-URL: https://permian-global-research.github.io/ezwarp/
+URL: https://github.com/Permian-Global-Research/ezwarp,
+    https://permian-global-research.github.io/ezwarp/
+BugReports: https://github.com/Permian-Global-Research/ezwarp/issues
