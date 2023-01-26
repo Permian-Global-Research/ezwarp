@@ -75,11 +75,15 @@ remotes::install_github("Permian-Global-Research/ezwarp")
 
 ### Examples
 
-A very simple example, defining the grid manually with ezgrid. Here we
-use the excellent global GEBCO elevation dataset from … Now clearly
-downloading at full resolution would take forever. So, using gdalwarp we
-can resample to a more modest resolution - in this case 0.5 degrees - by
-manually setting the dimension.
+A very simple example, defining the grid manually with `ezgrid`. Here we
+use the excellent [GEBCO
+elevation](https://www.gebco.net/data_and_products/gridded_bathymetry_data/gebco_2021/)
+dataset via the [Australian Antarctic Data
+Centre](https://data.aad.gov.au/datasets/science/GEBCO_2021_GEOTIFF)’s
+Cloud optimized Geotiff (COG). Now, clearly downloading at full
+resolution would take forever. So, using gdalwarp we can resample to a
+more modest resolution - in this case 0.5 degrees - by manually setting
+the dimension.
 
 Note that the output can be either a SpatRaster or stars object. Also,
 see that a general plotting function `sciplot` is provided to make use
@@ -104,12 +108,13 @@ sciplot(world.el.stars, pal='oleron', n =256, centre=TRUE)
 <img src="man/figures/README-simple-world-1.png" width="50%" /><img src="man/figures/README-simple-world-2.png" width="50%" />
 
 The `cutline` argument can be used to mask regions with a input spatial
-vector. Here we demonstrate this by using an online [geojson of
-Madagascar](https://www.geoboundaries.org/downloadCGAZ.html) directly.
-Note also that we reuse the source as the target (y) but set the `res`
-argument to 0.5 to make sure we resample the grid. We also specify
+vector. Here we demonstrate this by using an online geojson of
+Madagascar from the [geoboundaries
+database](https://www.geoboundaries.org/downloadCGAZ.html) directly.
+Note also that we reuse the source as the target `y` but set the `res`
+argument to 0.5 to make sure we rescale the grid. We also specify
 `crop_to_cutline = TRUE` otherwise the extent will default to that
-defined by `y`. In this example, the ‘sf’ warp engine is used rather
+defined by `y`. In this example, the ‘sf’ warp `engine` is used rather
 than ‘vapour’.
 
 ``` r
