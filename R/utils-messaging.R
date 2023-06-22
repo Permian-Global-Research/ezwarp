@@ -50,7 +50,7 @@ no_terra_error <- function() {
     )
 }
 
-# Warper Messages ---------------------------------------------------------------
+# Warper Messages --------------------------------------------------------------
 
 check_options_error <- function(opt) {
     if (opt == "-crop_to_cutline") {
@@ -151,7 +151,7 @@ spat_source_error <- function(x) {
     ))
 }
 
-# ezgrid Messages ---------------------------------------------------------------
+# ezgrid Messages --------------------------------------------------------------
 
 missing_param_error <- function(val) {
     cli::cli_abort("Can't return param {val} from ezgrid")

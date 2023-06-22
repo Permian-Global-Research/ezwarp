@@ -71,7 +71,10 @@ ezwarp <- function(x,
                    cutline = NULL,
                    crop_to_cutline = FALSE,
                    nodata = NULL,
-                   out_class = c("SpatRaster", "stars", "path", "rayshader", "vector"),
+                   out_class = c(
+                     "SpatRaster", "stars", "path",
+                     "rayshader", "vector"
+                   ),
                    filename = NULL,
                    overwrite = TRUE,
                    options = "",
