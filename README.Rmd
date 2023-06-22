@@ -9,7 +9,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.path = "man/figures/README-",
-  cache=TRUE,
+  cache = TRUE,
   out.width = "100%",
   warning = FALSE,
   message = FALSE
@@ -77,7 +77,7 @@ classes may be supported in the future.
 ### Installation
 
 ```{r, install, eval=FALSE}
-#install.packages("remotes")
+# install.packages("remotes")
 remotes::install_github("Permian-Global-Research/ezwarp")
 ```
 
@@ -99,16 +99,16 @@ colour palettes provided in the [{scico}](https://github.com/thomasp85/scico) pa
 library(ezwarp)
 library(terra)
 template <- ezgrid(c(-180, 180, -90, 90),
-                   dimension = c(720, 360),
-                   projection='EPSG:4326')
+  dimension = c(720, 360),
+  projection = "EPSG:4326"
+)
 
 src <- "/vsicurl/https://public.services.aad.gov.au/datasets/science/GEBCO_2021_GEOTIFF/GEBCO_2021.tif"
 
-world.el.terra <- ezwarp(x=src, y=template)
-world.el.stars <- ezwarp(x=src, y=template, out_class = 'stars')
-sciplot(world.el.terra, pal='bukavu', centre=TRUE)
-sciplot(world.el.stars, pal='oleron', n =256, centre=TRUE)
-
+world.el.terra <- ezwarp(x = src, y = template)
+world.el.stars <- ezwarp(x = src, y = template, out_class = "stars")
+sciplot(world.el.terra, pal = "bukavu", centre = TRUE)
+sciplot(world.el.stars, pal = "oleron", n = 256, centre = TRUE)
 ```
 
 The `cutline` argument can be used to mask regions with a input spatial vector. 
@@ -119,12 +119,14 @@ directly. Note also that we reuse the source as the target `y` but set the
 In this example, the 'sf' warp `engine` is used rather than 'vapour'.
 
 ```{r mask-world}
-madagascar <-"https://github.com/wmgeolab/geoBoundariesArchive_4_0_0/raw/299e00623ece6c03bcb9a751eda6094b1eac85a6/releaseData/gbOpen/MDG/ADM0/geoBoundaries-MDG-ADM0.geojson"
+madagascar <- "https://github.com/wmgeolab/geoBoundariesArchive_4_0_0/raw/299e00623ece6c03bcb9a751eda6094b1eac85a6/releaseData/gbOpen/MDG/ADM0/geoBoundaries-MDG-ADM0.geojson"
 
-world.el.mask <- ezwarp(x=src, y=src, res=0.1, cutline = madagascar, 
-                        crop_to_cutline = TRUE, engine = 'sf')
+world.el.mask <- ezwarp(
+  x = src, y = src, res = 0.1, cutline = madagascar,
+  crop_to_cutline = TRUE, engine = "sf"
+)
 
-sciplot(world.el.mask, pal='lapaz' ) 
+sciplot(world.el.mask, pal = "lapaz")
 ```
 
 
@@ -144,21 +146,24 @@ esri_sat <- "<GDAL_WMS><Service name=\"TMS\"><ServerUrl>http://services.arcgison
 
 f <- system.file("gpkg", "nc.gpkg", package = "sf")
 
-nc.mask <- ezwarp(x=esri_sat, y=esri_sat, res=100, cutline = f,
-                   crop_to_cutline = TRUE, nodata = -99, engine="sf")
+nc.mask <- ezwarp(
+  x = esri_sat, y = esri_sat, res = 100, cutline = f,
+  crop_to_cutline = TRUE, nodata = -99, engine = "sf"
+)
 
-jackson.mask <- ezwarp(x=esri_sat, y=esri_sat, res=25, cutline = f,
-                   options=c("-csql", "SELECT * FROM 'nc.gpkg' WHERE NAME = 'Jackson'"),
-                   crop_to_cutline = TRUE, nodata = -99)
+jackson.mask <- ezwarp(
+  x = esri_sat, y = esri_sat, res = 25, cutline = f,
+  options = c("-csql", "SELECT * FROM 'nc.gpkg' WHERE NAME = 'Jackson'"),
+  crop_to_cutline = TRUE, nodata = -99
+)
 
-f_sf <- read_sf(f) |>  
+f_sf <- read_sf(f) |>
   st_transform(vapour::vapour_raster_info(esri_sat)$projection)
 
 terra::plotRGB(nc.mask)
-plot(st_geometry(f_sf), add=TRUE, border='grey90')
+plot(st_geometry(f_sf), add = TRUE, border = "grey90")
 terra::plotRGB(jackson.mask)
-plot(st_geometry(f_sf), add=TRUE, border='grey10')
-
+plot(st_geometry(f_sf), add = TRUE, border = "grey10")
 ```
 
 This example is just to illustrate that *ezwarp* can handle differing inputs as 
@@ -166,55 +171,62 @@ sources - url/filepath/SpatRaster/stars and can use all of these along
 with sf/sfc/SpatVector/ezgrid as a target (y) too. 
 
 ```{r mixed-source, fig.show='hold', out.width="33%", warning=FALSE, message=FALSE}
+nc_sub1 <- f_sf[1:10, ]
+nc_sub2 <- vect(f_sf[90:100, ])
 
-nc_sub1 <- f_sf[1:10,]
-nc_sub2 <- vect(f_sf[90:100,])
+nc_sub1.terra <- ezwarp(
+  x = src, y = nc_sub1, res = 100, cutline = nc_sub1,
+  crop_to_cutline = TRUE
+)
 
-nc_sub1.terra <- ezwarp(x=src, y=nc_sub1, res=100, cutline= nc_sub1,
-                        crop_to_cutline = TRUE) 
+nc_sub2.stars <- ezwarp(
+  x = src, y = nc_sub2, res = 200, cutline = nc_sub2,
+  crop_to_cutline = TRUE, out_class = "stars"
+)
 
-nc_sub2.stars <- ezwarp(x=src, y=nc_sub2, res=200, cutline= nc_sub2,
-                        crop_to_cutline = TRUE, out_class = 'stars')
-
-multi.ras <- ezwarp(x=list(nc_sub1.terra, nc_sub2.stars), 
-                    y=f_sf, res=200, out_class = 'stars')
-
-
-sciplot(nc_sub1.terra, pal = 'bamako')
-plot(st_geometry(f_sf), add=TRUE, border='grey30')
-
-sciplot(nc_sub2.stars, pal = 'vanimo', reset=FALSE)
-plot(st_geometry(f_sf), add=TRUE, border='grey30', reset=TRUE)
-
-sciplot(multi.ras, pal = 'romaO', reset=FALSE)
-plot(st_geometry(f_sf), add=TRUE, border='grey30', reset=TRUE)
+multi.ras <- ezwarp(
+  x = list(nc_sub1.terra, nc_sub2.stars),
+  y = f_sf, res = 200, out_class = "stars"
+)
 
 
+sciplot(nc_sub1.terra, pal = "bamako")
+plot(st_geometry(f_sf), add = TRUE, border = "grey30")
+
+sciplot(nc_sub2.stars, pal = "vanimo", reset = FALSE)
+plot(st_geometry(f_sf), add = TRUE, border = "grey30", reset = TRUE)
+
+sciplot(multi.ras, pal = "romaO", reset = FALSE)
+plot(st_geometry(f_sf), add = TRUE, border = "grey30", reset = TRUE)
 ```
 
-A matrix output class is also supported. This will return a matrix if the source 
-has only one band (or only one is requested). A multidimensional array is 
-returned when more than one band is present. The returned object includes 
-*extent*, *dimension* and *projections* attributes. This can be useful if you plan
-to directly manipulate your data in R. These objects happen also to 
-be compatible with {rayshader...}
+A rayshader-oriented matrix output class is also supported (i.e. North is up). 
+This will return a matrix if the source has only one band (or only one is 
+requested). A multidimensional array is returned when more than one band is 
+present. The returned object includes *extent*, *dimension* and *projections* 
+attributes. This can be useful if you plan to directly manipulate your data in 
+R. 
 
 ```{r rayshade-example}
 library(rayshader)
 
 # get terrain as matrix
 nc_dtm.mat <- ezwarp(src, jackson.mask,
-                     res=50, out_class = 'matrix', nodata=-999, 
-                     resample = "lanczos") 
-nc_dtm.mat|> 
-  sphere_shade(texture = "imhof4") |> 
-  add_shadow(ray_shade(nc_dtm.mat, zscale=10, sunaltitude = 20,
-  sunangle = 200,), 0)|> 
-  plot_3d(nc_dtm.mat, zscale = 10,fov = 130, theta = 50, phi = 20, zoom=0.1, 
-          windowsize = c(1000, 800))
+  res = 50, out_class = "rayshader", nodata = -999,
+  resample = "lanczos"
+)
+nc_dtm.mat |>
+  sphere_shade(texture = "imhof4") |>
+  add_shadow(ray_shade(nc_dtm.mat,
+    zscale = 10, sunaltitude = 20,
+    sunangle = 200,
+  ), 0) |>
+  plot_3d(nc_dtm.mat,
+    zscale = 10, fov = 130, theta = 50, phi = 20, zoom = 0.1,
+    windowsize = c(1000, 800)
+  )
 Sys.sleep(0.2)
 render_depth(focallength = 300, clear = TRUE)
-
 ```
 
 

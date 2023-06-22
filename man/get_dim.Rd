@@ -40,10 +40,10 @@ A class agnostic function to return the dimensions of a spatial object. Only
 applicable for rasters - spatial vectors will return NULL.
 }
 \examples{
-f <- system.file("ex/elev.tif", package="terra") 
+f <- system.file("ex/elev.tif", package = "terra")
 get_dim(f)
 get_dim(terra::rast(f))
-f2 <- system.file("ex/lux.shp", package="terra") 
+f2 <- system.file("ex/lux.shp", package = "terra")
 get_dim(f2)
 
 }

@@ -13,7 +13,7 @@ ezwarp(
   cutline = NULL,
   crop_to_cutline = FALSE,
   nodata = NULL,
-  out_class = c("SpatRaster", "stars", "matrix", "vector"),
+  out_class = c("SpatRaster", "stars", "path", "rayshader", "vector"),
   filename = NULL,
   overwrite = TRUE,
   options = "",
@@ -29,33 +29,39 @@ ezwarp(
 
 \item{res}{numeric. the resolution of the output SpatRaster.}
 
-\item{bands}{numeric which bands to use from the source. Only used if \code{engine="vapour"}}
+\item{bands}{numeric which bands to use from the source. Only used if
+\code{engine="vapour"}}
 
 \item{resample}{resampling method. default is bilinear, see details.}
 
-\item{cutline}{an sf, sfc, SpatVector or ogr-readable spatial vector source to mask the output raster. see -cutline argument in gdalwarp}
+\item{cutline}{an sf, sfc, SpatVector or ogr-readable spatial vector source
+to mask the output raster. see -cutline argument in gdalwarp}
 
-\item{crop_to_cutline}{logical. If TRUE, then the output will be cropped to the limits of the mask given in cutline.}
+\item{crop_to_cutline}{logical. If TRUE, then the output will be cropped to
+the limits of the mask given in cutline.}
 
 \item{nodata}{Numeric. No data value to be used for output.}
 
-\item{out_class}{default is "SpatRaster". Can be either "SpatRaster", "stars", "matrix", "vector"}
+\item{out_class}{default is "SpatRaster". Can be either "SpatRaster",
+"stars", "path", "rayshader", or "vector".}
 
-\item{filename}{the filepath for the out raster. if given and "vapour" is used
-for the engine, then the output SpatRaster/stars object will have a source.
-If NULL then an in memory raster is returned. If the sf engine is used and
-filename is NULL then a tempfile is used.}
+\item{filename}{the filepath for the out raster. if given and "vapour" is
+used for the engine, then the output SpatRaster/stars object will have a
+source. If NULL then an in memory raster is returned. If the sf engine is
+used and filename is NULL then a tempfile is used.}
 
 \item{overwrite}{logical - should a file be overwritten.}
 
 \item{options}{gdal options.}
 
-\item{compression}{default is "DEFLATE". character describing tif compression e.g. "LZW"}
+\item{compression}{default is "DEFLATE". character describing tif
+compression e.g. "LZW"}
 
-\item{engine}{either "vapour" or "sf". choose which warper to use. Only vapour
-supports in memory raster creation.}
+\item{engine}{either "vapour" or "sf". choose which warper to use.
+Only vapour supports in memory raster creation.}
 
-\item{...}{Additional args passed to \code{vapour::vapour_warp_raster}. Might be removed.}
+\item{...}{Additional args passed to \code{vapour::vapour_warp_raster}.
+Might be removed.}
 }
 \value{
 one of the following as defined in \code{out_class}: 'SpatRaster',
@@ -68,26 +74,29 @@ the cutline feature.
 }
 \details{
 When selecting the resample method, choose from the following options:
-'bilinear' (the default), 'near', 'cubic', 'cubicspline', 'lanczos', 'average', 'mode',
-'max', 'min', 'med', 'q1', 'q3', 'sum'. For details on these methods see: https://gdal.org/programs/gdalwarp.html
-If raster source is categorical make sure to use 'nearest'.
+'bilinear' (the default), 'near', 'cubic', 'cubicspline', 'lanczos',
+'average', 'mode', 'max', 'min', 'med', 'q1', 'q3', 'sum'. For details on
+these methods see: https://gdal.org/programs/gdalwarp.html. If raster source
+is categorical make sure to use 'nearest'.
 
-If "matrix" is used for \code{out_class}, then a matrix is returned if only one band
-is targeted. If multiple bands are targeted, then a n-dimensional array is returned.
-The matrix is returned oriented North is up.
+If "rayshader" is used for \code{out_class}, then a matrix is returned if only one
+band is targeted. If multiple bands are targeted, then a n-dimensional array
+is returned. The matrix is returned oriented North is up.
 
-If "vector" is used for \code{out_class}, a vector is returned for a single band target,
-and a list of vectors is returned for a multiband target.
+If "vector" is used for \code{out_class}, a vector is returned for a single band
+target, and a list of vectors is returned for a multiband target.
+
+If "path" is used for \code{out_class}, a path to the output raster is returned.
 }
 \examples{
-f <- system.file("ex/elev.tif", package="terra") 
+f <- system.file("ex/elev.tif", package = "terra")
 r.terra <- terra::rast(f)
 
-ezwarp(f,f, res=1e-4)
+ezwarp(f, f, res = 1e-4)
 
-ezwarp(r.terra,f, res=1e-4, engine = 'sf', out_class="stars")
+ezwarp(r.terra, f, res = 1e-4, engine = "sf", out_class = "stars")
 
-v <- ezwarp(r.terra,f, res=1e-4, out_class="vector")[[1]] 
+v <- ezwarp(r.terra, f, res = 1e-4, out_class = "vector")[[1]]
 hist(v)
 }
 \concept{warp_functions}
