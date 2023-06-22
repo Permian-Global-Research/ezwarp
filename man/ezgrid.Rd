@@ -7,13 +7,17 @@
 ezgrid(extent, dimension = NULL, projection, source = NULL)
 }
 \arguments{
-\item{extent}{numeric vector with the following form: \code{c(xmin, xmax, ymin, ymax)}}
+\item{extent}{numeric vector with the following form:
+\code{c(xmin, xmax, ymin, ymax)}}
 
-\item{dimension}{numeric vector, length 2. define the XY dimension of the grid: \code{c(x.dim, y.dim)}}
+\item{dimension}{numeric vector, length 2. define the XY dimension of the
+grid: \code{c(x.dim, y.dim)}}
 
-\item{projection}{projection of warped raster (in Well-Known-Text, or any projection string accepted by GDAL)}
+\item{projection}{projection of warped raster (in Well-Known-Text, or any
+projection string accepted by GDAL)}
 
-\item{source}{default NULL an optional spatial source/file path. used internally.}
+\item{source}{default NULL an optional spatial source/file path.
+used internally.}
 }
 \value{
 an ezgrid object
@@ -23,9 +27,11 @@ Create an ezgrid object to define a desired extent, projection and crs. Use this
 as the \code{y} argument in \code{ezwarp()}.
 }
 \examples{
-ezgrid(extent=c(-180, 180, -90, 90), 
-  dimension = c(180, 90), 
-  projection = 'EPSG:4326')
+ezgrid(
+  extent = c(-180, 180, -90, 90),
+  dimension = c(180, 90),
+  projection = "EPSG:4326"
+)
 
 }
 \concept{warp_grid_params}
