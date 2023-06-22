@@ -12,8 +12,9 @@ Description: The goal of ezwarp is to simplify the use of gdalwarp in R.
 License: Apache License (>= 2)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.3
 Imports: 
+    cli,
     graphics,
     scico,
     terra,
