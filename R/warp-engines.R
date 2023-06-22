@@ -52,7 +52,7 @@ sf_warp_util <- function(params,
 #' @return a vector of raster values.
 #' @noRd
 vapour_warp_util <- function(params, bands, resample, opts, ...) {
-  v <- vapour::vapour_warp_raster(
+  vapour::vapour_warp_raster(
     x = vapour::vapour_vrt(params$x),
     bands = bands,
     extent = params$extent,

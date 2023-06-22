@@ -6,7 +6,7 @@
 #' @keywords internal
 #' @noRd
 rotate <- function(x) {
-  t(x[nrow(x):1, ])
+  t(x[rev(seq_len(nrow(x))), ])
 }
 
 #' Internal function which is used to form a matrix from single vector band
@@ -24,8 +24,8 @@ matrix_thing <- function(.v, .p) {
 
 #' Build a Matrix from vapour vector
 #'
-#' @description This function is used to build a matrix from a vapour vector that
-#' conforms to the requirements of {rayshader}
+#' @description This function is used to build a matrix from a vapour vector
+#' that conforms to the requirements of {rayshader}
 #'
 #' @param p ezgrid object
 #' @param v list of numeric vectors from vapour
@@ -41,7 +41,7 @@ build_rayshader <- function(p, v) {
       c(p$dimension[2], p$dimension[1], length(v2))
     )[, p$dimension[1]:1, , drop = FALSE]
   } else {
-    m <- matrix(v[[1]], p$dimension[1])[, p$dimension[2]:1, drop = F]
+    m <- matrix(v[[1]], p$dimension[1])[, p$dimension[2]:1, drop = FALSE]
     m <- rotate(rotate(m)) |>
       apply(2, rev)
   }
