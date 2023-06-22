@@ -1,25 +1,24 @@
 url: https://permian-global-research.github.io/ezwarp/
 template:
   bootstrap: 5
-  bootswatch: solar
+  bootswatch: lux
   navbar:
     bg: primary
     type: dark
-  theme: arrow-dark
+  theme: arrow-light
   bslib:
-    primary: '#FF963A'
-    success: '#FF963A'
+    primary: "#FF5733"
+    success: "#FF5733"
 reference:
-- title: Warp a raster dataset
-  contents: contains("ezwarp")
-- title: Define warp paramaters
-  contents: ezgrid
-- title: Class Agnostic spatial helpers
-  contents:
-  - contains("get_dim")
-  - contains("get_ext")
-  - contains("get_proj")
-  - contains("get_source")
-- title: Plot helpers
-  contents: contains("sciplot")
-
+  - title: Warp a raster dataset
+    contents: contains("ezwarp")
+  - title: Define warp paramaters
+    contents: ezgrid
+  - title: Class Agnostic spatial helpers
+    contents:
+      - contains("get_dim")
+      - contains("get_ext")
+      - contains("get_proj")
+      - contains("get_source")
+  - title: Plot helpers
+    contents: contains("sciplot")
