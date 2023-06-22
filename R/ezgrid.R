@@ -73,6 +73,6 @@ is_dimension_valid <- function(x) {
 is_projection_valid <- function(x) {
   is.character(x[["projection"]]) &&
     length(x[["projection"]]) == 1 &&
-    nchar(x[["projection"]]) > 0 &&
-    !is.na(x[["projection"]])
+    !is.na(x[["projection"]]) &&
+    nchar(vapour::vapour_srs_wkt(x[["projection"]])) > 0
 }
