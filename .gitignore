@@ -9,3 +9,7 @@
 gdalwmscache/
 README_cache/
 docs
+
+.vscode
+
+README.html
