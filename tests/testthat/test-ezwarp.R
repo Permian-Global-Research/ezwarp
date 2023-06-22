@@ -109,11 +109,21 @@ test_that("ezwarp-basic-vapour-matrix", {
   expect_gt(sum(r1c, na.rm = TRUE), 0)
 })
 
+test_that("ezwarp-basic-vapour-matrix-source", {
+  r1c <- ezwarp(f, f,
+    res = 1e-4, out_class = "rayshader",
+    filename = tempfile(fileext = ".tif")
+  )
+
+  expect_gt(sum(r1c, na.rm = TRUE), 0)
+})
+
 test_that("ezwarp-basic-vapour-vector", {
   r1d <- ezwarp(f, f, res = 1e-4, out_class = "vector")
 
   expect_gt(sum(r1d[[1]], na.rm = TRUE), 0)
 })
+
 
 
 test_that("ezwarp-basic2-vapour", {
@@ -208,19 +218,19 @@ test_that("ezwarp-OUTCLASS-warn", {
 
 
 test_that("ezwarp-band-conflict-error", {
-  r.terra3 <- c(r_terra, sqrt(r_terra))
-  .l <- list(r.terra3, rast_obj200)
+  r_terra3 <- c(r_terra, sqrt(r_terra))
+  .l <- list(r_terra3, rast_obj200)
   expect_error(ezwarp(.l, r_terra))
 })
 
 test_that("ezwarp-band-conflict-pass", {
-  r.big <- (r_terra) * 1000
-  r.terra3 <- c(r_terra, r.big)
-  r.terra3b <- c(r_terra, sqrt(r_terra), sqrt(r_terra) * 10)
-  .l <- list(r.terra3b, r.terra3)
+  r_big <- (r_terra) * 1000
+  r_terra3 <- c(r_terra, r_big)
+  r_terra3b <- c(r_terra, sqrt(r_terra), sqrt(r_terra) * 10)
+  .l <- list(r_terra3b, r_terra3)
 
   x <- ezwarp(.l, r_terra, bands = 2)
-  expect_lt(sum(x[], na.rm = TRUE), sum(r.terra3[], na.rm = TRUE))
+  expect_lt(sum(x[], na.rm = TRUE), sum(r_terra3[], na.rm = TRUE))
 })
 
 

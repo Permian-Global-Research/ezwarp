@@ -38,7 +38,7 @@
 #' 'bilinear' (the default), 'near', 'cubic', 'cubicspline', 'lanczos',
 #' 'average', 'mode', 'max', 'min', 'med', 'q1', 'q3', 'sum'. For details on
 #' these methods see: https://gdal.org/programs/gdalwarp.html. If raster source
-#' is categorical make sure to use 'nearest'.
+#' is categorical make sure to use 'near'.
 #'
 #' If "rayshader" is used for `out_class`, then a matrix is returned if only one
 #' band is targeted. If multiple bands are targeted, then a n-dimensional array
@@ -176,7 +176,7 @@ on_disk_build_composer <- function(
     return(stars::read_stars(filename))
   } else if (out_class[1] %in% c("rayshader", "vector")) {
     # read from source
-    v <- vapour_warp_util(params, bands, resample, opts, ...)
+    v <- vapour_warp_util(params, bands, "near", opts, ...)
     if (out_class[1] == "rayshader") {
       return(build_rayshader(params, v))
     }
