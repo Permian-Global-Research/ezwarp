@@ -8,11 +8,11 @@ as the y argument in ezwarp()."><!-- mathjax --><script src="https://cdnjs.cloud
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
     
 
-    <nav class="navbar fixed-top navbar-dark navbar-expand-lg bg-dark"><div class="container">
+    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
     
     <a class="navbar-brand me-2" href="../index.html">ezwarp</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.2.01</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,19 +57,23 @@ as the <code>y</code> argument in <code><a href="ezwarp.html">ezwarp()</a></code
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>extent</dt>
-<dd><p>numeric vector with the following form: <code>c(xmin, xmax, ymin, ymax)</code></p></dd>
+<dd><p>numeric vector with the following form:
+<code>c(xmin, xmax, ymin, ymax)</code></p></dd>
 
 
 <dt>dimension</dt>
-<dd><p>numeric vector, length 2. define the XY dimension of the grid: <code>c(x.dim, y.dim)</code></p></dd>
+<dd><p>numeric vector, length 2. define the XY dimension of the
+grid: <code>c(x.dim, y.dim)</code></p></dd>
 
 
 <dt>projection</dt>
-<dd><p>projection of warped raster (in Well-Known-Text, or any projection string accepted by GDAL)</p></dd>
+<dd><p>projection of warped raster (in Well-Known-Text, or any
+projection string accepted by GDAL)</p></dd>
 
 
 <dt>source</dt>
-<dd><p>default NULL an optional spatial source/file path. used internally.</p></dd>
+<dd><p>default NULL an optional spatial source/file path.
+used internally.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -81,9 +85,11 @@ as the <code>y</code> argument in <code><a href="ezwarp.html">ezwarp()</a></code
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">ezgrid</span><span class="op">(</span>extent<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">180</span>, <span class="fl">180</span>, <span class="op">-</span><span class="fl">90</span>, <span class="fl">90</span><span class="op">)</span>, </span></span>
-<span class="r-in"><span>  dimension <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">180</span>, <span class="fl">90</span><span class="op">)</span>, </span></span>
-<span class="r-in"><span>  projection <span class="op">=</span> <span class="st">'EPSG:4326'</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">ezgrid</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  extent <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">180</span>, <span class="fl">180</span>, <span class="op">-</span><span class="fl">90</span>, <span class="fl">90</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  dimension <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">180</span>, <span class="fl">90</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  projection <span class="op">=</span> <span class="st">"EPSG:4326"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $extent</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] -180  180  -90   90</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>

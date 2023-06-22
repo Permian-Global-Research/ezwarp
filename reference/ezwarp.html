@@ -10,11 +10,11 @@ the cutline feature."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
     
 
-    <nav class="navbar fixed-top navbar-dark navbar-expand-lg bg-dark"><div class="container">
+    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
     
     <a class="navbar-brand me-2" href="../index.html">ezwarp</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.2.01</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,7 +63,7 @@ the cutline feature.</p>
 <span>  cutline <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  crop_to_cutline <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  nodata <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  out_class <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"SpatRaster"</span>, <span class="st">"stars"</span>, <span class="st">"matrix"</span>, <span class="st">"vector"</span><span class="op">)</span>,</span>
+<span>  out_class <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"SpatRaster"</span>, <span class="st">"stars"</span>, <span class="st">"path"</span>, <span class="st">"rayshader"</span>, <span class="st">"vector"</span><span class="op">)</span>,</span>
 <span>  filename <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  overwrite <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  options <span class="op">=</span> <span class="st">""</span>,</span>
@@ -88,7 +88,8 @@ the cutline feature.</p>
 
 
 <dt>bands</dt>
-<dd><p>numeric which bands to use from the source. Only used if <code>engine="vapour"</code></p></dd>
+<dd><p>numeric which bands to use from the source. Only used if
+<code>engine="vapour"</code></p></dd>
 
 
 <dt>resample</dt>
@@ -96,11 +97,13 @@ the cutline feature.</p>
 
 
 <dt>cutline</dt>
-<dd><p>an sf, sfc, SpatVector or ogr-readable spatial vector source to mask the output raster. see -cutline argument in gdalwarp</p></dd>
+<dd><p>an sf, sfc, SpatVector or ogr-readable spatial vector source
+to mask the output raster. see -cutline argument in gdalwarp</p></dd>
 
 
 <dt>crop_to_cutline</dt>
-<dd><p>logical. If TRUE, then the output will be cropped to the limits of the mask given in cutline.</p></dd>
+<dd><p>logical. If TRUE, then the output will be cropped to
+the limits of the mask given in cutline.</p></dd>
 
 
 <dt>nodata</dt>
@@ -108,14 +111,15 @@ the cutline feature.</p>
 
 
 <dt>out_class</dt>
-<dd><p>default is "SpatRaster". Can be either "SpatRaster", "stars", "matrix", "vector"</p></dd>
+<dd><p>default is "SpatRaster". Can be either "SpatRaster",
+"stars", "path", "rayshader", or "vector".</p></dd>
 
 
 <dt>filename</dt>
-<dd><p>the filepath for the out raster. if given and "vapour" is used
-for the engine, then the output SpatRaster/stars object will have a source.
-If NULL then an in memory raster is returned. If the sf engine is used and
-filename is NULL then a tempfile is used.</p></dd>
+<dd><p>the filepath for the out raster. if given and "vapour" is
+used for the engine, then the output SpatRaster/stars object will have a
+source. If NULL then an in memory raster is returned. If the sf engine is
+used and filename is NULL then a tempfile is used.</p></dd>
 
 
 <dt>overwrite</dt>
@@ -127,16 +131,18 @@ filename is NULL then a tempfile is used.</p></dd>
 
 
 <dt>compression</dt>
-<dd><p>default is "DEFLATE". character describing tif compression e.g. "LZW"</p></dd>
+<dd><p>default is "DEFLATE". character describing tif
+compression e.g. "LZW"</p></dd>
 
 
 <dt>engine</dt>
-<dd><p>either "vapour" or "sf". choose which warper to use. Only vapour
-supports in memory raster creation.</p></dd>
+<dd><p>either "vapour" or "sf". choose which warper to use.
+Only vapour supports in memory raster creation.</p></dd>
 
 
 <dt>...</dt>
-<dd><p>Additional args passed to <code><a href="https://rdrr.io/pkg/vapour/man/vapour_warp_raster.html" class="external-link">vapour::vapour_warp_raster</a></code>. Might be removed.</p></dd>
+<dd><p>Additional args passed to <code><a href="https://rdrr.io/pkg/vapour/man/vapour_warp_raster.html" class="external-link">vapour::vapour_warp_raster</a></code>.
+Might be removed.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -149,22 +155,24 @@ supports in memory raster creation.</p></dd>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>When selecting the resample method, choose from the following options:
-'bilinear' (the default), 'near', 'cubic', 'cubicspline', 'lanczos', 'average', 'mode',
-'max', 'min', 'med', 'q1', 'q3', 'sum'. For details on these methods see: https://gdal.org/programs/gdalwarp.html
-If raster source is categorical make sure to use 'nearest'.</p>
-<p>If "matrix" is used for <code>out_class</code>, then a matrix is returned if only one band
-is targeted. If multiple bands are targeted, then a n-dimensional array is returned.
-The matrix is returned oriented North is up.</p>
-<p>If "vector" is used for <code>out_class</code>, a vector is returned for a single band target,
-and a list of vectors is returned for a multiband target.</p>
+'bilinear' (the default), 'near', 'cubic', 'cubicspline', 'lanczos',
+'average', 'mode', 'max', 'min', 'med', 'q1', 'q3', 'sum'. For details on
+these methods see: https://gdal.org/programs/gdalwarp.html. If raster source
+is categorical make sure to use 'nearest'.</p>
+<p>If "rayshader" is used for <code>out_class</code>, then a matrix is returned if only one
+band is targeted. If multiple bands are targeted, then a n-dimensional array
+is returned. The matrix is returned oriented North is up.</p>
+<p>If "vector" is used for <code>out_class</code>, a vector is returned for a single band
+target, and a list of vectors is returned for a multiband target.</p>
+<p>If "path" is used for <code>out_class</code>, a path to the output raster is returned.</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"ex/elev.tif"</span>, package<span class="op">=</span><span class="st">"terra"</span><span class="op">)</span> </span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"ex/elev.tif"</span>, package <span class="op">=</span> <span class="st">"terra"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">r.terra</span> <span class="op">&lt;-</span> <span class="fu">terra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/rast.html" class="external-link">rast</a></span><span class="op">(</span><span class="va">f</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">ezwarp</span><span class="op">(</span><span class="va">f</span>,<span class="va">f</span>, res<span class="op">=</span><span class="fl">1e-4</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">ezwarp</span><span class="op">(</span><span class="va">f</span>, <span class="va">f</span>, res <span class="op">=</span> <span class="fl">1e-4</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> class       : SpatRaster </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> dimensions  : 7501, 7918, 1  (nrow, ncol, nlyr)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> resolution  : 1e-04, 1e-04  (x, y)</span>
@@ -175,17 +183,17 @@ and a list of vectors is returned for a multiband target.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> min value   :   141 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> max value   :   547 </span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">ezwarp</span><span class="op">(</span><span class="va">r.terra</span>,<span class="va">f</span>, res<span class="op">=</span><span class="fl">1e-4</span>, engine <span class="op">=</span> <span class="st">'sf'</span>, out_class<span class="op">=</span><span class="st">"stars"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">ezwarp</span><span class="op">(</span><span class="va">r.terra</span>, <span class="va">f</span>, res <span class="op">=</span> <span class="fl">1e-4</span>, engine <span class="op">=</span> <span class="st">"sf"</span>, out_class <span class="op">=</span> <span class="st">"stars"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> stars object with 2 dimensions and 1 attribute</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attribute(s), summary of first 1e+05 cells:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                       Min. 1st Qu. Median Mean 3rd Qu. Max.  NA's</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> file1f1d79d7cad1.tif    NA      NA     NA  NaN      NA   NA 1e+05</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> file1d8a4ad95398.tif    NA      NA     NA  NaN      NA   NA 1e+05</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> dimension(s):</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   from   to  offset  delta refsys point x/y</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> x    1 7918  5.7416  1e-04 WGS 84 FALSE [x]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> y    1 7501 50.1917 -1e-04 WGS 84 FALSE [y]</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">v</span> <span class="op">&lt;-</span> <span class="fu">ezwarp</span><span class="op">(</span><span class="va">r.terra</span>,<span class="va">f</span>, res<span class="op">=</span><span class="fl">1e-4</span>, out_class<span class="op">=</span><span class="st">"vector"</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> </span></span>
+<span class="r-in"><span><span class="va">v</span> <span class="op">&lt;-</span> <span class="fu">ezwarp</span><span class="op">(</span><span class="va">r.terra</span>, <span class="va">f</span>, res <span class="op">=</span> <span class="fl">1e-4</span>, out_class <span class="op">=</span> <span class="st">"vector"</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/pkg/terra/man/hist.html" class="external-link">hist</a></span><span class="op">(</span><span class="va">v</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="ezwarp-1.png" alt="" width="700" height="433"></span>
 </code></pre></div>
