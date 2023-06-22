@@ -169,7 +169,19 @@ process_options <- function(
   ))
 }
 
-
+#' Process bands of multiple sources
+#'
+#' Handles an edge case where sources with differing numbers of bands result in
+#' an error unless bands is specified. Also, where a SpartRaster comprises
+#' multiple sources, this splits them up to handle each source individually.
+#'
+#' @param x A raster type object, e.g. SpatRaster, stars or file path
+#' @param bands numeric. Desired bands.
+#' @param params warp params
+#'
+#' @return list with bands and params
+#' @noRd
+#'
 process_bands <- function(x, bands, params) {
   if (is.null(bands)) {
     b_list <- lapply(x, bands_r_ras, params = params)
