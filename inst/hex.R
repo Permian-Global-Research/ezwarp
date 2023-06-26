@@ -15,10 +15,14 @@ make_logo <- function(
     bgc = "#373654",
     viridis_pal = "mako",
     scico_pal = NULL,
-    src = "/vsicurl/https://public.services.aad.gov.au/datasets/science/GEBCO_2021_GEOTIFF/GEBCO_2021.tif") {
+    direction = 1,
+    src = paste0(
+        "/vsicurl/https://public.services.aad.gov.au/datasets/",
+        "science/GEBCO_2021_GEOTIFF/GEBCO_2021.tif"
+    )) {
     tf <- tempfile(fileext = ".png")
     p_logo <- data.frame(text = "ezwarp", .x = 0, .y = 0) |>
-        ggplot(aes(.x, .y, label = text)) +
+        ggplot(aes(".x", ".y", label = text)) +
         geom_text(size = text_size, family = "Racing Sans One") + # Monoton
         theme_void() +
         coord_fixed()
@@ -49,7 +53,7 @@ make_logo <- function(
     elev_na[elev_na <= 0] <- NA
 
     elv_df <- as.data.frame(elev_na, xy = TRUE)
-    library(viridisLite)
+
     gg1 <- ggplot(rv) +
         geom_sf_pattern(
             pattern = "gradient",
@@ -83,12 +87,14 @@ make_logo <- function(
     if (!is.null(scico_pal)) {
         gg1 <- gg1 + scico::scale_fill_scico(
             palette = scico_pal,
-            trans = scales::yj_trans(0.5)
+            trans = scales::yj_trans(0.5),
+            direction = direction
         )
     } else {
         gg1 <- gg1 + scale_fill_viridis_c(
             option = viridis_pal,
-            trans = scales::yj_trans(0.5)
+            trans = scales::yj_trans(0.5),
+            direction = direction
         )
     }
 
@@ -115,14 +121,12 @@ make_logo <- function(
 
 
 p <- make_logo(
-    .path = "inst/figures/ezwarp-hex.png",
+    .path = "man/figures/ezwarp-hex.png",
     p1 = "+proj=ob_tran +o_proj=moll +o_lon_p=40 +o_lat_p=70 +lon_0=152",
     p2 = "+proj=tpers +h=6500000 +lat_0=5 +lon_0=112 +azi=23.5",
     text_size = 35,
     bgc = "#736180",
-    scico_pal = "berlin"
+    scico_pal = "tokyo"
 )
 
 p
-
-sciplot_pals()
