@@ -113,7 +113,16 @@ make_logo <- function(
         border_colour = "white"
     ))
 
-    image_write(image = img, path = .path)
+    perm <- image_scale(
+        image_read(paste0(
+            "https://avatars.githubusercontent.com/u/",
+            "106586419?s=400&u=69fb140fd7d3f204f361e85dba7398ac33d88a03&v=4"
+        )),
+        "x150"
+    )
+
+    comp <- image_composite(img, perm, offset = "+1250-2800")
+    image_write(comp, .path)
 
     return(.path)
 }
@@ -130,3 +139,13 @@ p <- make_logo(
 )
 
 p
+# Compose images using one of many operators
+
+hex <- image_read("man/figures/ezwarp-hex.png")
+perm <- image_scale(
+    image_read("https://avatars.githubusercontent.com/u/106586419?s=400&u=69fb140fd7d3f204f361e85dba7398ac33d88a03&v=4"),
+    "x150"
+)
+# Standard is atop
+comp <- image_composite(hex, perm, offset = "+1250-2800")
+image_write(comp, "man/figures/ezwarp-hex-perm.png")
