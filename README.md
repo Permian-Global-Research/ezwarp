@@ -7,7 +7,7 @@
 
 # ezwarp
 
-<img align="right" width="250" src="inst/figures/ezwarp-hex.png">
+<img align="right" width="250" src="man/figures/ezwarp-hex.png">
 
 <!-- badges: start -->
 

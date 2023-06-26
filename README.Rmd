@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 
 # ezwarp 
 
-<img align="right" width="250" src="inst/figures/ezwarp-hex.png">
+<img align="right" width="250" src="man/figures/ezwarp-hex.png">
 
 <!-- badges: start -->
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
