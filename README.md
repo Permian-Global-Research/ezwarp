@@ -7,6 +7,8 @@
 
 # ezwarp
 
+<img align="right" width="250" src="inst/figures/ezwarp-hex.png">
+
 <!-- badges: start -->
 
 [![Lifecycle:
