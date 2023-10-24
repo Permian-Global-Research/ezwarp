@@ -24,7 +24,7 @@ get_ext <- function(x, ...) {
 #'
 #' @export
 get_ext.SpatRaster <- function(x, ...) {
-  terra::ext(x)
+  as.vector(terra::ext(x))
 }
 
 #' @rdname get_ext
