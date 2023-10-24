@@ -84,5 +84,5 @@ stars_crs <- function(x) {
 }
 
 terra_crs <- function(x) {
-  x@ptr$get_crs("wkt")
+  terra::crs(x)
 }
