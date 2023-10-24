@@ -24,7 +24,7 @@ get_dim <- function(x, ...) {
 #'
 #' @export
 get_dim.SpatRaster <- function(x, ...) {
-  c(x@ptr$ncol(), x@ptr$nrow())
+  c(terra::ncol(x), terra::nrow(x))
 }
 
 #' @rdname get_dim
