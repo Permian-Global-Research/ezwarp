@@ -10,3 +10,4 @@
 ^pkgdown$
 ^README_cache$
 ^.vscode$
+^gdalwmscache$

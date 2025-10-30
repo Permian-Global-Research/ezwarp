@@ -6,7 +6,7 @@
 #' https://stackoverflow.com/questions/34208564/how-to-hide-or-disable-in-function-printed-message
 #' @noRd
 .quiet <- function(x) {
-    sink(tempfile())
-    on.exit(sink())
-    invisible(force(x))
+  sink(tempfile())
+  on.exit(sink())
+  invisible(force(x))
 }

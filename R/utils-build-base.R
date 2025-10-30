@@ -54,7 +54,6 @@ build_rayshader <- function(p, v) {
 }
 
 
-
 #' Build a list of vectors from format
 #'
 #' @param p ezgrid object

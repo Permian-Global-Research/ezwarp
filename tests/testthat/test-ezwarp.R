@@ -64,18 +64,28 @@ test_that("ezwarp-basic-vapour-ezgrid2", {
 })
 
 test_that("ezwarp-basic-sf", {
-  r1b <- ezwarp(f, f,
-    res = 1e-4, engine = "sf", out_class = "stars",
-    nodata = -999, filename = tempfile(fileext = ".tif")
+  r1b <- ezwarp(
+    f,
+    f,
+    res = 1e-4,
+    engine = "sf",
+    out_class = "stars",
+    nodata = -999,
+    filename = tempfile(fileext = ".tif")
   )
 
   expect_gt(sum(r1b[[1]], na.rm = TRUE), 0)
 })
 
 test_that("ezwarp-basic-sf-path", {
-  r1b <- ezwarp(f, f,
-    res = 1e-4, engine = "sf", out_class = "path",
-    nodata = -999, filename = tempfile(fileext = ".tif")
+  r1b <- ezwarp(
+    f,
+    f,
+    res = 1e-4,
+    engine = "sf",
+    out_class = "path",
+    nodata = -999,
+    filename = tempfile(fileext = ".tif")
   )
 
   expect_gt(sum(terra::rast(r1b)[], na.rm = TRUE), 0)
@@ -83,9 +93,13 @@ test_that("ezwarp-basic-sf-path", {
 
 
 test_that("ezwarp-basic-vapour-stars-tofile", {
-  r1b <- ezwarp(f, f,
-    res = 1e-4, out_class = "stars",
-    nodata = -999, filename = tempfile(fileext = ".tif")
+  r1b <- ezwarp(
+    f,
+    f,
+    res = 1e-4,
+    out_class = "stars",
+    nodata = -999,
+    filename = tempfile(fileext = ".tif")
   )
 
   expect_gt(sum(r1b[[1]], na.rm = TRUE), 0)
@@ -110,8 +124,11 @@ test_that("ezwarp-basic-vapour-matrix", {
 })
 
 test_that("ezwarp-basic-vapour-matrix-source", {
-  r1c <- ezwarp(f, f,
-    res = 1e-4, out_class = "rayshader",
+  r1c <- ezwarp(
+    f,
+    f,
+    res = 1e-4,
+    out_class = "rayshader",
     filename = tempfile(fileext = ".tif")
   )
 
@@ -125,7 +142,6 @@ test_that("ezwarp-basic-vapour-vector", {
 })
 
 
-
 test_that("ezwarp-basic2-vapour", {
   r2 <- ezwarp(r_stars, r_terra, cutline = vect_obj300)
 
@@ -133,8 +149,11 @@ test_that("ezwarp-basic2-vapour", {
 })
 
 test_that("ezwarp-basic2-sf", {
-  r2 <- ezwarp(r_stars, r_terra,
-    cutline = vect_obj300, engine = "sf",
+  r2 <- ezwarp(
+    r_stars,
+    r_terra,
+    cutline = vect_obj300,
+    engine = "sf",
     crop_to_cutline = TRUE
   )
 
@@ -142,7 +161,9 @@ test_that("ezwarp-basic2-sf", {
 })
 
 test_that("ezwarp-basic3-vapour", {
-  r2 <- ezwarp(r_terra, r_stars,
+  r2 <- ezwarp(
+    r_terra,
+    r_stars,
     cutline = sf::st_as_sf(vect_obj200),
     crop_to_cutline = TRUE
   )
@@ -167,7 +188,6 @@ test_that("ezwarp-multisoure-test", {
 })
 
 
-
 test_that("ezwarp-vect-set", {
   r2 <- ezwarp(r_terra, vect_obj200, res = terra::res(r_terra)[1])
 
@@ -180,7 +200,6 @@ test_that("ezwarp-vectfile-set", {
 
   expect_lt(sum(r2[], na.rm = TRUE), sum(r_terra[], na.rm = TRUE))
 })
-
 
 
 test_that("ezwarp-list-vapour-mix", {
@@ -216,7 +235,6 @@ test_that("ezwarp-OUTCLASS-warn", {
 })
 
 
-
 test_that("ezwarp-band-conflict-error", {
   r_terra3 <- c(r_terra, sqrt(r_terra))
   .l <- list(r_terra3, rast_obj200)
@@ -234,20 +252,19 @@ test_that("ezwarp-band-conflict-pass", {
 })
 
 
-
 test_that("ezwarp-basic3-vapour", {
-  r1 <- ezwarp(f, f,
-    cutline = .file,
-    crop_to_cutline = TRUE
-  )
+  r1 <- ezwarp(f, f, cutline = .file, crop_to_cutline = TRUE)
 
-  r2 <- ezwarp(r_terra, r_stars,
+  r2 <- ezwarp(
+    r_terra,
+    r_stars,
     cutline = .file,
     crop_to_cutline = TRUE,
     options = c(
       "-csql",
       paste0(
-        "SELECT * FROM ", terra::vector_layers(.file),
+        "SELECT * FROM ",
+        terra::vector_layers(.file),
         " WHERE elevation >= 170"
       )
     )

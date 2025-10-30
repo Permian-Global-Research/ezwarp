@@ -52,7 +52,7 @@ check_n_bands <- function(b) {
 #' @noRd
 check_in_form <- function(x) {
   if (length(x) > 1) {
-    if (class(x) != "list") {
+    if (!inherits(x, "list")) {
       not_list_error(x)
     }
   } else {

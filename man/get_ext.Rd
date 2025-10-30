@@ -36,17 +36,18 @@ get_ext(x, ...)
 \item{...}{Not used}
 }
 \value{
-A numeric vector of length 4. Values are returned as: "xmin", "xmax", "ymin", "ymax"
+A numeric vector of length 4. Values are returned as:
+"xmin", "xmax", "ymin", "ymax"
 }
 \description{
-A class agnostic function to return the bounding extent (i.e. bounding box) of
-a spatial object.
+A class agnostic function to return the bounding extent (i.e. bounding box)
+of a spatial object.
 }
 \examples{
-f <- system.file("ex/elev.tif", package="terra") 
+f <- system.file("ex/elev.tif", package = "terra")
 get_ext(f)
 get_ext(terra::rast(f))
-f2 <- system.file("ex/lux.shp", package="terra") 
+f2 <- system.file("ex/lux.shp", package = "terra")
 get_ext(f2)
 }
 \seealso{

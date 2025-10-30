@@ -25,12 +25,15 @@
 ezgrid <- function(extent, dimension = NULL, projection, source = NULL) {
   x <- is_grid_valid(extent, dimension, projection)
 
-  ezg <- structure(list(
-    extent = x$extent,
-    dimension = x$dimension,
-    projection = x$projection,
-    source = source
-  ), class = "ezgrid")
+  ezg <- structure(
+    list(
+      extent = x$extent,
+      dimension = x$dimension,
+      projection = x$projection,
+      source = source
+    ),
+    class = "ezgrid"
+  )
   ezg
 }
 
@@ -42,7 +45,8 @@ is_grid_valid <- function(extent, dimension, projection) {
 
   if (!is_extent_valid(x)) invlaid_extent_error()
 
-  if ("dimXY" %in% names(x)) { # TODO: do we need this?
+  if ("dimXY" %in% names(x)) {
+    # TODO: do we need this?
     x[["dimension"]] <- x[["dimXY"]]
   }
 

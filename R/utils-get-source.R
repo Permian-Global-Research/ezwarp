@@ -51,7 +51,7 @@ get_source.SpatRaster <- function(x, force = FALSE) {
 }
 
 
-t.star <- function(r) {
+t_star <- function(r) {
   ts <- tempfile(fileext = ".tif")
   stars::write_stars(r, ts)
   ts
@@ -62,7 +62,7 @@ t.star <- function(r) {
 #' @export
 get_source.stars <- function(x, force = FALSE) {
   check_stars()
-  t.star(x)
+  t_star(x)
 }
 
 #' @rdname get_source
@@ -72,9 +72,7 @@ get_source.stars_proxy <- function(x, force = FALSE) {
   if (isFALSE(force)) {
     return(x[[1]])
   } else {
-    (
-      return(t.star(x))
-    )
+    (return(t_star(x)))
   }
 }
 

@@ -43,10 +43,10 @@ A class agnostic function to return the projection of a spatial object or
 source. returned projection uses wkt format.
 }
 \examples{
-f <- system.file("ex/elev.tif", package="terra") 
+f <- system.file("ex/elev.tif", package = "terra")
 get_proj(f)
 get_proj(terra::rast(f))
-f2 <- system.file("ex/lux.shp", package="terra") 
+f2 <- system.file("ex/lux.shp", package = "terra")
 get_proj(f2)
 
 }

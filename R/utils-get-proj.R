@@ -77,7 +77,6 @@ get_proj.character <- function(x, ...) {
 }
 
 
-
 stars_crs <- function(x) {
   d <- attr(x, "dimension")
   d[[1]]$refsys[["wkt"]]

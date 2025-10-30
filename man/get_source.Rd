@@ -31,8 +31,8 @@ get_source(x, force = FALSE)
 \item{x}{a raster source - either character i.e a local source or remote.
 If remote, src must be prefixed with relevant gdal module. e.g. "/vsicurl/"}
 
-\item{force}{Logical to determine if the SpatRaster or stars_proxy object should
-be re-saved even if on disk sources exist.}
+\item{force}{Logical to determine if the SpatRaster or stars_proxy object
+should be re-saved even if on disk sources exist.}
 }
 \value{
 character source.
@@ -44,10 +44,10 @@ A class agnostic function to return or create the source of a spatial object.
 If a SpatRaster is provided the source of the raster is used.
 }
 \examples{
-f <- system.file("ex/elev.tif", package="terra") 
+f <- system.file("ex/elev.tif", package = "terra")
 get_source(f)
-get_source(terra::rast(f), force=TRUE)
-f2 <- system.file("ex/lux.shp", package="terra") 
+get_source(terra::rast(f), force = TRUE)
+f2 <- system.file("ex/lux.shp", package = "terra")
 get_source(f2)
 
 }
