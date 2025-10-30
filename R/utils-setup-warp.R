@@ -105,10 +105,21 @@ crop_cutline_adjust <- function(cl, params, res, options) {
   }
   info <- vapour::vapour_layer_info(cl, sql = com)
 
-  bound <- matrix(info$extent[c(
-    1, 2, 2, 1, 1,
-    3, 3, 4, 4, 3
-  )], ncol = 2)
+  bound <- matrix(
+    info$extent[c(
+      1,
+      2,
+      2,
+      1,
+      1,
+      3,
+      3,
+      4,
+      4,
+      3
+    )],
+    ncol = 2
+  )
 
   m <- terra::project(
     bound,
@@ -141,8 +152,13 @@ crop_cutline_adjust <- function(cl, params, res, options) {
 #' @return list with options and params
 #' @noRd
 process_options <- function(
-    cutline, crop_to_cutline,
-    nodata, options, params, res) {
+  cutline,
+  crop_to_cutline,
+  nodata,
+  options,
+  params,
+  res
+) {
   opts <- ""
   if (!is.null(cutline)) {
     cl <- get_source(cutline)
@@ -162,6 +178,8 @@ process_options <- function(
     )
   }
   opts <- c(opts, options)
+
+  opts <- opts[nzchar(opts)]
 
   return(list(
     opts = opts,
