@@ -63,24 +63,29 @@
 #' v <- ezwarp(r.terra, f, res = 1e-4, out_class = "vector")[[1]]
 #' hist(v)
 #' @export
-ezwarp <- function(x,
-                   y,
-                   res,
-                   bands = NULL,
-                   resample = "bilinear",
-                   cutline = NULL,
-                   crop_to_cutline = FALSE,
-                   nodata = NULL,
-                   out_class = c(
-                     "SpatRaster", "stars", "path",
-                     "rayshader", "vector"
-                   ),
-                   filename = NULL,
-                   overwrite = TRUE,
-                   options = "",
-                   compression = "DEFLATE",
-                   engine = c("vapour", "sf"),
-                   ...) {
+ezwarp <- function(
+  x,
+  y,
+  res,
+  bands = NULL,
+  resample = "bilinear",
+  cutline = NULL,
+  crop_to_cutline = FALSE,
+  nodata = NULL,
+  out_class = c(
+    "SpatRaster",
+    "stars",
+    "path",
+    "rayshader",
+    "vector"
+  ),
+  filename = NULL,
+  overwrite = TRUE,
+  options = "",
+  compression = "DEFLATE",
+  engine = c("vapour", "sf"),
+  ...
+) {
   check_options(options)
 
   x <- check_in_form(x)
@@ -90,19 +95,21 @@ ezwarp <- function(x,
   check_engine(engine)
 
   params <- build_warp_inputs(x, y, res)
-
   band_set <- process_bands(x, bands, params)
   bands <- band_set$bands
   params <- band_set$params
 
   # sort out the options.
   get_options <- process_options(
-    cutline, crop_to_cutline,
-    nodata, options, params, res
+    cutline,
+    crop_to_cutline,
+    nodata,
+    options,
+    params,
+    res
   )
   params <- get_options$params
   opts <- get_options$opts
-
 
   # send inputs to the engine.
   if (engine[1] == "vapour") {
@@ -129,8 +136,14 @@ ezwarp <- function(x,
   }
   # if in memory is not true or the sf engine is used then read the file.
   return(on_disk_build_composer(
-    filename, out_class, params, v,
-    bands, resample, opts, ...
+    filename,
+    out_class,
+    params,
+    v,
+    bands,
+    resample,
+    opts,
+    ...
   ))
 }
 
@@ -168,8 +181,15 @@ in_memory_build_composer <- function(v, params, out_class) {
 #' @return the output raster.
 #' @noRd
 on_disk_build_composer <- function(
-    filename, out_class, params, v,
-    bands, resample, opts, ...) {
+  filename,
+  out_class,
+  params,
+  v,
+  bands,
+  resample,
+  opts,
+  ...
+) {
   if (out_class[1] == "SpatRaster") {
     return(terra::rast(filename))
   } else if (out_class[1] == "stars") {

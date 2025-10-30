@@ -84,7 +84,8 @@ save_r_ras <- function(r) {
 bands_r_ras <- function(r, params) {
   if (inherits(r, c("SpatRaster", "stars_proxy"))) {
     bands <- as.integer(dim(r)[3])
-    if (is.na(bands)) { # to catch when stars proxy doesn't give the 3rd dim.
+    if (is.na(bands)) {
+      # to catch when stars proxy doesn't give the 3rd dim.
       bands <- 1
     }
   } else {

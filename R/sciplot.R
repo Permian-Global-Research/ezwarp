@@ -21,15 +21,6 @@
 #' terra::plot does not support continuous legend as is the default in stars.
 #'
 #' @examples
-#'
-#' src <- paste0(
-#'   "/vsicurl/https://public.services.aad.gov.au/datasets/",
-#'   "science/GEBCO_2021_GEOTIFF/GEBCO_2021.tif"
-#' )
-#' template <- ezgrid(c(-180, 180, -90, 90), c(720, 360), "EPSG:4326")
-#' world.el.terra <- ezwarp(x = src, y = template)
-#' sciplot(world.el.terra, pal = "oleron", centre = TRUE)
-#'
 #' f <- system.file("ex/elev.tif", package = "terra")
 #' r.stars <- stars::read_stars(f)
 #' sciplot(r.stars)
@@ -43,13 +34,19 @@ sciplot <- function(x, pal = "acton", n, direction, centre, ...) {
 #'
 #' @export
 sciplot.SpatRaster <- function(
-    x, pal = "acton", n = 256,
-    direction = 1, centre = FALSE,
-    n_quantile = NULL, ...) {
+  x,
+  pal = "acton",
+  n = 256,
+  direction = 1,
+  centre = FALSE,
+  n_quantile = NULL,
+  ...
+) {
   brks <- NULL
 
   if (!is.null(n_quantile)) {
-    brks <- stats::quantile(x[],
+    brks <- stats::quantile(
+      x[],
       probs = seq(0, 1, length.out = n_quantile),
       na.rm = TRUE
     )
@@ -71,8 +68,14 @@ sciplot.SpatRaster <- function(
 #' @rdname sciplot
 #'
 #' @export
-sciplot.stars <- function(x, pal = "acton", n = 11, direction = 1,
-                          centre = FALSE, ...) {
+sciplot.stars <- function(
+  x,
+  pal = "acton",
+  n = 11,
+  direction = 1,
+  centre = FALSE,
+  ...
+) {
   pal <- scico::scico(n, palette = pal, direction = direction)
 
   if (isTRUE(centre)) {
@@ -83,9 +86,12 @@ sciplot.stars <- function(x, pal = "acton", n = 11, direction = 1,
 
     col_to_include <- include_cols(x, max_absolute_value, n)
 
-    plot(x,
+    plot(
+      x,
       nbreaks = length(col_to_include) + 1,
-      col = pal[col_to_include], breaks = "equal", ...
+      col = pal[col_to_include],
+      breaks = "equal",
+      ...
     )
   } else {
     plot(x, nbreaks = n + 1, col = pal, ...)
