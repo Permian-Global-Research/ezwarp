@@ -77,7 +77,7 @@ When selecting the resample method, choose from the following options:
 'bilinear' (the default), 'near', 'cubic', 'cubicspline', 'lanczos',
 'average', 'mode', 'max', 'min', 'med', 'q1', 'q3', 'sum'. For details on
 these methods see: https://gdal.org/programs/gdalwarp.html. If raster source
-is categorical make sure to use 'nearest'.
+is categorical make sure to use 'near'.
 
 If "rayshader" is used for \code{out_class}, then a matrix is returned if only one
 band is targeted. If multiple bands are targeted, then a n-dimensional array

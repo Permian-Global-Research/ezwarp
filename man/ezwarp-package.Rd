@@ -3,7 +3,6 @@
 \docType{package}
 \name{ezwarp-package}
 \alias{ezwarp-package}
-\alias{_PACKAGE}
 \title{ezwarp: A utility tool for working with gdal warp in R}
 \description{
 The goal of ezwarp is to simplify the use of gdalwarp in R. gdalwarp is a very powerful and fast Image reprojection and warping utility. It can be used to reproject (i.e. transform to a new Coordinate Reference System), crop, mask and resample. Unlike many tools in R, this can all be done in a single command, using the warp tool, saving time and code.
