@@ -13,8 +13,9 @@
 
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
-[![codecov](https://codecov.io/gh/Permian-Global-Research/ezwarp/branch/main/graph/badge.svg?token=4I9PAMOY5I)](https://codecov.io/gh/Permian-Global-Research/ezwarp)
 [![R-CMD-check](https://github.com/Permian-Global-Research/ezwarp/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Permian-Global-Research/ezwarp/actions/workflows/R-CMD-check.yaml)
+[![Codecov test
+coverage](https://codecov.io/gh/Permian-Global-Research/ezwarp/graph/badge.svg)](https://app.codecov.io/gh/Permian-Global-Research/ezwarp)
 <!-- badges: end -->
 
 ### Overview
@@ -29,13 +30,13 @@ a single command, using the warp tool, saving time and code.
 At present, there are many ways to access the functionality of gdalwarp
 in R. These include:
 
-  - [vapour::warp\_raster](https://hypertidy.github.io/vapour/reference/vapour_warp_raster.html)
-  - [sf::gdal\_utils](https://r-spatial.github.io/sf/reference/gdal_utils.html)
-  - [stars::st\_warp](https://r-spatial.github.io/stars/reference/st_warp.html)
-  - [{gdalio}](https://github.com/hypertidy/gdalio)
-  - [terra::project](https://rspatial.github.io/terra/reference/project.html)
-  - [{whatarelief}](https://hypertidy.github.io/whatarelief/)
-  - system(“gdalwarp …”)
+- [vapour::warp_raster](https://hypertidy.github.io/vapour/reference/vapour_warp_raster.html)
+- [sf::gdal_utils](https://r-spatial.github.io/sf/reference/gdal_utils.html)
+- [stars::st_warp](https://r-spatial.github.io/stars/reference/st_warp.html)
+- [{gdalio}](https://github.com/hypertidy/gdalio)
+- [terra::project](https://rspatial.github.io/terra/reference/project.html)
+- [{whatarelief}](https://hypertidy.github.io/whatarelief/)
+- system(“gdalwarp …”)
 
 Some of these packages/functions (perhaps sensibly) restrict certain
 functionality of gdalwarp to make specific tasks much simpler
@@ -137,8 +138,8 @@ We can also pass additional arguments to gdalwarp using the options
 command - See here the [gdalwarp
 docs](https://gdal.org/programs/gdalwarp.html). Here we pass an sql
 query for the cutline feature specifying that we only want to use Stokes
-County (from the nc dataset in sf). Also the crop\_to\_cutline argument
-is used here to limit the extent to the specified cropline feature. This
+County (from the nc dataset in sf). Also the crop_to_cutline argument is
+used here to limit the extent to the specified cropline feature. This
 example also demonstrates how ezwarp handles multiple bands, in this
 case with the esri satellite WMS layer. By default, all bands are read -
 this can be changed with the `bands` argument.
