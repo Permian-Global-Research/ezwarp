@@ -11,23 +11,30 @@
 #'
 #' @return a path to the output raster.
 #' @noRd
-sf_warp_util <- function(params,
-                         destination,
-                         resample,
-                         compression,
-                         options,
-                         ...) {
+sf_warp_util <- function(
+  params,
+  destination,
+  resample,
+  compression,
+  options,
+  ...
+) {
   if (is.null(destination)) {
     destination <- tempfile(fileext = ".tif")
   }
 
   opts <- c(
-    "-te", params$extent[c(1, 3, 2, 4)],
-    "-ts", params$dimension,
-    "-t_srs", params$projection,
-    "-r", resample,
+    "-te",
+    params$extent[c(1, 3, 2, 4)],
+    "-ts",
+    as.integer(params$dimension),
+    "-t_srs",
+    params$projection,
+    "-r",
+    resample,
     "-overwrite",
-    "-co", paste0("COMPRESS=", compression),
+    "-co",
+    paste0("COMPRESS=", compression),
     options
   )
 
