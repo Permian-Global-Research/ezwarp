@@ -18,14 +18,13 @@ Imports:
     graphics,
     scico,
     terra,
-    vapour (>= 0.8.8.9009)
+    vapour (>= 0.12.0)
 Suggests: 
     covr,
     testthat (>= 3.0.0),
     sf,
     stars,
     rayshader
-Remotes: hypertidy/vapour
 Config/testthat/edition: 3
 Depends: 
     R (>= 4.1.0)
